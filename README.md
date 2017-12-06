@@ -24,8 +24,7 @@ $env->getOs(); // WIN, LIN, CYG, DAR, etc..
 ```
 
 ### Complete list of methods
- 
-``` php
+
 - [x] $env->getUname();
 - [x] $env->setUname($uname);
 - [x] $env->getOS();
@@ -45,4 +44,3 @@ $env->getOs(); // WIN, LIN, CYG, DAR, etc..
 - [ ] $env->getHost();
 - [ ] $env->getPort();
 - [ ] $env->getScheme();
-```
