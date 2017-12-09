@@ -1,3 +1,5 @@
+[![buddy pipeline](https://app.buddy.works/dmandrafe/apli-environment/pipelines/pipeline/66482/badge.svg?token=ac40fcb04e4ac8e6f132f5faee6df14e92ab5e74208dd573211f9c8d7f8d0943 "buddy pipeline")](https://app.buddy.works/dmandrafe/apli-environment/pipelines/pipeline/66482)
+
 # Apli Environment
 
 Provide a set of methods to help us know information about server and php.
