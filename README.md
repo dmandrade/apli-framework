@@ -20,25 +20,27 @@ Add this to the require block in your `composer.json`.
 $env = new Environment;
 $env->isWeb();
 $env->isCli();
-$env->getOs(); // WIN, LIN, CYG, DAR, etc..
+$env->isUnix();
+$env->getKernelName(); // OPENBSD, WIN32, DARWIN
+$env->getOsName(); // Windows, Linux, Mac OSX, BSD, Sun OS
 ```
 
 ### Complete list of methods
 
-- [x] $env->getUname();
-- [x] $env->setUname($uname);
-- [x] $env->getOS();
-- [x] $env->setOS( $os );
+- [x] $env->getKernelName();
+- [x] $env->getOsFamily();
+- [x] $env->getOsName();
 - [x] $env->isUnix();
-- [x] $env->isWin();
-- [x] $env->isLinux();
-- [ ] $env->isWeb();
+- [x] $env->isUnixOnWindows();
+- [x] $env->isWindows();
+- [x] $env->isOsx();
+- [x] $env->isWeb();
+- [x] $env->isCli();
 - [ ] $env->getPhpVersion();
 - [ ] $env->getRoot( $full = true );
 - [ ] $env->getEntry( $full = true );
 - [ ] $env->getWorkingDirectory();
 - [ ] $env->getServerParam( $key, $default = null );
-- [ ] $env->isCli();
 - [ ] $env->getServerPublicRoot();
 - [ ] $env->getRequestUri( $withParams = true );
 - [ ] $env->getHost();

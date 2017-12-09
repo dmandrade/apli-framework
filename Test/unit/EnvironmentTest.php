@@ -25,39 +25,24 @@ class EnvironmentTest extends \Codeception\Test\Unit {
     protected $instance;
 
     /**
-     * Property os.
+     * getOSTestData
      *
-     * @var boolean
+     * @return  array
      */
-    protected $os;
-
-    /**
-     * Property isWin.
-     *
-     * @var  boolean
-     */
-    protected $isWin;
-
-    /**
-     * Property isMac.
-     *
-     * @var  boolean
-     */
-    protected $isMac;
-
-    /**
-     * Property isUnix.
-     *
-     * @var  boolean
-     */
-    protected $isUnix;
-
-    /**
-     * Property isLinux.
-     *
-     * @var  boolean
-     */
-    protected $isLinux;
+    public function getIsOsxTestData() {
+        return [
+            [ 'CYGWIN_NT-5.1', false ],
+            [ 'Darwin', true ],
+            [ 'FreeBSD', false ],
+            [ 'Linux', false ],
+            [ 'NetBSD', false ],
+            [ 'OpenBSD', false ],
+            [ 'SunOS', false ],
+            [ 'WIN32', false ],
+            [ 'WINNT', false ],
+            [ 'Windows', false ]
+        ];
+    }
 
     /**
      * getOSTestData
@@ -69,13 +54,10 @@ class EnvironmentTest extends \Codeception\Test\Unit {
             [ 'CYGWIN_NT-5.1', false ],
             [ 'Darwin', false ],
             [ 'FreeBSD', false ],
-            [ 'HP-UX', false ],
-            [ 'IRIX64', false ],
             [ 'Linux', false ],
             [ 'NetBSD', false ],
             [ 'OpenBSD', false ],
             [ 'SunOS', false ],
-            [ 'Unix', false ],
             [ 'WIN32', true ],
             [ 'WINNT', true ],
             [ 'Windows', true ]
@@ -89,16 +71,13 @@ class EnvironmentTest extends \Codeception\Test\Unit {
      */
     public function getIsUnixTestData() {
         return [
-            [ 'CYGWIN_NT-5.1', true ],
+            [ 'CYGWIN_NT-5.1', false ],
             [ 'Darwin', true ],
             [ 'FreeBSD', true ],
-            [ 'HP-UX', true ],
-            [ 'IRIX64', true ],
             [ 'Linux', true ],
             [ 'NetBSD', true ],
             [ 'OpenBSD', true ],
             [ 'SunOS', true ],
-            [ 'Unix', true ],
             [ 'WIN32', false ],
             [ 'WINNT', false ],
             [ 'Windows', false ]
@@ -110,18 +89,15 @@ class EnvironmentTest extends \Codeception\Test\Unit {
      *
      * @return  array
      */
-    public function getIsLinuxTestData() {
+    public function getIsUnixOnWindowsTestData() {
         return [
-            [ 'CYGWIN_NT-5.1', false ],
+            [ 'CYGWIN_NT-5.1', true ],
             [ 'Darwin', false ],
             [ 'FreeBSD', false ],
-            [ 'HP-UX', false ],
-            [ 'IRIX64', false ],
-            [ 'Linux', true ],
+            [ 'Linux', false ],
             [ 'NetBSD', false ],
             [ 'OpenBSD', false ],
             [ 'SunOS', false ],
-            [ 'Unix', false ],
             [ 'WIN32', false ],
             [ 'WINNT', false ],
             [ 'Windows', false ]
@@ -129,20 +105,25 @@ class EnvironmentTest extends \Codeception\Test\Unit {
     }
 
     /**
-     * Method to test getOS().
+     * Method to test isOsx().
+     *
+     * @param string $os
+     * @param boolean $value
      *
      * @return void
      *
-     * @covers Environment::getOS
+     * @dataProvider getIsOsxTestData
+     *
+     * @covers Environment::isOsx
      */
-    public function testGetOS() {
-        $this->instance->setUname( 'Darwin' );
+    public function testIsOsx($os, $value) {
+        $this->instance->setKernelName( $os );
 
-        $this->assertEquals( 'DAR', $this->instance->getOS() );
+        $this->assertEquals( $value, $this->instance->isOsx() );
     }
 
     /**
-     * Method to test isWin().
+     * Method to test isWindows().
      *
      * @param string $os
      * @param boolean $value
@@ -151,13 +132,12 @@ class EnvironmentTest extends \Codeception\Test\Unit {
      *
      * @dataProvider getIsWinTestData
      *
-     * @covers       Environment::isWin
+     * @covers       Environment::isWindows
      */
     public function testIsWin( $os, $value ) {
-        $this->instance->setOS( null );
-        $this->instance->setUname( $os );
+        $this->instance->setKernelName( $os );
 
-        $this->assertEquals( $value, $this->instance->isWin() );
+        $this->assertEquals( $value, $this->instance->isWindows() );
     }
 
     /**
@@ -173,44 +153,13 @@ class EnvironmentTest extends \Codeception\Test\Unit {
      * @covers       Environment::isUnix
      */
     public function testIsUnix( $os, $value ) {
-        $this->instance->setOS( null );
-        $this->instance->setUname( $os );
+        $this->instance->setKernelName( $os );
 
         $this->assertEquals( $value, $this->instance->isUnix() );
     }
 
-    /**
-     * Method to test isLinux().
-     *
-     * @param string $os
-     * @param boolean $value
-     *
-     * @return void
-     *
-     * @dataProvider getIsLinuxTestData
-     *
-     * @covers       Environment::isLinux
-     */
-    public function testIsLinux( $os, $value ) {
-        $this->instance->setOS( null );
-        $this->instance->setUname( $os );
-
-        $this->assertEquals( $value, $this->instance->isLinux() );
-    }
-
     protected function _before() {
         $this->instance = new Environment();
-
-        // Detect the native operating system type.
-        $this->os = strtoupper( substr( PHP_OS, 0, 3 ) );
-
-        $this->isWin = $this->os === 'WIN';
-
-        $this->isMac = $this->os === 'MAC';
-
-        $this->isUnix = in_array( $this->os, [ 'CYG', 'DAR', 'FRE', 'LIN', 'NET', 'OPE', 'MAC' ] );
-
-        $this->isLinux = $this->os === 'LIN';
     }
 
     protected function _after() {

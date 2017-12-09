@@ -14,25 +14,40 @@
 
 namespace Apli\Environment;
 
+use Apli\Environment\Detector\AbstractOs;
+use Apli\Environment\Detector\OsDetector;
+use Apli\Environment\Detector\OsInterface;
+
 /**
  * Class Environment
  * @package Apli\Environment
  */
 class Environment {
 
+
     /**
-     * Property os.
-     *
+     * Canonical Kernel's name
      * @var string
+     */
+    protected $kernel;
+
+    /**
+     * OS Family
+     * @var int
+     */
+    protected $family;
+
+    /**
+     * OS type constant
+     * @var OsInterface
      */
     protected $os;
 
     /**
-     * Property uname.
-     *
-     * @var  string
+     * OS type constant
+     * @var OsInterface
      */
-    protected $uname = PHP_OS;
+    protected $isCli;
 
     /**
      * Property server data.
@@ -47,17 +62,14 @@ class Environment {
      * @param array $server
      */
     public function __construct() {
-        $this->server = $_SERVER;
+        $this->server   = $_SERVER;
+        $this->isCli    = substr( php_sapi_name(), 0, 3 ) === 'cli';
+        $this->detector = new OsDetector();
+        $this->setKernelName( PHP_OS );
     }
 
-
-    /**
-     * Get uname
-     *
-     * @return string
-     */
-    public function getUname() {
-        return $this->uname;
+    private function detectOs() {
+        $this->os = $this->detector->detectOs( $this->kernel );
     }
 
     /**
@@ -67,31 +79,30 @@ class Environment {
      *
      * @return $this
      */
-    public function setUname( $uname ) {
-        $this->uname = $uname;
+    public function setKernelName( $kernel ) {
+        $this->os     = null;
+        $this->kernel = strtoupper( $kernel );
+        $this->detectOs();
 
         return $this;
     }
 
     /**
-     * Check if OS is unix
-     * @return bool
+     * Get uname
+     *
+     * @return string
      */
-    public function isUnix() {
-        $unames = [
-            'CYG',
-            'DAR',
-            'FRE',
-            'HP-',
-            'IRI',
-            'LIN',
-            'NET',
-            'OPE',
-            'SUN',
-            'UNI'
-        ];
+    public function getKernelName() {
+        return $this->kernel;
+    }
 
-        return in_array( $this->getOS(), $unames );
+    /**
+     * Get the Family constant
+     *
+     * @return int
+     */
+    public function getOsFamily() {
+        return $this->os->getFamily();
     }
 
     /**
@@ -99,34 +110,24 @@ class Environment {
      *
      * @return  string
      */
-    public function getOS() {
-        if ( ! $this->os ) {
-            // Detect the native operating system type.
-            $this->os = strtoupper( substr( $this->uname, 0, 3 ) );
-        }
-
-        return $this->os;
+    public function getOsName() {
+        return $this->os->getName();
     }
 
     /**
-     * Set OS name
-     *
-     * @param $os
-     *
-     * @return $this
-     */
-    public function setOS( $os ) {
-        $this->os = $os;
-
-        return $this;
-    }
-
-    /**
-     * Check if OS is linux
+     * Check if OS is unix
      * @return bool
      */
-    public function isLinux() {
-        return $this->getOS() === 'LIN';
+    public function isUnix() {
+        return ( $this->os->getFamily() === OsDetector::UNIX_FAMILY );
+    }
+
+    /**
+     * Check if OS is unix
+     * @return bool
+     */
+    public function isUnixOnWindows() {
+        return ( $this->os->getFamily() === OsDetector::UNIX_ON_WINDOWS_FAMILY );
     }
 
     /**
@@ -134,8 +135,32 @@ class Environment {
      *
      * @return  bool
      */
-    public function isWin() {
-        return $this->getOS() === 'WIN';
+    public function isWindows() {
+        return ( $this->os->getFamily() === OsDetector::WINDOWS_FAMILY );
+    }
+
+    /**
+     * If the Operating System is OSX
+     * @return bool
+     */
+    public function isOsx() {
+        return ( $this->kernel === 'DARWIN' );
+    }
+
+    /**
+     * Check if is running in a cli environment
+     * @return bool
+     */
+    public function isCli() {
+        return $this->isCli;
+    }
+
+    /**
+     * Check if is running in a web environment
+     * @return bool
+     */
+    public function isWeb() {
+        return ! $this->isCli;
     }
 
 }
