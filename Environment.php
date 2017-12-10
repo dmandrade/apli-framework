@@ -15,6 +15,7 @@
 namespace Apli\Environment;
 
 use Apli\Environment\Detector\AbstractOs;
+use Apli\Environment\Detector\MacOsx;
 use Apli\Environment\Detector\OsDetector;
 use Apli\Environment\Detector\OsInterface;
 
@@ -81,7 +82,7 @@ class Environment {
      */
     public function setKernelName( $kernel ) {
         $this->os     = null;
-        $this->kernel = strtoupper( $kernel );
+        $this->kernel = strtolower( $kernel );
         $this->detectOs();
 
         return $this;
@@ -144,7 +145,7 @@ class Environment {
      * @return bool
      */
     public function isOsx() {
-        return ( $this->kernel === 'DARWIN' );
+        return $this->os instanceof MacOsx;
     }
 
     /**
