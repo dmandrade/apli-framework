@@ -41,10 +41,10 @@ $env->getOsName(); // Windows, Linux, Mac OSX, BSD, Sun OS
 - [x] $env->getPhpVersion();
 - [x] $env->isPHP();
 - [x] $env->isHHVM();
-- [ ] $env->getRoot( $full = true );
-- [ ] $env->getEntry( $full = true );
-- [ ] $env->getWorkingDirectory();
-- [ ] $env->getServerParam( $key, $default = null );
+- [x] $env->getRoot();
+- [x] $env->getEntry();
+- [x] $env->getWorkingDirectory();
+- [x] $env->getServerParam( $key, $default = null );
 - [ ] $env->getServerPublicRoot();
 - [ ] $env->getRequestUri( $withParams = true );
 - [ ] $env->getHost();

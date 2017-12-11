@@ -193,4 +193,61 @@ class Environment {
     {
         return !$this->isHHVM();
     }
+
+    /**
+     * Get root directory
+     *
+     * @return string
+     */
+    public function getRoot() {
+        return dirname( $this->getEntry() );
+    }
+
+    /**
+     * Get script entry
+     *
+     * @return bool|mixed|string
+     */
+    public function getEntry() {
+        $wdir = $this->getWorkingDirectory();
+
+        $file = $this->getServerParam( 'SCRIPT_FILENAME' );
+
+        if ( strpos( $file, $wdir ) === 0 ) {
+            $file = substr( $file, strlen( $wdir ) );
+        }
+
+        $file = trim( $file, '.' . DIRECTORY_SEPARATOR );
+
+        if ( $this->isCli() ) {
+            $file = $wdir . DIRECTORY_SEPARATOR . $file;
+        }
+
+        return $file;
+    }
+
+    /**
+     * Get current working directory
+     *
+     * @return string
+     */
+    public function getWorkingDirectory() {
+        return getcwd();
+    }
+
+    /**
+     * Get a server param
+     *
+     * @param $key
+     * @param null $default
+     *
+     * @return mixed|null
+     */
+    protected function getServerParam( $key, $default = null ) {
+        if ( isset( $this->server[ $key ] ) ) {
+            return $this->server[ $key ];
+        }
+
+        return $default;
+    }
 }
