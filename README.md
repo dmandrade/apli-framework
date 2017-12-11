@@ -38,7 +38,9 @@ $env->getOsName(); // Windows, Linux, Mac OSX, BSD, Sun OS
 - [x] $env->isOsx();
 - [x] $env->isWeb();
 - [x] $env->isCli();
-- [ ] $env->getPhpVersion();
+- [x] $env->getPhpVersion();
+- [x] $env->isPHP();
+- [x] $env->isHHVM();
 - [ ] $env->getRoot( $full = true );
 - [ ] $env->getEntry( $full = true );
 - [ ] $env->getWorkingDirectory();

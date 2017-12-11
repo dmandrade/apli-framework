@@ -62,8 +62,8 @@ class Environment {
      *
      * @param array $server
      */
-    public function __construct() {
-        $this->server   = $_SERVER;
+    public function __construct(array $server = []) {
+        $this->server   = $server ? : $_SERVER;
         $this->isCli    = substr( php_sapi_name(), 0, 3 ) === 'cli';
         $this->detector = new OsDetector();
         $this->setKernelName( PHP_OS );
@@ -164,4 +164,33 @@ class Environment {
         return ! $this->isCli;
     }
 
+    /**
+     * Get PHP/HHVM version
+     *
+     * @return string
+     */
+    public function getPhpVersion() {
+        if ( $this->isHHVM() ) {
+            return HHVM_VERSION;
+        }
+
+        return PHP_VERSION;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHHVM()
+    {
+        return defined('HHVM_VERSION');
+    }
+    /**
+     * isPHP
+     *
+     * @return  boolean
+     */
+    public function isPHP()
+    {
+        return !$this->isHHVM();
+    }
 }
