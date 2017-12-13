@@ -45,8 +45,8 @@ $env->getOsName(); // Windows, Linux, Mac OSX, BSD, Sun OS
 - [x] $env->getEntry();
 - [x] $env->getWorkingDirectory();
 - [x] $env->getServerParam( $key, $default = null );
-- [ ] $env->getServerPublicRoot();
-- [ ] $env->getRequestUri( $withParams = true );
-- [ ] $env->getHost();
-- [ ] $env->getPort();
-- [ ] $env->getScheme();
+- [x] $env->getServerPublicRoot();
+- [x] $env->getRequestUri( $withParams = true );
+- [x] $env->getHost();
+- [x] $env->getPort();
+- [x] $env->getScheme();

@@ -236,6 +236,57 @@ class Environment {
     }
 
     /**
+     * Get server document root
+     *
+     * @return mixed|null
+     */
+    public function getServerPublicRoot() {
+        return $this->getServerParam( 'DOCUMENT_ROOT' );
+    }
+
+    /**
+     * Get server requested uri
+     *
+     * @param bool $withParams
+     *
+     * @return mixed|null
+     */
+    public function getRequestUri( $withParams = true ) {
+        if ( $withParams ) {
+            return $this->getServerParam( 'REQUEST_URI' );
+        }
+
+        return $this->getServerParam( 'PHP_SELF' );
+    }
+
+    /**
+     * Get server host
+     *
+     * @return mixed|null
+     */
+    public function getHost() {
+        return $this->getServerParam( 'HTTP_HOST' );
+    }
+
+    /**
+     * Get server port
+     *
+     * @return mixed|null
+     */
+    public function getPort() {
+        return $this->getServerParam( 'SERVER_PORT' );
+    }
+
+    /**
+     * Get server schema
+     *
+     * @return mixed|null
+     */
+    public function getScheme() {
+        return $this->getServerParam( 'REQUEST_SCHEME' );
+    }
+
+    /**
      * Get a server param
      *
      * @param $key
