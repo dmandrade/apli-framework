@@ -8,6 +8,9 @@ notifications:
     on_success: never
     on_failure: change
 
+git:
+  depth: 5
+
 branches:
   only:
     - master
