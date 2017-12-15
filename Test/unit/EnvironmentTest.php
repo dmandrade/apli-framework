@@ -22,7 +22,7 @@ class EnvironmentTest extends \Codeception\Test\Unit {
      *
      * @var Environment
      */
-    protected $instance;
+    protected $environment;
 
     /**
      * Is hhvm flag
@@ -201,9 +201,9 @@ class EnvironmentTest extends \Codeception\Test\Unit {
      * @covers Environment::isOsx
      */
     public function testIsOsx($os, $value) {
-        $this->instance->setKernelName( $os );
+        $this->environment->server()->os()->setKernelName( $os );
 
-        $this->assertEquals( $value, $this->instance->isOsx() );
+        $this->assertEquals( $value, $this->environment->server()->os()->isOsx() );
     }
 
     /**
@@ -219,9 +219,9 @@ class EnvironmentTest extends \Codeception\Test\Unit {
      * @covers       Environment::isWindows
      */
     public function testIsWin( $os, $value ) {
-        $this->instance->setKernelName( $os );
+        $this->environment->server()->os()->setKernelName( $os );
 
-        $this->assertEquals( $value, $this->instance->isWindows() );
+        $this->assertEquals( $value, $this->environment->server()->os()->isWindows() );
     }
 
     /**
@@ -237,9 +237,9 @@ class EnvironmentTest extends \Codeception\Test\Unit {
      * @covers       Environment::isUnix
      */
     public function testIsUnix( $os, $value ) {
-        $this->instance->setKernelName( $os );
+        $this->environment->server()->os()->setKernelName( $os );
 
-        $this->assertEquals( $value, $this->instance->isUnix() );
+        $this->assertEquals( $value, $this->environment->server()->os()->isUnix() );
     }
 
     /**
@@ -255,9 +255,9 @@ class EnvironmentTest extends \Codeception\Test\Unit {
      * @covers       Environment::isUnixOnWindows
      */
     public function testIsUnixOnWindows( $os, $value ) {
-        $this->instance->setKernelName( $os );
+        $this->environment->server()->os()->setKernelName( $os );
 
-        $this->assertEquals( $value, $this->instance->isUnixOnWindows() );
+        $this->assertEquals( $value, $this->environment->server()->os()->isUnixOnWindows() );
     }
 
     /**
@@ -273,9 +273,9 @@ class EnvironmentTest extends \Codeception\Test\Unit {
      * @covers       Environment::isCli
      */
     public function testIsCli( $interface, $value ) {
-        $this->instance->setSapiName($interface);
+        $this->environment->setSapiName($interface);
 
-        $this->assertEquals( $value, $this->instance->isCli() );
+        $this->assertEquals( $value, $this->environment->isCli() );
     }
 
     /**
@@ -291,9 +291,9 @@ class EnvironmentTest extends \Codeception\Test\Unit {
      * @covers       Environment::isWeb
      */
     public function testIsWeb( $interface, $value ) {
-        $this->instance->setSapiName($interface);
+        $this->environment->setSapiName($interface);
 
-        $this->assertEquals( $value, $this->instance->isWeb() );
+        $this->assertEquals( $value, $this->environment->isWeb() );
     }
 
     /**
@@ -305,7 +305,7 @@ class EnvironmentTest extends \Codeception\Test\Unit {
      */
     public function testIsHHVM() {
 
-        $this->assertEquals( $this->isHHVM, $this->instance->isHHVM() );
+        $this->assertEquals( $this->isHHVM, $this->environment->isHHVM() );
     }
 
     /**
@@ -317,7 +317,7 @@ class EnvironmentTest extends \Codeception\Test\Unit {
      */
     public function testIsPHP() {
 
-        $this->assertEquals( !$this->isHHVM, $this->instance->isPHP() );
+        $this->assertEquals( !$this->isHHVM, $this->environment->isPHP() );
     }
 
     /**
@@ -328,13 +328,13 @@ class EnvironmentTest extends \Codeception\Test\Unit {
      * @covers       Environment::getPhpVersion
      */
     public function testGetPhpVersion() {
-        $this->assertEquals( $this->phpVersion, $this->instance->getPhpVersion() );
+        $this->assertEquals( $this->phpVersion, $this->environment->getPhpVersion() );
     }
 
     protected function _before() {
-        $this->instance = new Environment();
-        $this->isHHVM = defined('HHVM_VERSION');
-        $this->phpVersion = $this->isHHVM ? HHVM_VERSION : PHP_VERSION;
+        $this->environment = new Environment();
+        $this->isHHVM      = defined('HHVM_VERSION');
+        $this->phpVersion  = $this->isHHVM ? constant('HHVM_VERSION') : constant('PHP_VERSION');
     }
 
     protected function _after() {
