@@ -25,6 +25,20 @@ class EnvironmentTest extends \Codeception\Test\Unit {
     protected $instance;
 
     /**
+     * Is hhvm flag
+     *
+     * @var boolean
+     */
+    protected $isHHVM;
+
+    /**
+     * PHP/HHVM runtime version
+     *
+     * @var string
+     */
+    protected $phpVersion;
+
+    /**
      * getOSTestData
      *
      * @return  array
@@ -105,6 +119,76 @@ class EnvironmentTest extends \Codeception\Test\Unit {
     }
 
     /**
+     * getIsCliTestData
+     *
+     * @see http://php.net/manual/en/function.php-sapi-name.php
+     *
+     * @return  array
+     */
+    public function getIsCliTestData() {
+        return [
+            [ 'aolserver', false ],
+            [ 'apache', false ],
+            [ 'apache2filter', false ],
+            [ 'apache2handler', false ],
+            [ 'caudium', false ],
+            [ 'cgi', false ],
+            [ 'cgi-fcgi', false ],
+            [ 'cli', true ],
+            [ 'cli-server', true ],
+            [ 'cgi', false ],
+            [ 'continuity', false ],
+            [ 'embed', false ],
+            [ 'fpm-fcgi', false ],
+            [ 'isapi', false ],
+            [ 'litespeed', false ],
+            [ 'milter', false ],
+            [ 'nsapi', false ],
+            [ 'phttpd', false ],
+            [ 'pi3web', false ],
+            [ 'roxen', false ],
+            [ 'thttpd', false ],
+            [ 'tux', false ],
+            [ 'webjames', false ],
+        ];
+    }
+
+    /**
+     * getIsWebTestData
+     *
+     * @see http://php.net/manual/en/function.php-sapi-name.php
+     *
+     * @return  array
+     */
+    public function getIsWebTestData() {
+        return [
+            [ 'aolserver', true ],
+            [ 'apache', true ],
+            [ 'apache2filter', true ],
+            [ 'apache2handler', true ],
+            [ 'caudium', true ],
+            [ 'cgi', true ],
+            [ 'cgi-fcgi', true ],
+            [ 'cli', false ],
+            [ 'cli-server', false ],
+            [ 'cgi', true ],
+            [ 'continuity', true ],
+            [ 'embed', true ],
+            [ 'fpm-fcgi', true ],
+            [ 'isapi', true ],
+            [ 'litespeed', true ],
+            [ 'milter', true ],
+            [ 'nsapi', true ],
+            [ 'phttpd', true ],
+            [ 'pi3web', true ],
+            [ 'roxen', true ],
+            [ 'thttpd', true ],
+            [ 'tux', true ],
+            [ 'webjames', true ],
+        ];
+    }
+
+    /**
      * Method to test isOsx().
      *
      * @param string $os
@@ -158,8 +242,99 @@ class EnvironmentTest extends \Codeception\Test\Unit {
         $this->assertEquals( $value, $this->instance->isUnix() );
     }
 
+    /**
+     * Method to test isUnixOnWindows().
+     *
+     * @param string $os
+     * @param boolean $value
+     *
+     * @return void
+     *
+     * @dataProvider getIsUnixOnWindowsTestData
+     *
+     * @covers       Environment::isUnixOnWindows
+     */
+    public function testIsUnixOnWindows( $os, $value ) {
+        $this->instance->setKernelName( $os );
+
+        $this->assertEquals( $value, $this->instance->isUnixOnWindows() );
+    }
+
+    /**
+     * Method to test isCli().
+     *
+     * @param string $interface
+     * @param boolean $value
+     *
+     * @return void
+     *
+     * @dataProvider getIsCliTestData
+     *
+     * @covers       Environment::isCli
+     */
+    public function testIsCli( $interface, $value ) {
+        $this->instance->setSapiName($interface);
+
+        $this->assertEquals( $value, $this->instance->isCli() );
+    }
+
+    /**
+     * Method to test isWeb().
+     *
+     * @param string $interface
+     * @param boolean $value
+     *
+     * @return void
+     *
+     * @dataProvider getIsWebTestData
+     *
+     * @covers       Environment::isWeb
+     */
+    public function testIsWeb( $interface, $value ) {
+        $this->instance->setSapiName($interface);
+
+        $this->assertEquals( $value, $this->instance->isWeb() );
+    }
+
+    /**
+     * Method to test isHHVM().
+     *
+     * @return void
+     *
+     * @covers       Environment::isHHVM
+     */
+    public function testIsHHVM() {
+
+        $this->assertEquals( $this->isHHVM, $this->instance->isHHVM() );
+    }
+
+    /**
+     * Method to test isPHP().
+     *
+     * @return void
+     *
+     * @covers       Environment::isPHP
+     */
+    public function testIsPHP() {
+
+        $this->assertEquals( !$this->isHHVM, $this->instance->isPHP() );
+    }
+
+    /**
+     * Method to test getPhpVersion().
+     *
+     * @return void
+     *
+     * @covers       Environment::getPhpVersion
+     */
+    public function testGetPhpVersion() {
+        $this->assertEquals( $this->phpVersion, $this->instance->getPhpVersion() );
+    }
+
     protected function _before() {
         $this->instance = new Environment();
+        $this->isHHVM = defined('HHVM_VERSION');
+        $this->phpVersion = $this->isHHVM ? HHVM_VERSION : PHP_VERSION;
     }
 
     protected function _after() {

@@ -45,12 +45,6 @@ class Environment {
     protected $os;
 
     /**
-     * OS type constant
-     * @var OsInterface
-     */
-    protected $isCli;
-
-    /**
      * Property server data.
      *
      * @var  array
@@ -58,13 +52,20 @@ class Environment {
     protected $server = [];
 
     /**
+     * Property sapi name.
+     *
+     * @var  string
+     */
+    protected $sapi = '';
+
+    /**
      * Environment constructor.
      *
      * @param array $server
      */
-    public function __construct(array $server = []) {
+    public function __construct(array $server = [], $sapi = '') {
         $this->server   = $server ? : $_SERVER;
-        $this->isCli    = substr( php_sapi_name(), 0, 3 ) === 'cli';
+        $this->setSapiName($sapi);
         $this->detector = new OsDetector();
         $this->setKernelName( PHP_OS );
     }
@@ -149,11 +150,20 @@ class Environment {
     }
 
     /**
+     * Set sapi interface name
+     *
+     * @param $interface
+     */
+    public function setSapiName($interface = '') {
+        $this->sapi = $interface ? : php_sapi_name();
+    }
+
+    /**
      * Check if is running in a cli environment
      * @return bool
      */
     public function isCli() {
-        return $this->isCli;
+        return (substr( $this->sapi, 0, 3 ) === 'cli');
     }
 
     /**
@@ -161,7 +171,7 @@ class Environment {
      * @return bool
      */
     public function isWeb() {
-        return ! $this->isCli;
+        return ! $this->isCli();
     }
 
     /**
