@@ -4,12 +4,12 @@
  *
  *  This file is part of the Aplí Framework.
  *
- *  @project Aplí Framework
- *  @file Sun.php
- *  @author Danilo Andrade <danilo@daniloandrade.net>
- *  @date 09/12/17 at 21:51
- *  @copyright  Copyright (c) 2017 Danilo Andrade
- *  @license    GNU Lesser General Public License version 3 or later.
+ * @project Aplí Framework
+ * @file Sun.php
+ * @author Danilo Andrade <danilo@daniloandrade.net>
+ * @date 09/12/17 at 21:51
+ * @copyright  Copyright (c) 2017 Danilo Andrade
+ * @license    GNU Lesser General Public License version 3 or later.
  */
 
 /**

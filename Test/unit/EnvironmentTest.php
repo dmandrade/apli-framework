@@ -198,9 +198,9 @@ class EnvironmentTest extends \Codeception\Test\Unit {
      *
      * @dataProvider getIsOsxTestData
      *
-     * @covers Environment::isOsx
+     * @covers       Environment::isOsx
      */
-    public function testIsOsx($os, $value) {
+    public function testIsOsx( $os, $value ) {
         $this->environment->server()->os()->setKernelName( $os );
 
         $this->assertEquals( $value, $this->environment->server()->os()->isOsx() );
@@ -273,7 +273,7 @@ class EnvironmentTest extends \Codeception\Test\Unit {
      * @covers       Environment::isCli
      */
     public function testIsCli( $interface, $value ) {
-        $this->environment->setSapiName($interface);
+        $this->environment->setSapiName( $interface );
 
         $this->assertEquals( $value, $this->environment->isCli() );
     }
@@ -291,7 +291,7 @@ class EnvironmentTest extends \Codeception\Test\Unit {
      * @covers       Environment::isWeb
      */
     public function testIsWeb( $interface, $value ) {
-        $this->environment->setSapiName($interface);
+        $this->environment->setSapiName( $interface );
 
         $this->assertEquals( $value, $this->environment->isWeb() );
     }
@@ -317,7 +317,7 @@ class EnvironmentTest extends \Codeception\Test\Unit {
      */
     public function testIsPHP() {
 
-        $this->assertEquals( !$this->isHHVM, $this->environment->isPHP() );
+        $this->assertEquals( ! $this->isHHVM, $this->environment->isPHP() );
     }
 
     /**
@@ -333,8 +333,8 @@ class EnvironmentTest extends \Codeception\Test\Unit {
 
     protected function _before() {
         $this->environment = new Environment();
-        $this->isHHVM      = defined('HHVM_VERSION');
-        $this->phpVersion  = $this->isHHVM ? constant('HHVM_VERSION') : constant('PHP_VERSION');
+        $this->isHHVM      = defined( 'HHVM_VERSION' );
+        $this->phpVersion  = $this->isHHVM ? constant( 'HHVM_VERSION' ) : constant( 'PHP_VERSION' );
     }
 
     protected function _after() {

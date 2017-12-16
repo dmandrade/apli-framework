@@ -4,12 +4,12 @@
  *
  *  This file is part of the Aplí Framework.
  *
- *  @project Aplí Framework
- *  @file Server.php
- *  @author Danilo Andrade <danilo@daniloandrade.net>
- *  @date 16/12/17 at 15:11
- *  @copyright  Copyright (c) 2017 Danilo Andrade
- *  @license    GNU Lesser General Public License version 3 or later.
+ * @project Aplí Framework
+ * @file Server.php
+ * @author Danilo Andrade <danilo@daniloandrade.net>
+ * @date 16/12/17 at 15:11
+ * @copyright  Copyright (c) 2017 Danilo Andrade
+ * @license    GNU Lesser General Public License version 3 or later.
  */
 
 namespace Apli\Environment;
@@ -38,9 +38,9 @@ class Server {
      *
      * @param array $server
      */
-    public function __construct(array $server = []) {
-        $this->server   = $server ? : $_SERVER;
-        $this->os = new Platform();
+    public function __construct( array $server = [] ) {
+        $this->server = $server ?: $_SERVER;
+        $this->os     = new Platform();
     }
 
     /**
@@ -85,6 +85,22 @@ class Server {
      */
     public function getWorkingDirectory() {
         return getcwd();
+    }
+
+    /**
+     * Get a server param
+     *
+     * @param $key
+     * @param null $default
+     *
+     * @return mixed|null
+     */
+    protected function getParam( $key, $default = null ) {
+        if ( isset( $this->server[ $key ] ) ) {
+            return $this->server[ $key ];
+        }
+
+        return $default;
     }
 
     /**
@@ -136,21 +152,5 @@ class Server {
      */
     public function getScheme() {
         return $this->getParam( 'REQUEST_SCHEME' );
-    }
-
-    /**
-     * Get a server param
-     *
-     * @param $key
-     * @param null $default
-     *
-     * @return mixed|null
-     */
-    protected function getParam( $key, $default = null ) {
-        if ( isset( $this->server[ $key ] ) ) {
-            return $this->server[ $key ];
-        }
-
-        return $default;
     }
 }

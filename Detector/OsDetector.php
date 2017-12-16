@@ -4,12 +4,12 @@
  *
  *  This file is part of the Aplí Framework.
  *
- *  @project Aplí Framework
- *  @file OsDetector.php
- *  @author Danilo Andrade <danilo@daniloandrade.net>
- *  @date 09/12/17 at 20:34
- *  @copyright  Copyright (c) 2017 Danilo Andrade
- *  @license    GNU Lesser General Public License version 3 or later.
+ * @project Aplí Framework
+ * @file OsDetector.php
+ * @author Danilo Andrade <danilo@daniloandrade.net>
+ * @date 09/12/17 at 20:34
+ * @copyright  Copyright (c) 2017 Danilo Andrade
+ * @license    GNU Lesser General Public License version 3 or later.
  */
 
 /**
@@ -23,10 +23,10 @@ namespace Apli\Environment\Detector;
 
 class OsDetector {
 
-    const OTHER_FAMILY                 = 0;
-    const UNIX_FAMILY                  = 1;
-    const WINDOWS_FAMILY               = 2;
-    const UNIX_ON_WINDOWS_FAMILY       = 3;
+    const OTHER_FAMILY = 0;
+    const UNIX_FAMILY = 1;
+    const WINDOWS_FAMILY = 2;
+    const UNIX_ON_WINDOWS_FAMILY = 3;
 
     /**
      * @var OsInterface[]
@@ -46,17 +46,17 @@ class OsDetector {
      *
      * @return OsInterface
      */
-    public function detectOs($kernel) {
-        foreach ($this->detectors as $class) {
+    public function detectOs( $kernel ) {
+        foreach ( $this->detectors as $class ) {
             /** @var OsInterface $os */
-            $os = (new $class);
-            $detected = $this->isOs($kernel, $os->getVariants());
-            if($detected) {
+            $os       = ( new $class );
+            $detected = $this->isOs( $kernel, $os->getVariants() );
+            if ( $detected ) {
                 return $os;
             }
         }
 
-        return (new UnknownOs());
+        return ( new UnknownOs() );
     }
 
     /**
@@ -66,14 +66,14 @@ class OsDetector {
      * @return boolean
      */
     private function isOs( $kernel, $variants ) {
-        return (bool)preg_grep('/^'.preg_quote($kernel).'$/i',$variants);
+        return (bool) preg_grep( '/^' . preg_quote( $kernel ) . '$/i', $variants );
     }
 
     /**
      * @param OsInterface $detector
      */
-    public function extend($detector) {
-        if(!in_array($detector, $this->detectors)) {
+    public function extend( $detector ) {
+        if ( ! in_array( $detector, $this->detectors ) ) {
             $this->detectors[] = $detector;
         }
     }

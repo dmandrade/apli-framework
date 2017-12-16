@@ -4,12 +4,12 @@
  *
  *  This file is part of the Aplí Framework.
  *
- *  @project Aplí Framework
- *  @file Platform.php
- *  @author Danilo Andrade <danilo@daniloandrade.net>
- *  @date 16/12/17 at 15:12
- *  @copyright  Copyright (c) 2017 Danilo Andrade
- *  @license    GNU Lesser General Public License version 3 or later.
+ * @project Aplí Framework
+ * @file Platform.php
+ * @author Danilo Andrade <danilo@daniloandrade.net>
+ * @date 16/12/17 at 15:12
+ * @copyright  Copyright (c) 2017 Danilo Andrade
+ * @license    GNU Lesser General Public License version 3 or later.
  */
 
 namespace Apli\Environment;
@@ -56,15 +56,6 @@ class Platform {
     }
 
     /**
-     * Set detected os
-     *
-     * @return void
-     */
-    private function detectOs() {
-        $this->os = $this->detector->detectOs( $this->kernel );
-    }
-
-    /**
      * Set kernel name
      *
      * @param string $kernel
@@ -77,6 +68,15 @@ class Platform {
         $this->detectOs();
 
         return $this;
+    }
+
+    /**
+     * Set detected os
+     *
+     * @return void
+     */
+    private function detectOs() {
+        $this->os = $this->detector->detectOs( $this->kernel );
     }
 
     /**
