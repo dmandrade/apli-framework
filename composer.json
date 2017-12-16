@@ -1,0 +1,30 @@
+{
+    "name": "apli/framework",
+    "description": "Apli Framework.",
+    "authors": [
+        {
+            "name": "Danilo Andrade",
+            "email": "danilo@daniloandrade.net",
+            "homepage": "https://daniloandrade.net"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.4"
+    },
+    "require-dev": {
+    },
+    "suggest": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Apli\\": "src/"
+        },
+        "files": [
+        ]
+    },
+    "provide": {
+    },
+    "replace": {
+        "apli/environment": "self.version"
+    }
+}
