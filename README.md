@@ -21,7 +21,7 @@ Enum support class implementation inspired from SplEnum
 ### Declaration
 
 ```php
-use Apli\Support\Enum;
+use Apli\Support\AbstractEnum;
 
 /**
  * State enum
