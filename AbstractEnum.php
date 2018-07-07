@@ -22,7 +22,7 @@ use UnexpectedValueException;
  *
  * @package Apli\Support
  */
-abstract class Enum implements \JsonSerializable
+abstract class AbstractEnum implements \JsonSerializable
 {
 
     /**
@@ -172,7 +172,7 @@ abstract class Enum implements \JsonSerializable
     /**
      * Provided for compatibility with SplEnum
      *
-     * @see Enum::getConstants()
+     * @see AbstractEnum::getConstants()
      * @param bool $include_default Include `__default` and its value. Not included by default.
      * @return array
      * @throws ReflectionException
@@ -187,7 +187,7 @@ abstract class Enum implements \JsonSerializable
      *
      * @param $name
      * @param $arguments
-     * @return Enum
+     * @return AbstractEnum
      * @throws ReflectionException
      * @throws \BadMethodCallException if enum does not exist
      */
@@ -236,10 +236,10 @@ abstract class Enum implements \JsonSerializable
     /**
      * Compares one Enum with another.
      *
-     * @param Enum|null $enum
+     * @param AbstractEnum|null $enum
      * @return bool
      */
-    final public function equals(Enum $enum = null)
+    final public function equals(AbstractEnum $enum = null)
     {
         return $enum !== null && $this->getValue() === $enum->getValue() && get_called_class() == get_class($enum);
     }

@@ -26,7 +26,7 @@ use Apli\Support\Enum;
 /**
  * State enum
  */
-class State extends Enum
+class State extends AbstractEnum
 {
     const ACTIVE = 'active';
     const INACTIVE = 'inactive';
@@ -85,7 +85,7 @@ If you care about IDE autocompletion, you can use phpdoc (this is supported in P
  * @method static State ACTIVE()
  * @method static State INACTIVE()
  */
-class State extends Enum
+class State extends AbstractEnum
 {
     const ACTIVE = 'active';
     const INACTIVE = 'inactive';
