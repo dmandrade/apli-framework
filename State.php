@@ -14,7 +14,7 @@
 
 namespace Apli\Session;
 
-use Apli\Support\Enum;
+use Apli\Support\AbstractEnum;
 
 /**
  * Class State
@@ -27,15 +27,11 @@ use Apli\Support\Enum;
  *
  * @package Apli\Session
  */
-final class State extends Enum
+final class State extends AbstractEnum
 {
     const ACTIVE = 'active';
-
     const INACTIVE = 'inactive';
-
     const EXPIRED = 'expired';
-
     const DESTROYED = 'destroyed';
-
     const ERROR = 'error';
 }
