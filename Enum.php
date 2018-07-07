@@ -13,7 +13,9 @@
  */
 
 namespace Apli\Support;
+
 use ReflectionException;
+use UnexpectedValueException;
 
 /**
  * Enum implementation inspired from SplEnum
@@ -24,6 +26,17 @@ abstract class Enum implements \JsonSerializable
 {
 
     /**
+     * Store existing constants in a static cache per object.
+     *
+     * @var array
+     */
+    protected static $cache = array();
+    /**
+     * Set name of default constant key
+     * @var string
+     */
+    protected static $defaultKey = "__default";
+    /**
      * Enum value
      *
      * @var mixed
@@ -31,85 +44,103 @@ abstract class Enum implements \JsonSerializable
     protected $value;
 
     /**
-     * Store default values in a cache per object.
-     *
-     * @var array
-     */
-    private static $defaults;
-
-    /**
-     * Store existing constants in a static cache per object.
-     *
-     * @var array
-     */
-    protected static $cache = array();
-
-    /**
-     * Set name of default constant key
-     * @var string
-     */
-    protected static $defaultKey = "__default";
-
-    /**
      * Creates a new value of some type
      *
-     * @param mixed $value
+     * @param mixed|null $value Initial value
+     * @param bool $strict Provided for SplEnum compatibility (its purpose is unknown)
      *
-     * @throws \UnexpectedValueException if incompatible type is given.
+     * @throws UnexpectedValueException if incompatible type is given.
      * @throws ReflectionException
      */
-    public function __construct($value = null)
+    public function __construct($value = null, $strict = false)
     {
+        $className = get_called_class();
+
         if (is_null($value)) {
-            $value = self::getDefault();
+            if (!self::isValidName(self::$defaultKey)) {
+                throw new UnexpectedValueException('Default value not defined in enum ' . $className);
+            }
+
+            $value = self::getConstants()[self::$defaultKey];
         }
 
-        if (!$this->isValid($value)) {
-            throw new \UnexpectedValueException("Value '$value' is not part of the enum " . get_called_class());
+        if (!self::isValidValue($value)) {
+            throw new UnexpectedValueException("Value '$value' is not part of the enum " . get_called_class());
         }
+
         $this->value = $value;
     }
 
     /**
-     * Get enum value
+     * Check if enum key exists
      *
-     * @return mixed
+     * @param string $name Name of the constant to validate
+     * @param bool $strict Case is significant when searching for name
+     * @return bool
+     * @throws ReflectionException
      */
-    public function getValue()
+    public static function isValidName($name, $strict = true)
     {
-        return $this->value;
+        $constants = static::getConstants();
+
+        if ($strict) {
+            return array_key_exists($name, $constants);
+        }
+
+        $constantNames = array_map('strtoupper', array_keys($constants));
+        return in_array(strtoupper($name), $constantNames);
     }
 
     /**
-     * Returns the enum key.
+     * Returns all enum constants
+     *
+     * @param bool $includeDefault
+     * @return array|mixed
+     * @throws ReflectionException
+     */
+    public static function getConstants($includeDefault = true)
+    {
+        $className = get_called_class();
+        if (!array_key_exists($className, static::$cache)) {
+            $reflection = new \ReflectionClass($className);
+            static::$cache[$className] = $reflection->getConstants();
+        }
+
+        $constants = self::$cache[$className];
+
+        if ($includeDefault === false) {
+            $constants = array_filter(
+                $constants,
+                function ($key) {
+                    return $key !== self::$defaultKey;
+                },
+                ARRAY_FILTER_USE_KEY);
+        }
+
+        return $constants;
+    }
+
+    /**
+     * Check if is valid enum value
+     *
+     * @param $value
+     * @return bool
+     * @throws ReflectionException
+     */
+    public static function isValidValue($value)
+    {
+        return in_array($value, static::toArray(), true);
+    }
+
+    /**
+     * Returns all possible values as an array, except default constant
      *
      * @return mixed
      * @throws ReflectionException
      */
-    public function getKey()
+    public static function toArray()
     {
-        return static::search($this->value);
-    }
-
-    /**
-     * Return enum value as string
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return (string)$this->value;
-    }
-
-    /**
-     * Compares one Enum with another.
-     *
-     * @param Enum|null $enum
-     * @return bool
-     */
-    final public function equals(Enum $enum = null)
-    {
-        return $enum !== null && $this->getValue() === $enum->getValue() && get_called_class() == get_class($enum);
+        return self::getConstants(false);
     }
 
     /**
@@ -139,80 +170,16 @@ abstract class Enum implements \JsonSerializable
     }
 
     /**
-     * Get default value for enum
+     * Provided for compatibility with SplEnum
      *
-     * @return mixed
-     */
-    public static function getDefault()
-    {
-        $class = get_called_class();
-
-        if (!isset(static::$defaults[$class])) {
-            throw new \UnexpectedValueException("No default enum set");
-        }
-
-        return static::$defaults[$class];
-    }
-
-    /**
-     * Returns all possible values as an array, except default constant
-     *
-     * @return mixed
+     * @see Enum::getConstants()
+     * @param bool $include_default Include `__default` and its value. Not included by default.
+     * @return array
      * @throws ReflectionException
      */
-    public static function toArray()
+    public static function getConstList($include_default = false)
     {
-        $class = get_called_class();
-        if (!array_key_exists($class, static::$cache)) {
-            $reflection = new \ReflectionClass($class);
-            $constants = $reflection->getConstants();
-
-            if (\array_key_exists(self::$defaultKey, $constants)) {
-                static::$defaults[$class] = $constants[self::$defaultKey];
-                unset($constants[self::$defaultKey]);
-            }
-
-            static::$cache[$class] = $constants;
-        }
-
-        return static::$cache[$class];
-    }
-
-    /**
-     * Check if is valid enum value
-     *
-     * @param $value
-     * @return bool
-     * @throws ReflectionException
-     */
-    public static function isValid($value)
-    {
-        return in_array($value, static::toArray(), true);
-    }
-
-    /**
-     * Check if enum key exists
-     *
-     * @param $key
-     * @return bool
-     * @throws ReflectionException
-     */
-    public static function exists($key)
-    {
-        $array = static::toArray();
-        return isset($array[$key]);
-    }
-
-    /**
-     * Return key for value
-     *
-     * @param $value
-     * @return false|int|string
-     * @throws ReflectionException
-     */
-    public static function search($value)
-    {
-        return array_search($value, static::toArray(), true);
+        return self::getConstants($include_default);
     }
 
     /**
@@ -231,6 +198,60 @@ abstract class Enum implements \JsonSerializable
             return new static($array[$name]);
         }
         throw new \BadMethodCallException("No static method or enum constant '$name' in class " . get_called_class());
+    }
+
+    /**
+     * Returns the enum key.
+     *
+     * @return mixed
+     * @throws ReflectionException
+     */
+    public function getKey()
+    {
+        return static::search($this->value);
+    }
+
+    /**
+     * Return key for value
+     *
+     * @param $value
+     * @return false|int|string
+     * @throws ReflectionException
+     */
+    public static function search($value)
+    {
+        return array_search($value, static::toArray(), true);
+    }
+
+    /**
+     * Return string representation of the enum's value
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return strval($this->value);
+    }
+
+    /**
+     * Compares one Enum with another.
+     *
+     * @param Enum|null $enum
+     * @return bool
+     */
+    final public function equals(Enum $enum = null)
+    {
+        return $enum !== null && $this->getValue() === $enum->getValue() && get_called_class() == get_class($enum);
+    }
+
+    /**
+     * Get enum value
+     *
+     * @return mixed
+     */
+    public function getValue()
+    {
+        return $this->value;
     }
 
     /**

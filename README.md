@@ -65,15 +65,12 @@ function setAction(Action $action) {
 
 Static methods:
 
-- `getDefault()` Returns the default value of the enum or throw `UnexpectedValueException` if not exists
 - `toArray()` returns all possible values as an array
 - `keys()` Returns the names (keys) of all constants in the Enum class
 - `values()` Returns instances of the Enum class of all Enum constants (constant name in key, Enum instance in value)
-- `isValid()` Check if tested value is valid on enum set
-- `exists()` Check if tested key is exists on enum set
+- `isValidValue()` Check if tested value is valid on enum set
+- `isValidName()` Check if tested key is exists on enum set
 - `search()` Return key for searched value
-
-Note: constant `__default` value is only accessible using `getDefault()`, the other methods do not return this constant.
 
 ### Static methods
 
