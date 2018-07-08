@@ -43,7 +43,7 @@ You can declare the enum class using `final` or set the constant to `private` (o
 ```php
 $state = new State(State::ACTIVE);
 // or
-$state = Action::ACTIVE();
+$state = State::ACTIVE();
 ```
 
 Static methods are automatically implemented to provide quick access to an enum value.
@@ -51,7 +51,7 @@ Static methods are automatically implemented to provide quick access to an enum 
 As each constant is a class you have the advantage of type-hint:
 
 ```php
-function setAction(Action $action) {
+function setState(State $state) {
     // ...
 }
 ```
