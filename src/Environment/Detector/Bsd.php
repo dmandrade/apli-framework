@@ -22,14 +22,12 @@
 namespace Apli\Environment\Detector;
 
 
-class Bsd implements OsInterface
-{
+class Bsd implements OsInterface {
 
     /**
      * @return array
      */
-    public function getVariants()
-    {
+    public function getVariants() {
         return [
             'DRAGONFLY',
             'OPENBSD',
@@ -44,16 +42,14 @@ class Bsd implements OsInterface
     /**
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return 'BSD';
     }
 
     /**
      * @return int
      */
-    public function getFamily()
-    {
+    public function getFamily() {
         return OsDetector::UNIX_FAMILY;
     }
 }

@@ -21,8 +21,7 @@
 
 namespace Apli\Environment\Detector;
 
-class OsDetector
-{
+class OsDetector {
 
     const OTHER_FAMILY = 0;
     const UNIX_FAMILY = 1;
@@ -47,18 +46,17 @@ class OsDetector
      *
      * @return OsInterface
      */
-    public function detectOs($kernel)
-    {
-        foreach ($this->detectors as $class) {
+    public function detectOs( $kernel ) {
+        foreach ( $this->detectors as $class ) {
             /** @var OsInterface $os */
-            $os = (new $class);
-            $detected = $this->isOs($kernel, $os->getVariants());
-            if ($detected) {
+            $os       = ( new $class );
+            $detected = $this->isOs( $kernel, $os->getVariants() );
+            if ( $detected ) {
                 return $os;
             }
         }
 
-        return (new UnknownOs());
+        return ( new UnknownOs() );
     }
 
     /**
@@ -67,17 +65,15 @@ class OsDetector
      *
      * @return boolean
      */
-    private function isOs($kernel, $variants)
-    {
-        return (bool)preg_grep('/^' . preg_quote($kernel) . '$/i', $variants);
+    private function isOs( $kernel, $variants ) {
+        return (bool) preg_grep( '/^' . preg_quote( $kernel ) . '$/i', $variants );
     }
 
     /**
      * @param OsInterface $detector
      */
-    public function extend($detector)
-    {
-        if (!in_array($detector, $this->detectors)) {
+    public function extend( $detector ) {
+        if ( ! in_array( $detector, $this->detectors ) ) {
             $this->detectors[] = $detector;
         }
     }

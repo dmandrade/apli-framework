@@ -22,14 +22,12 @@
 namespace Apli\Environment\Detector;
 
 
-class Cygwin implements OsInterface
-{
+class Cygwin implements OsInterface {
 
     /**
      * @return array
      */
-    public function getVariants()
-    {
+    public function getVariants() {
         return [
             'CYGWIN',
             'CYGWIN_NT-5.1',
@@ -41,16 +39,14 @@ class Cygwin implements OsInterface
     /**
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return 'Cygwin';
     }
 
     /**
      * @return int
      */
-    public function getFamily()
-    {
+    public function getFamily() {
         return OsDetector::UNIX_ON_WINDOWS_FAMILY;
     }
 }

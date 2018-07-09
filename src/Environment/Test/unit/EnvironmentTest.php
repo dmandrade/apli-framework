@@ -16,8 +16,7 @@ namespace Apli\Environment\Test;
 
 use Apli\Environment\Environment;
 
-class EnvironmentTest extends \Codeception\Test\Unit
-{
+class EnvironmentTest extends \Codeception\Test\Unit {
     /**
      * Test instance.
      *
@@ -44,19 +43,18 @@ class EnvironmentTest extends \Codeception\Test\Unit
      *
      * @return  array
      */
-    public function getIsOsxTestData()
-    {
+    public function getIsOsxTestData() {
         return [
-            ['CYGWIN_NT-5.1', false],
-            ['Darwin', true],
-            ['FreeBSD', false],
-            ['Linux', false],
-            ['NetBSD', false],
-            ['OpenBSD', false],
-            ['SunOS', false],
-            ['WIN32', false],
-            ['WINNT', false],
-            ['Windows', false]
+            [ 'CYGWIN_NT-5.1', false ],
+            [ 'Darwin', true ],
+            [ 'FreeBSD', false ],
+            [ 'Linux', false ],
+            [ 'NetBSD', false ],
+            [ 'OpenBSD', false ],
+            [ 'SunOS', false ],
+            [ 'WIN32', false ],
+            [ 'WINNT', false ],
+            [ 'Windows', false ]
         ];
     }
 
@@ -65,19 +63,18 @@ class EnvironmentTest extends \Codeception\Test\Unit
      *
      * @return  array
      */
-    public function getIsWinTestData()
-    {
+    public function getIsWinTestData() {
         return [
-            ['CYGWIN_NT-5.1', false],
-            ['Darwin', false],
-            ['FreeBSD', false],
-            ['Linux', false],
-            ['NetBSD', false],
-            ['OpenBSD', false],
-            ['SunOS', false],
-            ['WIN32', true],
-            ['WINNT', true],
-            ['Windows', true]
+            [ 'CYGWIN_NT-5.1', false ],
+            [ 'Darwin', false ],
+            [ 'FreeBSD', false ],
+            [ 'Linux', false ],
+            [ 'NetBSD', false ],
+            [ 'OpenBSD', false ],
+            [ 'SunOS', false ],
+            [ 'WIN32', true ],
+            [ 'WINNT', true ],
+            [ 'Windows', true ]
         ];
     }
 
@@ -86,19 +83,18 @@ class EnvironmentTest extends \Codeception\Test\Unit
      *
      * @return  array
      */
-    public function getIsUnixTestData()
-    {
+    public function getIsUnixTestData() {
         return [
-            ['CYGWIN_NT-5.1', false],
-            ['Darwin', true],
-            ['FreeBSD', true],
-            ['Linux', true],
-            ['NetBSD', true],
-            ['OpenBSD', true],
-            ['SunOS', true],
-            ['WIN32', false],
-            ['WINNT', false],
-            ['Windows', false]
+            [ 'CYGWIN_NT-5.1', false ],
+            [ 'Darwin', true ],
+            [ 'FreeBSD', true ],
+            [ 'Linux', true ],
+            [ 'NetBSD', true ],
+            [ 'OpenBSD', true ],
+            [ 'SunOS', true ],
+            [ 'WIN32', false ],
+            [ 'WINNT', false ],
+            [ 'Windows', false ]
         ];
     }
 
@@ -107,19 +103,18 @@ class EnvironmentTest extends \Codeception\Test\Unit
      *
      * @return  array
      */
-    public function getIsUnixOnWindowsTestData()
-    {
+    public function getIsUnixOnWindowsTestData() {
         return [
-            ['CYGWIN_NT-5.1', true],
-            ['Darwin', false],
-            ['FreeBSD', false],
-            ['Linux', false],
-            ['NetBSD', false],
-            ['OpenBSD', false],
-            ['SunOS', false],
-            ['WIN32', false],
-            ['WINNT', false],
-            ['Windows', false]
+            [ 'CYGWIN_NT-5.1', true ],
+            [ 'Darwin', false ],
+            [ 'FreeBSD', false ],
+            [ 'Linux', false ],
+            [ 'NetBSD', false ],
+            [ 'OpenBSD', false ],
+            [ 'SunOS', false ],
+            [ 'WIN32', false ],
+            [ 'WINNT', false ],
+            [ 'Windows', false ]
         ];
     }
 
@@ -130,32 +125,31 @@ class EnvironmentTest extends \Codeception\Test\Unit
      *
      * @return  array
      */
-    public function getIsCliTestData()
-    {
+    public function getIsCliTestData() {
         return [
-            ['aolserver', false],
-            ['apache', false],
-            ['apache2filter', false],
-            ['apache2handler', false],
-            ['caudium', false],
-            ['cgi', false],
-            ['cgi-fcgi', false],
-            ['cli', true],
-            ['cli-server', true],
-            ['cgi', false],
-            ['continuity', false],
-            ['embed', false],
-            ['fpm-fcgi', false],
-            ['isapi', false],
-            ['litespeed', false],
-            ['milter', false],
-            ['nsapi', false],
-            ['phttpd', false],
-            ['pi3web', false],
-            ['roxen', false],
-            ['thttpd', false],
-            ['tux', false],
-            ['webjames', false],
+            [ 'aolserver', false ],
+            [ 'apache', false ],
+            [ 'apache2filter', false ],
+            [ 'apache2handler', false ],
+            [ 'caudium', false ],
+            [ 'cgi', false ],
+            [ 'cgi-fcgi', false ],
+            [ 'cli', true ],
+            [ 'cli-server', true ],
+            [ 'cgi', false ],
+            [ 'continuity', false ],
+            [ 'embed', false ],
+            [ 'fpm-fcgi', false ],
+            [ 'isapi', false ],
+            [ 'litespeed', false ],
+            [ 'milter', false ],
+            [ 'nsapi', false ],
+            [ 'phttpd', false ],
+            [ 'pi3web', false ],
+            [ 'roxen', false ],
+            [ 'thttpd', false ],
+            [ 'tux', false ],
+            [ 'webjames', false ],
         ];
     }
 
@@ -166,32 +160,31 @@ class EnvironmentTest extends \Codeception\Test\Unit
      *
      * @return  array
      */
-    public function getIsWebTestData()
-    {
+    public function getIsWebTestData() {
         return [
-            ['aolserver', true],
-            ['apache', true],
-            ['apache2filter', true],
-            ['apache2handler', true],
-            ['caudium', true],
-            ['cgi', true],
-            ['cgi-fcgi', true],
-            ['cli', false],
-            ['cli-server', false],
-            ['cgi', true],
-            ['continuity', true],
-            ['embed', true],
-            ['fpm-fcgi', true],
-            ['isapi', true],
-            ['litespeed', true],
-            ['milter', true],
-            ['nsapi', true],
-            ['phttpd', true],
-            ['pi3web', true],
-            ['roxen', true],
-            ['thttpd', true],
-            ['tux', true],
-            ['webjames', true],
+            [ 'aolserver', true ],
+            [ 'apache', true ],
+            [ 'apache2filter', true ],
+            [ 'apache2handler', true ],
+            [ 'caudium', true ],
+            [ 'cgi', true ],
+            [ 'cgi-fcgi', true ],
+            [ 'cli', false ],
+            [ 'cli-server', false ],
+            [ 'cgi', true ],
+            [ 'continuity', true ],
+            [ 'embed', true ],
+            [ 'fpm-fcgi', true ],
+            [ 'isapi', true ],
+            [ 'litespeed', true ],
+            [ 'milter', true ],
+            [ 'nsapi', true ],
+            [ 'phttpd', true ],
+            [ 'pi3web', true ],
+            [ 'roxen', true ],
+            [ 'thttpd', true ],
+            [ 'tux', true ],
+            [ 'webjames', true ],
         ];
     }
 
@@ -207,11 +200,10 @@ class EnvironmentTest extends \Codeception\Test\Unit
      *
      * @covers       Environment::isOsx
      */
-    public function testIsOsx($os, $value)
-    {
-        $this->environment->server()->os()->setKernelName($os);
+    public function testIsOsx( $os, $value ) {
+        $this->environment->server()->os()->setKernelName( $os );
 
-        $this->assertEquals($value, $this->environment->server()->os()->isOsx());
+        $this->assertEquals( $value, $this->environment->server()->os()->isOsx() );
     }
 
     /**
@@ -226,11 +218,10 @@ class EnvironmentTest extends \Codeception\Test\Unit
      *
      * @covers       Environment::isWindows
      */
-    public function testIsWin($os, $value)
-    {
-        $this->environment->server()->os()->setKernelName($os);
+    public function testIsWin( $os, $value ) {
+        $this->environment->server()->os()->setKernelName( $os );
 
-        $this->assertEquals($value, $this->environment->server()->os()->isWindows());
+        $this->assertEquals( $value, $this->environment->server()->os()->isWindows() );
     }
 
     /**
@@ -245,11 +236,10 @@ class EnvironmentTest extends \Codeception\Test\Unit
      *
      * @covers       Environment::isUnix
      */
-    public function testIsUnix($os, $value)
-    {
-        $this->environment->server()->os()->setKernelName($os);
+    public function testIsUnix( $os, $value ) {
+        $this->environment->server()->os()->setKernelName( $os );
 
-        $this->assertEquals($value, $this->environment->server()->os()->isUnix());
+        $this->assertEquals( $value, $this->environment->server()->os()->isUnix() );
     }
 
     /**
@@ -264,11 +254,10 @@ class EnvironmentTest extends \Codeception\Test\Unit
      *
      * @covers       Environment::isUnixOnWindows
      */
-    public function testIsUnixOnWindows($os, $value)
-    {
-        $this->environment->server()->os()->setKernelName($os);
+    public function testIsUnixOnWindows( $os, $value ) {
+        $this->environment->server()->os()->setKernelName( $os );
 
-        $this->assertEquals($value, $this->environment->server()->os()->isUnixOnWindows());
+        $this->assertEquals( $value, $this->environment->server()->os()->isUnixOnWindows() );
     }
 
     /**
@@ -283,11 +272,10 @@ class EnvironmentTest extends \Codeception\Test\Unit
      *
      * @covers       Environment::isCli
      */
-    public function testIsCli($interface, $value)
-    {
-        $this->environment->setSapiName($interface);
+    public function testIsCli( $interface, $value ) {
+        $this->environment->setSapiName( $interface );
 
-        $this->assertEquals($value, $this->environment->isCli());
+        $this->assertEquals( $value, $this->environment->isCli() );
     }
 
     /**
@@ -302,11 +290,10 @@ class EnvironmentTest extends \Codeception\Test\Unit
      *
      * @covers       Environment::isWeb
      */
-    public function testIsWeb($interface, $value)
-    {
-        $this->environment->setSapiName($interface);
+    public function testIsWeb( $interface, $value ) {
+        $this->environment->setSapiName( $interface );
 
-        $this->assertEquals($value, $this->environment->isWeb());
+        $this->assertEquals( $value, $this->environment->isWeb() );
     }
 
     /**
@@ -316,10 +303,9 @@ class EnvironmentTest extends \Codeception\Test\Unit
      *
      * @covers       Environment::isHHVM
      */
-    public function testIsHHVM()
-    {
+    public function testIsHHVM() {
 
-        $this->assertEquals($this->isHHVM, $this->environment->isHHVM());
+        $this->assertEquals( $this->isHHVM, $this->environment->isHHVM() );
     }
 
     /**
@@ -329,10 +315,9 @@ class EnvironmentTest extends \Codeception\Test\Unit
      *
      * @covers       Environment::isPHP
      */
-    public function testIsPHP()
-    {
+    public function testIsPHP() {
 
-        $this->assertEquals(!$this->isHHVM, $this->environment->isPHP());
+        $this->assertEquals( ! $this->isHHVM, $this->environment->isPHP() );
     }
 
     /**
@@ -342,19 +327,16 @@ class EnvironmentTest extends \Codeception\Test\Unit
      *
      * @covers       Environment::getPhpVersion
      */
-    public function testGetPhpVersion()
-    {
-        $this->assertEquals($this->phpVersion, $this->environment->getPhpVersion());
+    public function testGetPhpVersion() {
+        $this->assertEquals( $this->phpVersion, $this->environment->getPhpVersion() );
     }
 
-    protected function _before()
-    {
+    protected function _before() {
         $this->environment = new Environment();
-        $this->isHHVM = defined('HHVM_VERSION');
-        $this->phpVersion = $this->isHHVM ? constant('HHVM_VERSION') : constant('PHP_VERSION');
+        $this->isHHVM      = defined( 'HHVM_VERSION' );
+        $this->phpVersion  = $this->isHHVM ? constant( 'HHVM_VERSION' ) : constant( 'PHP_VERSION' );
     }
 
-    protected function _after()
-    {
+    protected function _after() {
     }
 }

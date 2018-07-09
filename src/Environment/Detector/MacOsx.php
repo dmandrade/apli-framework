@@ -22,14 +22,12 @@
 namespace Apli\Environment\Detector;
 
 
-class MacOsx implements OsInterface
-{
+class MacOsx implements OsInterface {
 
     /**
      * @return array
      */
-    public function getVariants()
-    {
+    public function getVariants() {
         return [
             'DARWIN'
         ];
@@ -38,16 +36,14 @@ class MacOsx implements OsInterface
     /**
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return 'Mac OSX';
     }
 
     /**
      * @return int
      */
-    public function getFamily()
-    {
+    public function getFamily() {
         return OsDetector::UNIX_FAMILY;
     }
 }

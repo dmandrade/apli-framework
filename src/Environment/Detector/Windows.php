@@ -22,14 +22,12 @@
 namespace Apli\Environment\Detector;
 
 
-class Windows implements OsInterface
-{
+class Windows implements OsInterface {
 
     /**
      * @return array
      */
-    public function getVariants()
-    {
+    public function getVariants() {
         return [
             'WINDOWS',
             'WINNT',
@@ -43,16 +41,14 @@ class Windows implements OsInterface
     /**
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return 'Windows';
     }
 
     /**
      * @return int
      */
-    public function getFamily()
-    {
+    public function getFamily() {
         return OsDetector::WINDOWS_FAMILY;
     }
 }
