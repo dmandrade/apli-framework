@@ -40,8 +40,7 @@ class Session implements \ArrayAccess, \IteratorAggregate
     /**
      * Session constructor.
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->state = State::INACTIVE();
     }
 
@@ -50,6 +49,7 @@ class Session implements \ArrayAccess, \IteratorAggregate
      * @link http://php.net/manual/en/iteratoraggregate.getiterator.php
      * @return Traversable An instance of an object implementing <b>Iterator</b> or
      * <b>Traversable</b>
+     * @since 5.0.0
      */
     public function getIterator()
     {
@@ -66,6 +66,7 @@ class Session implements \ArrayAccess, \IteratorAggregate
      * </p>
      * <p>
      * The return value will be casted to boolean if non-boolean was returned.
+     * @since 5.0.0
      */
     public function offsetExists($offset)
     {
@@ -79,6 +80,7 @@ class Session implements \ArrayAccess, \IteratorAggregate
      * The offset to retrieve.
      * </p>
      * @return mixed Can return all value types.
+     * @since 5.0.0
      */
     public function offsetGet($offset)
     {
@@ -95,6 +97,7 @@ class Session implements \ArrayAccess, \IteratorAggregate
      * The value to set.
      * </p>
      * @return void
+     * @since 5.0.0
      */
     public function offsetSet($offset, $value)
     {
@@ -108,6 +111,7 @@ class Session implements \ArrayAccess, \IteratorAggregate
      * The offset to unset.
      * </p>
      * @return void
+     * @since 5.0.0
      */
     public function offsetUnset($offset)
     {
