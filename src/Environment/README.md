@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/dmandrade/apli-environment.svg?branch=develop)](https://travis-ci.org/dmandrade/apli-environment)
+[![buddy pipeline](https://app.buddy.works/dmandrade/apli-environment/pipelines/pipeline/143627/badge.svg?token=4a2275d6858fa1a6ef485756ed5866894986f01ba3b8954a3d69cc94725ea11d "buddy pipeline")](https://app.buddy.works/dmandrade/apli-environment/pipelines/pipeline/143627)
 
 # Apli Environment
 

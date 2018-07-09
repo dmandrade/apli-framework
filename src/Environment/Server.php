@@ -19,7 +19,8 @@ namespace Apli\Environment;
  *
  * @package Apli\Environment
  */
-class Server {
+class Server
+{
 
     /**
      * Property server data.
@@ -38,15 +39,17 @@ class Server {
      *
      * @param array $server
      */
-    public function __construct( array $server = [] ) {
+    public function __construct(array $server = [])
+    {
         $this->server = $server ?: $_SERVER;
-        $this->os     = new Platform();
+        $this->os = new Platform();
     }
 
     /**
      * @return Platform
      */
-    public function os() {
+    public function os()
+    {
         return $this->os;
     }
 
@@ -55,8 +58,9 @@ class Server {
      *
      * @return string
      */
-    public function getRoot() {
-        return dirname( $this->getEntry() );
+    public function getRoot()
+    {
+        return dirname($this->getEntry());
     }
 
     /**
@@ -64,16 +68,17 @@ class Server {
      *
      * @return bool|mixed|string
      */
-    public function getEntry() {
+    public function getEntry()
+    {
         $wdir = $this->getWorkingDirectory();
 
-        $file = $this->getParam( 'SCRIPT_FILENAME' );
+        $file = $this->getParam('SCRIPT_FILENAME');
 
-        if ( strpos( $file, $wdir ) === 0 ) {
-            $file = substr( $file, strlen( $wdir ) );
+        if (strpos($file, $wdir) === 0) {
+            $file = substr($file, strlen($wdir));
         }
 
-        $file = trim( $file, '.' . DIRECTORY_SEPARATOR );
+        $file = trim($file, '.' . DIRECTORY_SEPARATOR);
 
         return $file;
     }
@@ -83,7 +88,8 @@ class Server {
      *
      * @return string
      */
-    public function getWorkingDirectory() {
+    public function getWorkingDirectory()
+    {
         return getcwd();
     }
 
@@ -95,9 +101,10 @@ class Server {
      *
      * @return mixed|null
      */
-    protected function getParam( $key, $default = null ) {
-        if ( isset( $this->server[ $key ] ) ) {
-            return $this->server[ $key ];
+    protected function getParam($key, $default = null)
+    {
+        if (isset($this->server[$key])) {
+            return $this->server[$key];
         }
 
         return $default;
@@ -108,8 +115,9 @@ class Server {
      *
      * @return mixed|null
      */
-    public function getPublicRoot() {
-        return $this->getParam( 'DOCUMENT_ROOT' );
+    public function getPublicRoot()
+    {
+        return $this->getParam('DOCUMENT_ROOT');
     }
 
     /**
@@ -119,12 +127,13 @@ class Server {
      *
      * @return mixed|null
      */
-    public function getRequestUri( $withParams = true ) {
-        if ( $withParams ) {
-            return $this->getParam( 'REQUEST_URI' );
+    public function getRequestUri($withParams = true)
+    {
+        if ($withParams) {
+            return $this->getParam('REQUEST_URI');
         }
 
-        return $this->getParam( 'PHP_SELF' );
+        return $this->getParam('PHP_SELF');
     }
 
     /**
@@ -132,8 +141,9 @@ class Server {
      *
      * @return mixed|null
      */
-    public function getHost() {
-        return $this->getParam( 'HTTP_HOST' );
+    public function getHost()
+    {
+        return $this->getParam('HTTP_HOST');
     }
 
     /**
@@ -141,8 +151,9 @@ class Server {
      *
      * @return mixed|null
      */
-    public function getPort() {
-        return $this->getParam( 'SERVER_PORT' );
+    public function getPort()
+    {
+        return $this->getParam('SERVER_PORT');
     }
 
     /**
@@ -150,7 +161,8 @@ class Server {
      *
      * @return mixed|null
      */
-    public function getScheme() {
-        return $this->getParam( 'REQUEST_SCHEME' );
+    public function getScheme()
+    {
+        return $this->getParam('REQUEST_SCHEME');
     }
 }

@@ -22,7 +22,8 @@ use Apli\Environment\Detector\OsInterface;
  * Class Platform
  * @package Apli\Environment
  */
-class Platform {
+class Platform
+{
 
     /**
      * Canonical Kernel's name
@@ -50,9 +51,10 @@ class Platform {
     /**
      * Platform constructor.
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->detector = new OsDetector();
-        $this->setKernelName( PHP_OS );
+        $this->setKernelName(PHP_OS);
     }
 
     /**
@@ -62,9 +64,10 @@ class Platform {
      *
      * @return $this
      */
-    public function setKernelName( $kernel ) {
-        $this->os     = null;
-        $this->kernel = strtolower( $kernel );
+    public function setKernelName($kernel)
+    {
+        $this->os = null;
+        $this->kernel = strtolower($kernel);
         $this->detectOs();
 
         return $this;
@@ -75,8 +78,9 @@ class Platform {
      *
      * @return void
      */
-    private function detectOs() {
-        $this->os = $this->detector->detectOs( $this->kernel );
+    private function detectOs()
+    {
+        $this->os = $this->detector->detectOs($this->kernel);
     }
 
     /**
@@ -84,7 +88,8 @@ class Platform {
      *
      * @return string
      */
-    public function getKernelName() {
+    public function getKernelName()
+    {
         return $this->kernel;
     }
 
@@ -93,7 +98,8 @@ class Platform {
      *
      * @return string
      */
-    public function getOsFamily() {
+    public function getOsFamily()
+    {
         return $this->os->getFamily();
     }
 
@@ -102,7 +108,8 @@ class Platform {
      *
      * @return string
      */
-    public function getOsName() {
+    public function getOsName()
+    {
         return $this->os->getName();
     }
 
@@ -111,8 +118,9 @@ class Platform {
      *
      * @return bool
      */
-    public function isUnix() {
-        return ( $this->os->getFamily() === OsDetector::UNIX_FAMILY );
+    public function isUnix()
+    {
+        return ($this->os->getFamily() === OsDetector::UNIX_FAMILY);
     }
 
     /**
@@ -120,8 +128,9 @@ class Platform {
      *
      * @return bool
      */
-    public function isUnixOnWindows() {
-        return ( $this->os->getFamily() === OsDetector::UNIX_ON_WINDOWS_FAMILY );
+    public function isUnixOnWindows()
+    {
+        return ($this->os->getFamily() === OsDetector::UNIX_ON_WINDOWS_FAMILY);
     }
 
     /**
@@ -129,8 +138,9 @@ class Platform {
      *
      * @return  bool
      */
-    public function isWindows() {
-        return ( $this->os->getFamily() === OsDetector::WINDOWS_FAMILY );
+    public function isWindows()
+    {
+        return ($this->os->getFamily() === OsDetector::WINDOWS_FAMILY);
     }
 
     /**
@@ -138,7 +148,8 @@ class Platform {
      *
      * @return bool
      */
-    public function isOsx() {
+    public function isOsx()
+    {
         return $this->os instanceof MacOsx;
     }
 }

@@ -22,26 +22,30 @@
 namespace Apli\Environment\Detector;
 
 
-class UnknownOs implements OsInterface {
+class UnknownOs implements OsInterface
+{
 
     /**
      * @return array
      */
-    public function getVariants() {
+    public function getVariants()
+    {
         return [];
     }
 
     /**
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return 'UNKNOWN';
     }
 
     /**
      * @return int
      */
-    public function getFamily() {
+    public function getFamily()
+    {
         return OsDetector::OTHER_FAMILY;
     }
 }
