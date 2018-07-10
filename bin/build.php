@@ -59,8 +59,11 @@ class Build extends AbstractCliApplication
      * @var  array
      */
     protected $subtrees = [
+        'application' => 'Application',
         'data' => 'Data',
         'environment' => 'Environment',
+        'filter' => 'Filter',
+        'io' => 'IO',
         'session' => 'Session',
         'support' => 'Support',
     ];
