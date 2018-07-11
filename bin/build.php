@@ -81,7 +81,7 @@ class Build extends AbstractCliApplication
 
         $this->version = $tag = $this->io->getOption('t') ?: $this->io->getOption('tag');
 
-        $branch = $this->io->getOption('b') ?: $this->io->getOption('branch', 'test');
+        $branch = $this->io->getOption('b') ?: $this->io->getOption('branch', 'master');
 
         $force = $this->io->getOption('f') ?: $this->io->getOption('force', false);
 
@@ -95,11 +95,7 @@ class Build extends AbstractCliApplication
 
         $this->exec('git fetch origin');
 
-        $this->exec('git branch -D ' . $branch);
-
-        $this->exec('git checkout -b ' . $branch);
-
-        $this->exec('git merge master');
+        $this->checkoutBranch();
 
         if ($this->version) {
             $this->exec('git tag -d ' . $tag);
@@ -111,7 +107,8 @@ class Build extends AbstractCliApplication
             $this->exec(sprintf('git push origin %s' . $force, $this->version));
         }
 
-        $this->exec(sprintf('git push origin %s %s:%s master:master' . $force, $tag, $branch, $branch));
+        $masterBranch = ($branch != 'master') ? 'master:master' : '';
+        $this->exec(sprintf('git push origin %s %s:%s %s ' . $force, $tag, $branch, $branch, $masterBranch));
 
         $allows = $this->io->getArguments();
 
@@ -128,6 +125,20 @@ class Build extends AbstractCliApplication
         $this->out()->out('Split finish.');
 
         return true;
+    }
+
+    protected function checkoutBranch()
+    {
+        if($this->branch = 'master') {
+            $this->exec('git checkout ' . $this->branch);
+            return;
+        }
+
+        $this->exec('git branch -D ' . $this->branch);
+
+        $this->exec('git checkout -b ' . $this->branch);
+
+        $this->exec('git merge master');
     }
 
     /**
