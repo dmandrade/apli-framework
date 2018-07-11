@@ -22,12 +22,14 @@
 namespace Apli\Environment\Detector;
 
 
-class Linux implements OsInterface {
+class Linux implements OsInterface
+{
 
     /**
      * @return array
      */
-    public function getVariants() {
+    public function getVariants()
+    {
         return [
             'LINUX',
             'GNU',
@@ -38,14 +40,16 @@ class Linux implements OsInterface {
     /**
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return 'Linux';
     }
 
     /**
      * @return int
      */
-    public function getFamily() {
+    public function getFamily()
+    {
         return OsDetector::UNIX_FAMILY;
     }
 }

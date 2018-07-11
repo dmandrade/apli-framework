@@ -22,12 +22,14 @@
 namespace Apli\Environment\Detector;
 
 
-class Sun implements OsInterface {
+class Sun implements OsInterface
+{
 
     /**
      * @return array
      */
-    public function getVariants() {
+    public function getVariants()
+    {
         return [
             'SOLARIS',
             'SUNOS'
@@ -37,14 +39,16 @@ class Sun implements OsInterface {
     /**
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return 'Sun OS';
     }
 
     /**
      * @return int
      */
-    public function getFamily() {
+    public function getFamily()
+    {
         return OsDetector::UNIX_FAMILY;
     }
 }

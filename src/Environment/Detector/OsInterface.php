@@ -22,7 +22,8 @@
 namespace Apli\Environment\Detector;
 
 
-interface OsInterface {
+interface OsInterface
+{
 
     /**
      * @return string

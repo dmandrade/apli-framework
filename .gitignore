@@ -1,12 +1,7 @@
 # Development system files #
 .*
-<<<<<<< HEAD
 !.gitignre
 !.editorconfig
-=======
-!/.gitignore
-!/.editorconfig
->>>>>>> sub-data
 !/.travis.yml
 
 # Composer #

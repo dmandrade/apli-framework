@@ -22,12 +22,14 @@
 namespace Apli\Environment\Detector;
 
 
-class Msys implements OsInterface {
+class Msys implements OsInterface
+{
 
     /**
      * @return array
      */
-    public function getVariants() {
+    public function getVariants()
+    {
         return [
             'MINGW',
             'MINGW32_NT-6.1',
@@ -38,14 +40,16 @@ class Msys implements OsInterface {
     /**
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return 'Msys';
     }
 
     /**
      * @return int
      */
-    public function getFamily() {
+    public function getFamily()
+    {
         return OsDetector::UNIX_ON_WINDOWS_FAMILY;
     }
 }
