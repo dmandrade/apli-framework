@@ -28,5 +28,6 @@ Packages ready to use or in development.
 - [ ] Middlewares
 - [ ] Router
 - [ ] Validator
+- [ ] Support
 
 *Each package can be used individually without the need of the entire framework.*
