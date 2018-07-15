@@ -2,29 +2,28 @@
 
 namespace Apli\Filter;
 
+use Apli\Filter\Cleaner\AlnumCleaner;
+use Apli\Filter\Cleaner\ArrayCleaner;
+use Apli\Filter\Cleaner\Base64Cleaner;
+use Apli\Filter\Cleaner\BooleanCleaner;
 use Apli\Filter\Cleaner\CleanerInterface;
+use Apli\Filter\Cleaner\CmdCleaner;
+use Apli\Filter\Cleaner\EmailCleaner;
+use Apli\Filter\Cleaner\FloatCleaner;
+use Apli\Filter\Cleaner\IntegerCleaner;
+use Apli\Filter\Cleaner\PathCleaner;
+use Apli\Filter\Cleaner\StringCleaner;
+use Apli\Filter\Cleaner\UintCleaner;
+use Apli\Filter\Cleaner\UrlCleaner;
+use Apli\Filter\Cleaner\UsernameCleaner;
+use Apli\Filter\Cleaner\WordCleaner;
+use Apli\Filter\Cleaner\HtmlCleaner;
 
 /**
  * Class Filter
  */
 class InputFilter implements \Serializable
 {
-    const INTEGER = 'INTEGER';
-    const UINT = 'UINT';
-    const FLOAT = 'FLOAT';
-    const BOOLEAN = 'BOOLEAN';
-    const WORD = 'WORD';
-    const ALNUM = 'ALNUM';
-    const CMD = 'CMD';
-    const BASE64 = 'BASE64';
-    const STRING = 'STRING';
-    const HTML = 'HTML';
-    const ARRAY_TYPE = 'ARRAY';
-    const PATH = 'PATH';
-    const USERNAME = 'USERNAME';
-    const EMAIL = 'EMAIL';
-    const URL = 'URL';
-    const RAW = 'RAW';
 
     /**
      * Property handlers.
@@ -68,98 +67,24 @@ class InputFilter implements \Serializable
     {
         $filter = $this->htmlCleaner;
 
-        // INT / INTEGER
-        $this->handlers[static::INTEGER] = $this->handlers['INT'] = function ($source) {
-            // Only use the first integer value
-            preg_match('/-?[0-9]+/', (string)$source, $matches);
-
-            return isset($matches[0]) ? (int)$matches[0] : null;
-        };
-
-        // UINT
-        $this->handlers[static::UINT] = function ($source) {
-            // Only use the first integer value
-            preg_match('/-?[0-9]+/', (string)$source, $matches);
-
-            return isset($matches[0]) ? abs((int)$matches[0]) : null;
-        };
-
-        // FLOAT / DOUBLE
-        $this->handlers[static::FLOAT] = $this->handlers['DOUBLE'] = function ($source) {
-            // Only use the first floating point value
-            preg_match('/-?[0-9]+(\.[0-9]+)?/', (string)$source, $matches);
-
-            return isset($matches[0]) ? (float)$matches[0] : null;
-        };
-
-        // BOOLEAN / BOOL
-        $this->handlers[static::BOOLEAN] = $this->handlers['BOOL'] = function ($source) {
-            return (bool)$source;
-        };
-
-        // WORD
-        $this->handlers[static::WORD] = function ($source) {
-            return (string)preg_replace('/[^A-Z_]/i', '', $source);
-        };
-
-        // ALNUM
-        $this->handlers[static::ALNUM] = function ($source) {
-            return (string)preg_replace('/[^A-Z0-9]/i', '', $source);
-        };
-
-        // CMD
-        $this->handlers[static::CMD] = function ($source) {
-            $result = (string)preg_replace('/[^A-Z0-9_\.-]/i', '', $source);
-
-            return ltrim($result, '.');
-        };
-
-        // BASE64
-        $this->handlers[static::BASE64] = function ($source) {
-            return (string)preg_replace('/[^A-Z0-9\/+=]/i', '', $source);
-        };
-
-        // STRING
-        $this->handlers[static::STRING] = function ($source) use ($filter) {
-            return (string)$filter->remove($filter->decode((string)$source));
-        };
-
-        // HTML
-        $this->handlers[static::HTML] = function ($source) use ($filter) {
-            return (string)$filter->remove((string)$source);
-        };
-
-        // ARRAY
-        $this->handlers[static::ARRAY_TYPE] = function ($source) {
-            return (array)$source;
-        };
-
-        // PATH
-        $this->handlers[static::PATH] = function ($source) {
-            $pattern = '/^[A-Za-z0-9_-]+[A-Za-z0-9_\.-]*([\\\\\/][A-Za-z0-9_-]+[A-Za-z0-9_\.-]*)*$/';
-            preg_match($pattern, (string)$source, $matches);
-
-            return isset($matches[0]) ? (string)$matches[0] : null;
-        };
-
-        // USERNAME
-        $this->handlers[static::USERNAME] = function ($source) {
-            return (string)preg_replace('/[\x00-\x1F\x7F<>"\'%&]/', '', $source);
-        };
-
-        // EMAIL
-        $this->handlers[static::EMAIL] = function ($source) {
-            return (string)filter_var($source, FILTER_SANITIZE_EMAIL);
-        };
-
-        // HTML
-        $this->handlers[static::URL] = function ($source) {
-            return (string)filter_var($source, FILTER_SANITIZE_URL,
-                FILTER_FLAG_QUERY_REQUIRED | FILTER_FLAG_PATH_REQUIRED);
-        };
+        $this->addHandler('HTML', $this->htmlCleaner);
+        $this->addHandler('INTEGER', new IntegerCleaner());
+        $this->addHandler('UINT', new UintCleaner());
+        $this->addHandler('FLOAT', new FloatCleaner());
+        $this->addHandler('BOOLEAN', new BooleanCleaner());
+        $this->addHandler('WORD', new WordCleaner());
+        $this->addHandler('ALNUM', new AlnumCleaner());
+        $this->addHandler('CMD', new CmdCleaner());
+        $this->addHandler('BASE64', new Base64Cleaner());
+        $this->addHandler('STRING', new StringCleaner($this->htmlCleaner));
+        $this->addHandler('ARRAY', new ArrayCleaner());
+        $this->addHandler('PATH', new PathCleaner());
+        $this->addHandler('USERNAME', new UsernameCleaner());
+        $this->addHandler('EMAIL', new EmailCleaner());
+        $this->addHandler('URL', new UrlCleaner());
 
         // RAW
-        $this->handlers[static::RAW] = function ($source) {
+        $this->handlers['RAW'] = function ($source) {
             return $source;
         };
 
@@ -238,23 +163,7 @@ class InputFilter implements \Serializable
      * setHandlers
      *
      * @param   string $name
-     * @param   CleanerInterface[]|\callable[] $handler
-     *
-     * @throws  \InvalidArgumentException
-     * @return  static  Return self to support chaining.
-     *
-     * @deprecated Use addHandler() instead.
-     */
-    public function setHandler($name, $handler)
-    {
-        return $this->addHandler($name, $handler);
-    }
-
-    /**
-     * setHandlers
-     *
-     * @param   string $name
-     * @param   CleanerInterface[]|\callable[] $handler
+     * @param   CleanerInterface|\callable $handler
      *
      * @throws  \InvalidArgumentException
      * @return  static  Return self to support chaining.
@@ -273,7 +182,7 @@ class InputFilter implements \Serializable
     /**
      * gethtmlCleaner
      *
-     * @return  \Apli\Filter\HtmlCleaner
+     * @return  \Apli\Filter\Cleaner\HtmlCleaner
      */
     public function getHtmlCleaner()
     {
@@ -283,7 +192,7 @@ class InputFilter implements \Serializable
     /**
      * sethtmlCleaner
      *
-     * @param   \Apli\Filter\HtmlCleaner $htmlCleaner
+     * @param   \Apli\Filter\Cleaner\HtmlCleaner $htmlCleaner
      *
      * @return  static  Return self to support chaining.
      */

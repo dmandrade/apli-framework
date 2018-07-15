@@ -1,11 +1,11 @@
 <?php
 
-namespace Apli\Filter;
+namespace Apli\Filter\Cleaner;
 
 /**
  * Html Cleaner object.
  */
-class HtmlCleaner
+class HtmlCleaner implements CleanerInterface
 {
     const USE_WHITE_LIST = 0;
 
@@ -612,4 +612,16 @@ class HtmlCleaner
 
         return $this;
     }
+    /**
+     * Method to clean text by rule.
+     *
+     * @param   string $source The source to be clean.
+     *
+     * @return  mixed  The cleaned value.
+     */
+    public function clean($source)
+    {
+        return (string)$this->clean((string)$source);
+    }
+
 }
