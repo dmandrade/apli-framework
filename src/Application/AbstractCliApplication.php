@@ -8,7 +8,7 @@
 
 namespace Apli\Application;
 
-use Apli\Data\Structure;
+use Apli\Data\Data;
 use Apli\IO\Cli\IO;
 use Apli\IO\Cli\IOInterface;
 
@@ -31,11 +31,11 @@ abstract class AbstractCliApplication extends AbstractApplication
      *
      * @param   IOInterface $io An optional argument to provide dependency injection for the application's
      *                                IO object.
-     * @param   Structure $config An optional argument to provide dependency injection for the application's
+     * @param   Data $config An optional argument to provide dependency injection for the application's
      *                                config object.  If the argument is a Structure object that object will become
      *                                the application's config object, otherwise a default config object is created.
      */
-    public function __construct(IOInterface $io = null, Structure $config = null)
+    public function __construct(IOInterface $io = null, Data $config = null)
     {
         // Close the application if we are not executed from the command line.
         if (!defined('STDOUT') || !defined('STDIN') || !isset($_SERVER['argv'])) {
@@ -43,7 +43,7 @@ abstract class AbstractCliApplication extends AbstractApplication
         }
 
         $this->io = $io instanceof IOInterface ? $io : new IO;
-        $this->config = $config instanceof Structure ? $config : new Structure;
+        $this->config = $config instanceof Data ? $config : new Data;
 
         $this->init();
 

@@ -2,7 +2,7 @@
 
 namespace Apli\Application;
 
-use Apli\Data\Structure;
+use Apli\Data\Data;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -10,14 +10,14 @@ use Psr\Log\NullLogger;
 /**
  * The Abstract Application Class.
  *
- * @property-read  Structure $config
+ * @property-read  Data $config
  */
 abstract class AbstractApplication implements LoggerAwareInterface
 {
     /**
      * The application configuration object.
      *
-     * @var    Structure
+     * @var    Data
      */
     protected $config;
 
@@ -31,11 +31,11 @@ abstract class AbstractApplication implements LoggerAwareInterface
 
     /**
      * Class constructor of Application.
-     * @param   Structure $config An optional argument to provide a Structure object to be config.
+     * @param   Data $config An optional argument to provide a Structure object to be config.
      */
-    public function __construct(Structure $config = null)
+    public function __construct(Data $config = null)
     {
-        $this->config = $config instanceof Structure ? $config : new Structure;
+        $this->config = $config instanceof Data ? $config : new Data;
 
         $this->init();
     }
@@ -171,11 +171,11 @@ abstract class AbstractApplication implements LoggerAwareInterface
     /**
      * Sets the configuration for the application.
      *
-     * @param   Structure $config A structure object holding the configuration.
+     * @param   Data $config A structure object holding the configuration.
      *
      * @return  AbstractApplication  Returns itself to support chaining.
      */
-    public function setConfiguration(Structure $config)
+    public function setConfiguration(Data $config)
     {
         $this->config = $config;
 
