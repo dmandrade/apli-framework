@@ -77,6 +77,39 @@ class Helper
     }
 
     /**
+     * Get data from array or object by path.
+     *
+     * @param array $data
+     * @param $path
+     * @param string $separator
+     * @return array|mixed|null
+     */
+    public static function getByPath(array $data, $path, $separator = '.')
+    {
+        $nodes = static::getPathNodes($path, $separator);
+
+        if (empty($nodes)) {
+            return null;
+        }
+
+        $dataTmp = $data;
+
+        foreach ($nodes as $arg) {
+            if (is_object($dataTmp) && isset($dataTmp->$arg)) {
+                $dataTmp = $dataTmp->$arg;
+            } elseif ($dataTmp instanceof \ArrayAccess && isset($dataTmp[$arg])) {
+                $dataTmp = $dataTmp[$arg];
+            } elseif (is_array($dataTmp) && isset($dataTmp[$arg])) {
+                $dataTmp = $dataTmp[$arg];
+            } else {
+                return null;
+            }
+        }
+
+        return $dataTmp;
+    }
+
+    /**
      * Explode the data path into an sequential array and remove empty
      * nodes that occur as a result of a double dot. ex: apli..test
      *

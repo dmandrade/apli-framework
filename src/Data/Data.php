@@ -53,7 +53,9 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
      */
     public function get($path, $default = null)
     {
-        return $default;
+        $result = Helper::getByPath($this->data, $path, $this->separator);
+
+        return !is_null($result) ? $result : $default;
     }
 
     /**
@@ -74,15 +76,17 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
         return $this;
     }
 
+
     /**
-     * Retrieve an external iterator
-     * @link http://php.net/manual/en/iteratoraggregate.getiterator.php
-     * @return Traversable An instance of an object implementing <b>Iterator</b> or
-     * <b>Traversable</b>
+     * Gets this object represented as an RecursiveArrayIterator.
+     *
+     * This allows the data properties to be accessed via a foreach statement.
+     *
+     * @return  \RecursiveArrayIterator a object iterator
      */
     public function getIterator()
     {
-        // TODO: Implement getIterator() method.
+        return new \RecursiveArrayIterator($this->data);
     }
 
     /**
