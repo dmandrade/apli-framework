@@ -90,32 +90,25 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     }
 
     /**
-     * Whether a offset exists
-     * @link http://php.net/manual/en/arrayaccess.offsetexists.php
-     * @param mixed $offset <p>
-     * An offset to check for.
-     * </p>
-     * @return boolean true on success or false on failure.
-     * </p>
-     * <p>
-     * The return value will be casted to boolean if non-boolean was returned.
+     * Checks whether an offset exists in the iterator.
+     *
+     * @param mixed $offset
+     * @return bool
      */
     public function offsetExists($offset)
     {
-        // TODO: Implement offsetExists() method.
+        return (boolean) ($this->get($offset) !== null);
     }
 
     /**
-     * Offset to retrieve
-     * @link http://php.net/manual/en/arrayaccess.offsetget.php
-     * @param mixed $offset <p>
-     * The offset to retrieve.
-     * </p>
-     * @return mixed Can return all value types.
+     * Gets an offset in the iterator.
+     *
+     * @param mixed $offset
+     * @return mixed|null
      */
     public function offsetGet($offset)
     {
-        // TODO: Implement offsetGet() method.
+        return $this->get($offset);
     }
 
     /**
