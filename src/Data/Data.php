@@ -112,56 +112,45 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     }
 
     /**
-     * Offset to set
-     * @link http://php.net/manual/en/arrayaccess.offsetset.php
-     * @param mixed $offset <p>
-     * The offset to assign the value to.
-     * </p>
-     * @param mixed $value <p>
-     * The value to set.
-     * </p>
-     * @return void
+     * Sets an offset in the iterator.
+     *
+     * @param mixed $offset
+     * @param mixed $value
      */
     public function offsetSet($offset, $value)
     {
-        // TODO: Implement offsetSet() method.
+        $this->set($offset, $value);
     }
 
     /**
-     * Offset to unset
-     * @link http://php.net/manual/en/arrayaccess.offsetunset.php
-     * @param mixed $offset <p>
-     * The offset to unset.
-     * </p>
-     * @return void
+     * Unsets an offset in the iterator.
+     *
+     * @param mixed $offset
      */
     public function offsetUnset($offset)
     {
-        // TODO: Implement offsetUnset() method.
+        $this->set($offset, null);
     }
 
     /**
-     * Count elements of an object
-     * @link http://php.net/manual/en/countable.count.php
-     * @return int The custom count as an integer.
-     * </p>
-     * <p>
-     * The return value is cast to an integer.
+     * Count itens in data object
+     *
+     * @return int
      */
     public function count()
     {
-        // TODO: Implement count() method.
+        return count($this->data);
     }
 
     /**
-     * Specify data which should be serialized to JSON
-     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
-     * @return mixed data which can be serialized by <b>json_encode</b>,
-     * which is a value of any type other than a resource.
+     * Implementation for the JsonSerializable interface.
+     * Allows us to pass Structure objects to json_encode.
+     *
+     * @return array|mixed
      */
     public function jsonSerialize()
     {
-        // TODO: Implement jsonSerialize() method.
+        return $this->data;
     }
 
     /**
