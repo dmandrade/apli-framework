@@ -97,7 +97,7 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
      */
     public function offsetExists($offset)
     {
-        return (boolean)($this->get($offset) !== null);
+        return $this->exists($offset);
     }
 
     /**
@@ -129,7 +129,7 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
      */
     public function offsetUnset($offset)
     {
-        $this->set($offset, null);
+        $this->remove($offset);
     }
 
     /**
@@ -204,35 +204,51 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     /**
      * Check if data is empty
      *
-     * @return mixed
+     * @return boolean
      */
     public function isNull()
     {
-        // TODO: Implement isNull() method.
+        return empty($this->data);
     }
 
     /**
      * Check if data is not null
      *
-     * @return mixed
+     * @return boolean
      */
     public function notNull()
     {
-        // TODO: Implement notNull() method.
+        return !$this->isNull();
     }
 
     /**
-     * Dump all data as array
+     * Set value.
      *
-     * @return  array
+     * @param string $field The field to set.
+     * @param mixed  $value The value to set.
+     *
+     * @return  void
+     * @throws \InvalidArgumentException
      */
-    public function dump()
+    public function __set($field, $value = null)
     {
-        // TODO: Implement dump() method.
+        $this->set($field, $value);
     }
 
     /**
-     * __get
+     * Check a value is set
+     *
+     * @param   string $field
+     *
+     * @return  boolean
+     */
+    public function __isset($field)
+    {
+        $this->exists($field);
+    }
+
+    /**
+     * Get a value
      *
      * @param   string $name
      *
@@ -240,7 +256,19 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
      */
     public function __get($name)
     {
-        // TODO: Implement __get() method.
+        $this->get($name);
+    }
+
+    /**
+     * Unset a value
+     *
+     * @param   string $name
+     *
+     * @return  void
+     */
+    public function __unset($name)
+    {
+        $this->remove($name);
     }
 
     /**
@@ -297,7 +325,9 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
      */
     public function remove($path)
     {
-        // TODO: Implement remove() method.
+        Helper::removeByPath($this->data, $path, $this->separator);
+
+        return $this;
     }
 
     /**
@@ -326,11 +356,11 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
      * Check if a data path exists.
      *
      * @param $path
-     * @return mixed
+     * @return boolean
      */
     public function exists($path)
     {
-        // TODO: Implement exists() method.
+        return !is_null($this->get($path));
     }
 
     /**

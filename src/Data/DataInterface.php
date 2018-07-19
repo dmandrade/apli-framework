@@ -90,7 +90,7 @@ interface DataInterface
      * Check if a data path exists.
      *
      * @param $path
-     * @return mixed
+     * @return boolean
      */
     public function exists($path);
 
@@ -106,32 +106,54 @@ interface DataInterface
     /**
      * Check if data is empty
      *
-     * @return mixed
+     * @return boolean
      */
     public function isNull();
 
     /**
      * Check if data is not null
      *
-     * @return mixed
+     * @return boolean
      */
     public function notNull();
 
     /**
-     * Dump all data as array
+     * Set value.
      *
-     * @return  array
+     * @param string $field The field to set.
+     * @param mixed  $value The value to set.
+     *
+     * @return  void
+     * @throws \InvalidArgumentException
      */
-    public function dump();
+    public function __set($field, $value = null);
 
     /**
-     * __get
+     * Check a value is set
+     *
+     * @param   string $field
+     *
+     * @return  boolean
+     */
+    public function __isset($field);
+
+    /**
+     * Get a value
      *
      * @param   string $name
      *
      * @return  mixed
      */
     public function __get($name);
+
+    /**
+     * Unset a value
+     *
+     * @param   string $name
+     *
+     * @return  void
+     */
+    public function __unset($name);
 
     /**
      * Transforms data to an array

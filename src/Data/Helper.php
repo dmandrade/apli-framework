@@ -121,4 +121,42 @@ class Helper
     {
         return array_values(array_filter(explode($separator, $path), 'strlen'));
     }
+
+    /**
+     * Remove a specified path in data
+     * 
+     * @param array $data
+     * @param $path
+     * @param string $separator
+     * @return bool
+     */
+    public static function removeByPath(array &$data, $path, $separator = '.')
+    {
+        $nodes = static::getPathNodes($path, $separator);
+
+        if (empty($nodes)) {
+            return false;
+        }
+
+        $previous = null;
+        $dataTmp  = &$data;
+
+        foreach ($nodes as $node) {
+            if (is_array($dataTmp)) {
+                if (empty($dataTmp[$node])) {
+                    return false;
+                }
+
+                $previous = &$dataTmp;
+                $dataTmp  = &$dataTmp[$node];
+            } else {
+                return false;
+            }
+        }
+
+        // Now, path go to the end, means we get latest node, set value to this node.
+        unset($previous[$node]);
+
+        return true;
+    }
 }
