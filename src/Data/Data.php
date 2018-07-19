@@ -97,7 +97,7 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
      */
     public function offsetExists($offset)
     {
-        return (boolean) ($this->get($offset) !== null);
+        return (boolean)($this->get($offset) !== null);
     }
 
     /**
@@ -241,5 +241,128 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     public function __get($name)
     {
         // TODO: Implement __get() method.
+    }
+
+    /**
+     * Push value to a path in data
+     *
+     * @param $path
+     * @param $value
+     * @return mixed
+     */
+    public function push($path, $value)
+    {
+        // TODO: Implement push() method.
+    }
+
+    /**
+     * Prepend value to a path in data.
+     *
+     * @param $path
+     * @param $value
+     * @return mixed
+     */
+    public function unshift($path, $value)
+    {
+        // TODO: Implement unshift() method.
+    }
+
+    /**
+     * To remove first element from the path of this data.
+     *
+     * @param $path
+     * @return mixed
+     */
+    public function shift($path)
+    {
+        // TODO: Implement shift() method.
+    }
+
+    /**
+     * To remove last element from the path of this data.
+     *
+     * @param $path
+     * @return mixed
+     */
+    public function pop($path)
+    {
+        // TODO: Implement pop() method.
+    }
+
+    /**
+     * remove a value from data
+     *
+     * @param   string $path
+     * @return  static
+     */
+    public function remove($path)
+    {
+        // TODO: Implement remove() method.
+    }
+
+    /**
+     * Reset all data.
+     *
+     * @return  static
+     */
+    public function reset()
+    {
+        // TODO: Implement reset() method.
+    }
+
+    /**
+     * Merge a data into this object.
+     *
+     * @param $source
+     * @param bool $raw
+     * @return mixed
+     */
+    public function merge($source, $raw = false)
+    {
+        // TODO: Implement merge() method.
+    }
+
+    /**
+     * Check if a data path exists.
+     *
+     * @param $path
+     * @return mixed
+     */
+    public function exists($path)
+    {
+        // TODO: Implement exists() method.
+    }
+
+    /**
+     * Transforms data to an array
+     *
+     * @return mixed
+     */
+    public function toArray()
+    {
+        // TODO: Implement toArray() method.
+    }
+
+    /**
+     * Transforms data to an object
+     *
+     * @param string $class
+     * @return mixed
+     */
+    public function toObject($class = 'stdClass')
+    {
+        // TODO: Implement toObject() method.
+    }
+
+    /**
+     * Get data in a given string format
+     *
+     * @param $format
+     * @param array $options
+     * @return mixed
+     */
+    public function toString($format, $options = [])
+    {
+        // TODO: Implement toString() method.
     }
 }
