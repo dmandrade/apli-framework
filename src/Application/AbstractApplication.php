@@ -199,6 +199,6 @@ abstract class AbstractApplication implements LoggerAwareInterface
             return $this->$name;
         }
 
-        throw new \UnexpectedValueException('Property: ' . $name . ' not found in ' . get_called_class());
+        throw new \UnexpectedValueException('Property: '.$name.' not found in '.get_called_class());
     }
 }

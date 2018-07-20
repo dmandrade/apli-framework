@@ -37,7 +37,7 @@ class CliOutput extends AbstractCliOutput implements ColorfulOutputInterface
      */
     public function out($text = '', $nl = true)
     {
-        fwrite($this->outputStream, $this->getProcessor()->process($text) . ($nl ? "\n" : null));
+        fwrite($this->outputStream, $this->getProcessor()->process($text).($nl ? "\n" : null));
 
         return $this;
     }
@@ -82,7 +82,7 @@ class CliOutput extends AbstractCliOutput implements ColorfulOutputInterface
      */
     public function err($text = '', $nl = true)
     {
-        fwrite($this->errorStream, $this->processor->process($text) . ($nl ? "\n" : null));
+        fwrite($this->errorStream, $this->processor->process($text).($nl ? "\n" : null));
 
         return $this;
     }

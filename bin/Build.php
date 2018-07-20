@@ -2,9 +2,9 @@
 
 use Apli\Application\AbstractCliApplication;
 
-include_once __DIR__ . '/../vendor/autoload.php';
+include_once __DIR__.'/../vendor/autoload.php';
 
-define('APLI_ROOT', realpath(__DIR__ . '/..'));
+define('APLI_ROOT', realpath(__DIR__.'/..'));
 
 /**
  * Class Build to build subtrees.
@@ -56,7 +56,7 @@ class Build extends AbstractCliApplication
     /**
      * Property subtrees.
      *
-     * @var  array
+     * @var array
      */
     protected $subtrees = [
         'application' => 'Application',
@@ -98,17 +98,17 @@ class Build extends AbstractCliApplication
         $this->checkoutBranch();
 
         if ($this->version) {
-            $this->exec('git tag -d ' . $tag);
+            $this->exec('git tag -d '.$tag);
 
-            $this->exec('git push origin :refs/tags/' . $tag);
+            $this->exec('git push origin :refs/tags/'.$tag);
 
-            $this->exec('git tag ' . $tag);
+            $this->exec('git tag '.$tag);
 
-            $this->exec(sprintf('git push origin %s' . $force, $this->version));
+            $this->exec(sprintf('git push origin %s'.$force, $this->version));
         }
 
         $masterBranch = ($branch != 'master') ? 'master:master' : '';
-        $this->exec(sprintf('git push origin %s %s:%s %s ' . $force, $tag, $branch, $branch, $masterBranch));
+        $this->exec(sprintf('git push origin %s %s:%s %s '.$force, $tag, $branch, $branch, $masterBranch));
 
         $allows = $this->io->getArguments();
 
@@ -125,20 +125,6 @@ class Build extends AbstractCliApplication
         $this->out()->out('Split finish.');
 
         return true;
-    }
-
-    protected function checkoutBranch()
-    {
-        if($this->branch = 'master') {
-            $this->exec('git checkout ' . $this->branch);
-            return;
-        }
-
-        $this->exec('git branch -D ' . $this->branch);
-
-        $this->exec('git checkout -b ' . $this->branch);
-
-        $this->exec('git merge master');
     }
 
     /**
@@ -177,7 +163,7 @@ HELP;
     {
         $this->out('Replacing Docblock');
 
-        $files = new RecursiveIteratorIterator(new \RecursiveDirectoryIterator(APLI_ROOT . '/src',
+        $files = new RecursiveIteratorIterator(new \RecursiveDirectoryIterator(APLI_ROOT.'/src',
             \FilesystemIterator::SKIP_DOTS));
 
         /** @var \SplFileInfo $file */
@@ -196,7 +182,7 @@ HELP;
 
             file_put_contents($file->getPathname(), $content);
 
-            $this->out('[Replace Docblock] ' . $file->getPathname());
+            $this->out('[Replace Docblock] '.$file->getPathname());
         }
 
         $this->exec('git checkout master');
@@ -220,7 +206,7 @@ HELP;
 
         $command = sprintf('%s %s %s', $command, $arguments, $options);
 
-        $this->out('>> ' . $command);
+        $this->out('>> '.$command);
 
         if ($this->io->getOption('dry-run')) {
             return '';
@@ -229,6 +215,20 @@ HELP;
         $return = exec(trim($command), $this->lastOutput, $this->lastReturn);
 
         $this->out($return);
+    }
+
+    protected function checkoutBranch()
+    {
+        if ($this->branch = 'master') {
+            $this->exec('git checkout '.$this->branch);
+            return;
+        }
+
+        $this->exec('git branch -D '.$this->branch);
+
+        $this->exec('git checkout -b '.$this->branch);
+
+        $this->exec('git merge master');
     }
 
     /**
@@ -246,7 +246,7 @@ HELP;
 
         // Do split
         $this->exec(sprintf('git branch -D sub-%s', $subtree));
-        $this->exec('git subtree split -P src/' . $namespace . ' -b sub-' . $subtree);
+        $this->exec('git subtree split -P src/'.$namespace.' -b sub-'.$subtree);
 
         // Create a new branch
         $this->exec(sprintf('git branch -D %s-%s', $this->branch, $subtree));
@@ -268,10 +268,10 @@ HELP;
             $this->exec(sprintf('git merge sub-%s', $subtree));
         }
 
-        $this->exec(sprintf('git push %s sub-%s:%s ' . $force, $subtree, $subtree, $this->branch));
+        $this->exec(sprintf('git push %s sub-%s:%s '.$force, $subtree, $subtree, $this->branch));
 
         if ($this->version) {
-            $this->exec('git checkout sub-' . $subtree);
+            $this->exec('git checkout sub-'.$subtree);
 
             $this->exec(sprintf('git tag -d %s', $this->version));
 
@@ -282,7 +282,7 @@ HELP;
             $this->exec(sprintf('git push %s %s', $subtree, $this->version));
         }
 
-        $this->exec('git checkout ' . $this->branch);
+        $this->exec('git checkout '.$this->branch);
     }
 
     /**

@@ -21,7 +21,7 @@ class Helper
         } elseif (is_object($data)) {
             $data = get_object_vars($data);
         } else {
-            $data = (array) $data;
+            $data = (array)$data;
         }
 
         if ($recursive) {
@@ -77,6 +77,19 @@ class Helper
     }
 
     /**
+     * Explode the data path into an sequential array and remove empty
+     * nodes that occur as a result of a double dot. ex: apli..test
+     *
+     * @param $path
+     * @param string $separator
+     * @return array
+     */
+    public static function getPathNodes($path, $separator = '.')
+    {
+        return array_values(array_filter(explode($separator, $path), 'strlen'));
+    }
+
+    /**
      * Get data from array or object by path.
      *
      * @param array $data
@@ -110,21 +123,8 @@ class Helper
     }
 
     /**
-     * Explode the data path into an sequential array and remove empty
-     * nodes that occur as a result of a double dot. ex: apli..test
-     *
-     * @param $path
-     * @param string $separator
-     * @return array
-     */
-    public static function getPathNodes($path, $separator = '.')
-    {
-        return array_values(array_filter(explode($separator, $path), 'strlen'));
-    }
-
-    /**
      * Remove a specified path in data
-     * 
+     *
      * @param array $data
      * @param $path
      * @param string $separator
@@ -139,7 +139,7 @@ class Helper
         }
 
         $previous = null;
-        $dataTmp  = &$data;
+        $dataTmp = &$data;
 
         foreach ($nodes as $node) {
             if (is_array($dataTmp)) {
@@ -148,7 +148,7 @@ class Helper
                 }
 
                 $previous = &$dataTmp;
-                $dataTmp  = &$dataTmp[$node];
+                $dataTmp = &$dataTmp[$node];
             } else {
                 return false;
             }

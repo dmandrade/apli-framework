@@ -175,7 +175,7 @@ class HtmlCleaner implements CleanerInterface
 
             if (($nextOpenTag !== false) && ($nextOpenTag < $tagOpen_end)) {
                 // At this point we have a mal-formed tag -- remove the offending open
-                $postTag = substr($postTag, 0, $tagOpen_start) . substr($postTag, $tagOpen_start + 1);
+                $postTag = substr($postTag, 0, $tagOpen_start).substr($postTag, $tagOpen_start + 1);
                 $tagOpen_start = strpos($postTag, '<');
                 continue;
             }
@@ -308,21 +308,21 @@ class HtmlCleaner implements CleanerInterface
                 if (!$isCloseTag) {
                     // Open or single tag
                     $attrSet = $this->cleanAttributes($attrSet);
-                    $preTag .= '<' . $tagName;
+                    $preTag .= '<'.$tagName;
 
                     for ($i = 0, $count = count($attrSet); $i < $count; $i++) {
-                        $preTag .= ' ' . $attrSet[$i];
+                        $preTag .= ' '.$attrSet[$i];
                     }
 
                     // Reformat single tags to XHTML
-                    if (strpos($fromTagOpen, '</' . $tagName)) {
+                    if (strpos($fromTagOpen, '</'.$tagName)) {
                         $preTag .= '>';
                     } else {
                         $preTag .= ' />';
                     }
                 } else // Closing tag
                 {
-                    $preTag .= '</' . $tagName . '>';
+                    $preTag .= '</'.$tagName.'>';
                 }
             }
 
@@ -380,12 +380,12 @@ class HtmlCleaner implements CleanerInterface
             // Escape bad chars
             $attributeValue = str_replace($badChars, $escapedChars, $attributeValue);
             $attributeValue = $this->stripCssExpressions($attributeValue);
-            $alreadyFiltered .= substr($remainder, 0, $nextBefore) . $attributeValue . $quote;
+            $alreadyFiltered .= substr($remainder, 0, $nextBefore).$attributeValue.$quote;
             $remainder = substr($remainder, $nextAfter + 1);
         }
 
         // At this point, we just have to return the $alreadyFiltered and the $remainder
-        return $alreadyFiltered . $remainder;
+        return $alreadyFiltered.$remainder;
     }
 
     /**
@@ -490,14 +490,14 @@ class HtmlCleaner implements CleanerInterface
             if ((!$attrFound && $this->attrMethod) || ($attrFound && !$this->attrMethod)) {
                 // Does the attribute have a value?
                 if (empty($attrSubSet[1]) === false) {
-                    $newSet[] = $attrSubSet[0] . '="' . $attrSubSet[1] . '"';
+                    $newSet[] = $attrSubSet[0].'="'.$attrSubSet[1].'"';
                 } elseif ($attrSubSet[1] === "0") {
                     // Special Case
                     // Is the value 0?
-                    $newSet[] = $attrSubSet[0] . '="0"';
+                    $newSet[] = $attrSubSet[0].'="0"';
                 } else {
                     // Leave empty attributes alone
-                    $newSet[] = $attrSubSet[0] . '=""';
+                    $newSet[] = $attrSubSet[0].'=""';
                 }
             }
         }
@@ -612,6 +612,7 @@ class HtmlCleaner implements CleanerInterface
 
         return $this;
     }
+
     /**
      * Method to clean text by rule.
      *

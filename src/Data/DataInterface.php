@@ -118,17 +118,6 @@ interface DataInterface
     public function notNull();
 
     /**
-     * Set value.
-     *
-     * @param string $field The field to set.
-     * @param mixed  $value The value to set.
-     *
-     * @return  void
-     * @throws \InvalidArgumentException
-     */
-    public function __set($field, $value = null);
-
-    /**
      * Check a value is set
      *
      * @param   string $field
@@ -145,6 +134,17 @@ interface DataInterface
      * @return  mixed
      */
     public function __get($name);
+
+    /**
+     * Set value.
+     *
+     * @param string $field The field to set.
+     * @param mixed $value The value to set.
+     *
+     * @return  void
+     * @throws \InvalidArgumentException
+     */
+    public function __set($field, $value = null);
 
     /**
      * Unset a value

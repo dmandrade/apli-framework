@@ -45,115 +45,6 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     }
 
     /**
-     * Get a value from data
-     *
-     * @param $path
-     * @param null $default
-     * @return null
-     */
-    public function get($path, $default = null)
-    {
-        $result = Helper::getByPath($this->data, $path, $this->separator);
-
-        return !is_null($result) ? $result : $default;
-    }
-
-    /**
-     * Set a value and convert object to array.
-     *
-     * @param $field
-     * @param $value
-     * @return $this
-     */
-    public function set($field, $value)
-    {
-        if (is_array($value) || is_object($value)) {
-            $value = Helper::toArray($value, true);
-        }
-
-        Helper::setByPath($this->data, $field, $value, $this->separator);
-
-        return $this;
-    }
-
-
-    /**
-     * Gets this object represented as an RecursiveArrayIterator.
-     *
-     * This allows the data properties to be accessed via a foreach statement.
-     *
-     * @return  \RecursiveArrayIterator a object iterator
-     */
-    public function getIterator()
-    {
-        return new \RecursiveArrayIterator($this->data);
-    }
-
-    /**
-     * Checks whether an offset exists in the iterator.
-     *
-     * @param mixed $offset
-     * @return bool
-     */
-    public function offsetExists($offset)
-    {
-        return $this->exists($offset);
-    }
-
-    /**
-     * Gets an offset in the iterator.
-     *
-     * @param mixed $offset
-     * @return mixed|null
-     */
-    public function offsetGet($offset)
-    {
-        return $this->get($offset);
-    }
-
-    /**
-     * Sets an offset in the iterator.
-     *
-     * @param mixed $offset
-     * @param mixed $value
-     */
-    public function offsetSet($offset, $value)
-    {
-        $this->set($offset, $value);
-    }
-
-    /**
-     * Unsets an offset in the iterator.
-     *
-     * @param mixed $offset
-     */
-    public function offsetUnset($offset)
-    {
-        $this->remove($offset);
-    }
-
-    /**
-     * Count itens in data object
-     *
-     * @return int
-     */
-    public function count()
-    {
-        return count($this->data);
-    }
-
-    /**
-     * Implementation for the JsonSerializable interface.
-     * Allows us to pass Structure objects to json_encode.
-     *
-     * @return array|mixed
-     */
-    public function jsonSerialize()
-    {
-        return $this->data;
-    }
-
-    /**
      * Bind the data
      *
      * @param $values
@@ -202,13 +93,135 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     }
 
     /**
-     * Check if data is empty
+     * Gets this object represented as an RecursiveArrayIterator.
      *
+     * This allows the data properties to be accessed via a foreach statement.
+     *
+     * @return  \RecursiveArrayIterator a object iterator
+     */
+    public function getIterator()
+    {
+        return new \RecursiveArrayIterator($this->data);
+    }
+
+    /**
+     * Checks whether an offset exists in the iterator.
+     *
+     * @param mixed $offset
+     * @return bool
+     */
+    public function offsetExists($offset)
+    {
+        return $this->exists($offset);
+    }
+
+    /**
+     * Check if a data path exists.
+     *
+     * @param $path
      * @return boolean
      */
-    public function isNull()
+    public function exists($path)
     {
-        return empty($this->data);
+        return !is_null($this->get($path));
+    }
+
+    /**
+     * Get a value from data
+     *
+     * @param $path
+     * @param null $default
+     * @return null
+     */
+    public function get($path, $default = null)
+    {
+        $result = Helper::getByPath($this->data, $path, $this->separator);
+
+        return !is_null($result) ? $result : $default;
+    }
+
+    /**
+     * Gets an offset in the iterator.
+     *
+     * @param mixed $offset
+     * @return mixed|null
+     */
+    public function offsetGet($offset)
+    {
+        return $this->get($offset);
+    }
+
+    /**
+     * Sets an offset in the iterator.
+     *
+     * @param mixed $offset
+     * @param mixed $value
+     */
+    public function offsetSet($offset, $value)
+    {
+        $this->set($offset, $value);
+    }
+
+    /**
+     * Set a value and convert object to array.
+     *
+     * @param $field
+     * @param $value
+     * @return $this
+     */
+    public function set($field, $value)
+    {
+        if (is_array($value) || is_object($value)) {
+            $value = Helper::toArray($value, true);
+        }
+
+        Helper::setByPath($this->data, $field, $value, $this->separator);
+
+        return $this;
+    }
+
+    /**
+     * Unsets an offset in the iterator.
+     *
+     * @param mixed $offset
+     */
+    public function offsetUnset($offset)
+    {
+        $this->remove($offset);
+    }
+
+    /**
+     * remove a value from data
+     *
+     * @param   string $path
+     * @return  static
+     */
+    public function remove($path)
+    {
+        Helper::removeByPath($this->data, $path, $this->separator);
+
+        return $this;
+    }
+
+    /**
+     * Count itens in data object
+     *
+     * @return int
+     */
+    public function count()
+    {
+        return count($this->data);
+    }
+
+    /**
+     * Implementation for the JsonSerializable interface.
+     * Allows us to pass Structure objects to json_encode.
+     *
+     * @return array|mixed
+     */
+    public function jsonSerialize()
+    {
+        return $this->data;
     }
 
     /**
@@ -222,17 +235,13 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     }
 
     /**
-     * Set value.
+     * Check if data is empty
      *
-     * @param string $field The field to set.
-     * @param mixed  $value The value to set.
-     *
-     * @return  void
-     * @throws \InvalidArgumentException
+     * @return boolean
      */
-    public function __set($field, $value = null)
+    public function isNull()
     {
-        $this->set($field, $value);
+        return empty($this->data);
     }
 
     /**
@@ -257,6 +266,20 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     public function __get($name)
     {
         $this->get($name);
+    }
+
+    /**
+     * Set value.
+     *
+     * @param string $field The field to set.
+     * @param mixed $value The value to set.
+     *
+     * @return  void
+     * @throws \InvalidArgumentException
+     */
+    public function __set($field, $value = null)
+    {
+        $this->set($field, $value);
     }
 
     /**
@@ -318,19 +341,6 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     }
 
     /**
-     * remove a value from data
-     *
-     * @param   string $path
-     * @return  static
-     */
-    public function remove($path)
-    {
-        Helper::removeByPath($this->data, $path, $this->separator);
-
-        return $this;
-    }
-
-    /**
      * Reset all data.
      *
      * @return  static
@@ -350,17 +360,6 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     public function merge($source, $raw = false)
     {
         // TODO: Implement merge() method.
-    }
-
-    /**
-     * Check if a data path exists.
-     *
-     * @param $path
-     * @return boolean
-     */
-    public function exists($path)
-    {
-        return !is_null($this->get($path));
     }
 
     /**

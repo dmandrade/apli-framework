@@ -40,7 +40,8 @@ class Session implements \ArrayAccess, \IteratorAggregate
     /**
      * Session constructor.
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->state = State::INACTIVE();
     }
 

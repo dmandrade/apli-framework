@@ -69,7 +69,7 @@ class OsDetector
      */
     private function isOs($kernel, $variants)
     {
-        return (bool)preg_grep('/^' . preg_quote($kernel) . '$/i', $variants);
+        return (bool)preg_grep('/^'.preg_quote($kernel).'$/i', $variants);
     }
 
     /**

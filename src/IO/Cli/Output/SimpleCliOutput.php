@@ -17,7 +17,7 @@ class SimpleCliOutput extends AbstractCliOutput
      */
     public function out($text = '', $nl = true)
     {
-        fwrite($this->outputStream, $text . ($nl ? "\n" : null));
+        fwrite($this->outputStream, $text.($nl ? "\n" : null));
 
         return $this;
     }
@@ -32,7 +32,7 @@ class SimpleCliOutput extends AbstractCliOutput
      */
     public function err($text = '', $nl = true)
     {
-        fwrite($this->errorStream, $text . ($nl ? "\n" : null));
+        fwrite($this->errorStream, $text.($nl ? "\n" : null));
 
         return $this;
     }

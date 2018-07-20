@@ -10,6 +10,7 @@ use Apli\Filter\Cleaner\CleanerInterface;
 use Apli\Filter\Cleaner\CmdCleaner;
 use Apli\Filter\Cleaner\EmailCleaner;
 use Apli\Filter\Cleaner\FloatCleaner;
+use Apli\Filter\Cleaner\HtmlCleaner;
 use Apli\Filter\Cleaner\IntegerCleaner;
 use Apli\Filter\Cleaner\PathCleaner;
 use Apli\Filter\Cleaner\StringCleaner;
@@ -17,7 +18,6 @@ use Apli\Filter\Cleaner\UintCleaner;
 use Apli\Filter\Cleaner\UrlCleaner;
 use Apli\Filter\Cleaner\UsernameCleaner;
 use Apli\Filter\Cleaner\WordCleaner;
-use Apli\Filter\Cleaner\HtmlCleaner;
 
 /**
  * Class Filter
@@ -114,6 +114,26 @@ class InputFilter implements \Serializable
     }
 
     /**
+     * setHandlers
+     *
+     * @param   string $name
+     * @param   CleanerInterface|\callable $handler
+     *
+     * @throws  \InvalidArgumentException
+     * @return  static  Return self to support chaining.
+     */
+    public function addHandler($name, $handler)
+    {
+        if (is_object($handler) && !($handler instanceof CleanerInterface) && !($handler instanceof \Closure)) {
+            throw new \InvalidArgumentException('Object filter handler should extends CleanerInterface or be a Closure.');
+        }
+
+        $this->handlers[strtoupper($name)] = $handler;
+
+        return $this;
+    }
+
+    /**
      * clean
      *
      * @param string $source
@@ -157,26 +177,6 @@ class InputFilter implements \Serializable
     public function getHandler($name)
     {
         return $this->handlers[strtoupper($name)];
-    }
-
-    /**
-     * setHandlers
-     *
-     * @param   string $name
-     * @param   CleanerInterface|\callable $handler
-     *
-     * @throws  \InvalidArgumentException
-     * @return  static  Return self to support chaining.
-     */
-    public function addHandler($name, $handler)
-    {
-        if (is_object($handler) && !($handler instanceof CleanerInterface) && !($handler instanceof \Closure)) {
-            throw new \InvalidArgumentException('Object filter handler should extends CleanerInterface or be a Closure.');
-        }
-
-        $this->handlers[strtoupper($name)] = $handler;
-
-        return $this;
     }
 
     /**

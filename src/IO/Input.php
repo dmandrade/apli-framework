@@ -127,10 +127,10 @@ class Input implements \Serializable, \Countable
 
         $filter = ($this->filter instanceof NullFilter) ? null : $this->filter;
 
-        $className = __NAMESPACE__ . '\\' . ucfirst($name) . 'Input';
+        $className = __NAMESPACE__.'\\'.ucfirst($name).'Input';
 
         if (!class_exists($className)) {
-            $className = __NAMESPACE__ . '\\' . ucfirst($name);
+            $className = __NAMESPACE__.'\\'.ucfirst($name);
         }
 
         if (class_exists($className)) {
@@ -139,7 +139,7 @@ class Input implements \Serializable, \Countable
             return $this->inputs[$name];
         }
 
-        $superGlobal = '_' . strtoupper($name);
+        $superGlobal = '_'.strtoupper($name);
 
         if (isset($GLOBALS[$superGlobal])) {
             $this->inputs[$name] = new Input($GLOBALS[$superGlobal], $filter);
@@ -519,7 +519,7 @@ class Input implements \Serializable, \Countable
             }
 
             if (!array_key_exists(0, $arguments)) {
-                throw new \BadMethodCallException(get_called_class() . '::' . $name . '() has no argument.');
+                throw new \BadMethodCallException(get_called_class().'::'.$name.'() has no argument.');
             }
 
             $separator = isset($arguments[2]) ? $arguments[2] : '.';

@@ -78,7 +78,7 @@ class Server
             $file = substr($file, strlen($wdir));
         }
 
-        $file = trim($file, '.' . DIRECTORY_SEPARATOR);
+        $file = trim($file, '.'.DIRECTORY_SEPARATOR);
 
         return $file;
     }
