@@ -1,3 +1,5 @@
+[![StyleCI](https://github.styleci.io/repos/113176973/shield?branch=master)](https://github.styleci.io/repos/113176973)
+
 # Aplí Framework
 
 A personal project to create a fully decoupled framework.

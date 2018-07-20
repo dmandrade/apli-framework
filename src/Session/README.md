@@ -1,3 +1,5 @@
+[![StyleCI](https://github.styleci.io/repos/114494447/shield?branch=master)](https://github.styleci.io/repos/114494447)
+
 # Aplí Session
        
 Aplí Session package provides a simple interface to manage session data.

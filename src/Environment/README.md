@@ -1,4 +1,4 @@
-[![buddy pipeline](https://app.buddy.works/dmandrade/apli-environment/pipelines/pipeline/143627/badge.svg?token=4a2275d6858fa1a6ef485756ed5866894986f01ba3b8954a3d69cc94725ea11d "buddy pipeline")](https://app.buddy.works/dmandrade/apli-environment/pipelines/pipeline/143627)
+[![StyleCI](https://github.styleci.io/repos/113188079/shield?branch=master)](https://github.styleci.io/repos/113188079)
 
 # Aplí Environment
 

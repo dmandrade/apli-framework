@@ -1,3 +1,5 @@
+[![StyleCI](https://github.styleci.io/repos/140433173/shield?branch=master)](https://github.styleci.io/repos/140433173)
+
 # Aplí IO
 
 Aplí IO package is an input & output handler to get request or send output to user.
