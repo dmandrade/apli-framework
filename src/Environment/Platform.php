@@ -1,13 +1,15 @@
 <?php
 /**
- *  Copyright (c) 2017 Danilo Andrade (http://daniloandrade.net)
+ *  Copyright (c) 2017 Danilo Andrade (http://daniloandrade.net).
  *
  *  This file is part of the Aplí Framework.
  *
  * @project Aplí Framework
  * @file Platform.php
+ *
  * @author Danilo Andrade <danilo@daniloandrade.net>
  * @date 16/12/17 at 15:12
+ *
  * @copyright  Copyright (c) 2017 Danilo Andrade
  * @license    GNU Lesser General Public License version 3 or later.
  */
@@ -19,26 +21,27 @@ use Apli\Environment\Detector\OsDetector;
 use Apli\Environment\Detector\OsInterface;
 
 /**
- * Class Platform
- * @package Apli\Environment
+ * Class Platform.
  */
 class Platform
 {
-
     /**
-     * Canonical Kernel's name
+     * Canonical Kernel's name.
+     *
      * @var string
      */
     protected $kernel;
 
     /**
-     * OS Family
+     * OS Family.
+     *
      * @var int
      */
     protected $family;
 
     /**
-     * OS type constant
+     * OS type constant.
+     *
      * @var OsInterface
      */
     protected $os;
@@ -58,7 +61,7 @@ class Platform
     }
 
     /**
-     * Set kernel name
+     * Set kernel name.
      *
      * @param string $kernel
      *
@@ -74,7 +77,7 @@ class Platform
     }
 
     /**
-     * Set detected os
+     * Set detected os.
      *
      * @return void
      */
@@ -84,7 +87,7 @@ class Platform
     }
 
     /**
-     * Get kernel name
+     * Get kernel name.
      *
      * @return string
      */
@@ -94,7 +97,7 @@ class Platform
     }
 
     /**
-     * Get the Family name
+     * Get the Family name.
      *
      * @return string
      */
@@ -104,7 +107,7 @@ class Platform
     }
 
     /**
-     * Get OS name
+     * Get OS name.
      *
      * @return string
      */
@@ -114,37 +117,37 @@ class Platform
     }
 
     /**
-     * Check if OS is unix
+     * Check if OS is unix.
      *
      * @return bool
      */
     public function isUnix()
     {
-        return ($this->os->getFamily() === OsDetector::UNIX_FAMILY);
+        return $this->os->getFamily() === OsDetector::UNIX_FAMILY;
     }
 
     /**
-     * Check if OS is unix
+     * Check if OS is unix.
      *
      * @return bool
      */
     public function isUnixOnWindows()
     {
-        return ($this->os->getFamily() === OsDetector::UNIX_ON_WINDOWS_FAMILY);
+        return $this->os->getFamily() === OsDetector::UNIX_ON_WINDOWS_FAMILY;
     }
 
     /**
-     * Check if OS is Windows
+     * Check if OS is Windows.
      *
-     * @return  bool
+     * @return bool
      */
     public function isWindows()
     {
-        return ($this->os->getFamily() === OsDetector::WINDOWS_FAMILY);
+        return $this->os->getFamily() === OsDetector::WINDOWS_FAMILY;
     }
 
     /**
-     * Check if OS is OSX
+     * Check if OS is OSX.
      *
      * @return bool
      */

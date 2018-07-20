@@ -14,42 +14,42 @@ class Build extends AbstractCliApplication
     /**
      * Organization.
      *
-     * @var  string
+     * @var string
      */
     protected $organization = 'dmandrade';
 
     /**
-     * Code license
+     * Code license.
      *
-     * @var  string
+     * @var string
      */
     protected $license = 'GNU Lesser General Public License version 3 or later.';
 
     /**
      * Property lastOutput.
      *
-     * @var  mixed
+     * @var mixed
      */
     protected $lastOutput = null;
 
     /**
      * Property lastReturn.
      *
-     * @var  mixed
+     * @var mixed
      */
     protected $lastReturn = null;
 
     /**
      * Code branch.
      *
-     * @var  string
+     * @var string
      */
     protected $branch = null;
 
     /**
      * Code version.
      *
-     * @var  string
+     * @var string
      */
     protected $version = null;
 
@@ -60,18 +60,18 @@ class Build extends AbstractCliApplication
      */
     protected $subtrees = [
         'application' => 'Application',
-        'data' => 'Data',
+        'data'        => 'Data',
         'environment' => 'Environment',
-        'filter' => 'Filter',
-        'io' => 'IO',
-        'session' => 'Session',
-        'support' => 'Support',
+        'filter'      => 'Filter',
+        'io'          => 'IO',
+        'session'     => 'Session',
+        'support'     => 'Support',
     ];
 
     /**
      * Method to run this application.
      *
-     * @return  boolean
+     * @return bool
      */
     protected function doExecute()
     {
@@ -128,13 +128,13 @@ class Build extends AbstractCliApplication
     }
 
     /**
-     * help
+     * help.
      *
-     * @return  boolean
+     * @return bool
      */
     protected function help()
     {
-        $help = <<<HELP
+        $help = <<<'HELP'
 Apli Build Command.
 
 Will run subtree split and push every packages to it's repos.
@@ -155,9 +155,9 @@ HELP;
     }
 
     /**
-     * replaceDocblockTags
+     * replaceDocblockTags.
      *
-     * @return  void
+     * @return void
      */
     protected function replaceDocblockTags()
     {
@@ -194,15 +194,15 @@ HELP;
      * Exec a command.
      *
      * @param string $command
-     * @param array $arguments
-     * @param array $options
+     * @param array  $arguments
+     * @param array  $options
      *
-     * @return  string
+     * @return string
      */
     protected function exec($command, $arguments = [], $options = [])
     {
-        $arguments = implode(' ', (array)$arguments);
-        $options = implode(' ', (array)$options);
+        $arguments = implode(' ', (array) $arguments);
+        $options = implode(' ', (array) $options);
 
         $command = sprintf('%s %s %s', $command, $arguments, $options);
 
@@ -221,6 +221,7 @@ HELP;
     {
         if ($this->branch = 'master') {
             $this->exec('git checkout '.$this->branch);
+
             return;
         }
 
@@ -237,7 +238,7 @@ HELP;
      * @param string $subtree
      * @param string $namespace
      *
-     * @return  void
+     * @return void
      */
     protected function splitTree($subtree, $namespace)
     {
@@ -286,11 +287,11 @@ HELP;
     }
 
     /**
-     * stop
+     * stop.
      *
      * @param string $msg
      *
-     * @return  void
+     * @return void
      */
     protected function stop($msg = null)
     {
@@ -302,6 +303,6 @@ HELP;
     }
 }
 
-$app = new Build;
+$app = new Build();
 
 $app->execute();

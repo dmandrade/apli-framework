@@ -3,16 +3,16 @@
 namespace Apli\Filter\Cleaner;
 
 /**
- * Interface FilterRuleInterface
+ * Interface FilterRuleInterface.
  */
 interface CleanerInterface
 {
     /**
      * Method to clean text by rule.
      *
-     * @param   string $source The source to be clean.
+     * @param string $source The source to be clean.
      *
-     * @return  mixed  The cleaned value.
+     * @return mixed The cleaned value.
      */
     public function clean($source);
 }

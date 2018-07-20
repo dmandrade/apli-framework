@@ -16,36 +16,36 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
     /**
      * Property input.
      *
-     * @var  CliInputInterface
+     * @var CliInputInterface
      */
     protected $input = null;
 
     /**
      * Property output.
      *
-     * @var  CliOutputInterface|ColorfulOutputInterface
+     * @var CliOutputInterface|ColorfulOutputInterface
      */
     protected $output = null;
 
     /**
      * Class init.
      *
-     * @param CliInputInterface $input
+     * @param CliInputInterface  $input
      * @param CliOutputInterface $output
      */
     public function __construct(CliInputInterface $input = null, CliOutputInterface $output = null)
     {
-        $this->input = $input ?: new CliInput;
-        $this->output = $output ?: new CliOutput;
+        $this->input = $input ?: new CliInput();
+        $this->output = $output ?: new CliOutput();
     }
 
     /**
-     * Write a string to standard output
+     * Write a string to standard output.
      *
-     * @param   string $text The text to display.
-     * @param   boolean $nl True (default) to append a new line at the end of the output string.
+     * @param string $text The text to display.
+     * @param bool   $nl   True (default) to append a new line at the end of the output string.
      *
-     * @return  IO  Instance of $this to allow chaining.
+     * @return IO Instance of $this to allow chaining.
      */
     public function out($text = '', $nl = true)
     {
@@ -57,7 +57,7 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
     /**
      * Get a value from standard input.
      *
-     * @return  string  The input string from standard input.
+     * @return string The input string from standard input.
      */
     public function in()
     {
@@ -67,8 +67,8 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
     /**
      * Write a string to standard error output.
      *
-     * @param   string $text The text to display.
-     * @param   boolean $nl True (default) to append a new line at the end of the output string.
+     * @param string $text The text to display.
+     * @param bool   $nl   True (default) to append a new line at the end of the output string.
      *
      * @return $this
      */
@@ -82,10 +82,10 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
     /**
      * Gets a value from the input data.
      *
-     * @param   string $name Name of the value to get.
-     * @param   mixed $default Default value to return if variable does not exist.
+     * @param string $name    Name of the value to get.
+     * @param mixed  $default Default value to return if variable does not exist.
      *
-     * @return  mixed  The filtered input value.
+     * @return mixed The filtered input value.
      */
     public function getOption($name, $default = null)
     {
@@ -93,12 +93,12 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
     }
 
     /**
-     * Sets a value
+     * Sets a value.
      *
-     * @param   string $name Name of the value to set.
-     * @param   mixed $value Value to assign to the input.
+     * @param string $name  Name of the value to set.
+     * @param mixed  $value Value to assign to the input.
      *
-     * @return  IO
+     * @return IO
      */
     public function setOption($name, $value)
     {
@@ -108,12 +108,12 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
     }
 
     /**
-     * setArgument
+     * setArgument.
      *
-     * @param integer $offset
+     * @param int   $offset
      * @param mixed $value
      *
-     * @return  IO
+     * @return IO
      */
     public function setArgument($offset, $value)
     {
@@ -123,9 +123,9 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
     }
 
     /**
-     * getInput
+     * getInput.
      *
-     * @return  CliInput|CliInputInterface
+     * @return CliInput|CliInputInterface
      */
     public function getInput()
     {
@@ -133,11 +133,11 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
     }
 
     /**
-     * setInput
+     * setInput.
      *
-     * @param   CliInputInterface $input
+     * @param CliInputInterface $input
      *
-     * @return  IO  Return self to support chaining.
+     * @return IO Return self to support chaining.
      */
     public function setInput(CliInputInterface $input)
     {
@@ -147,9 +147,9 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
     }
 
     /**
-     * getOutput
+     * getOutput.
      *
-     * @return  CliOutputInterface|ColorfulOutputInterface
+     * @return CliOutputInterface|ColorfulOutputInterface
      */
     public function getOutput()
     {
@@ -157,11 +157,11 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
     }
 
     /**
-     * setOutput
+     * setOutput.
      *
-     * @param   CliOutputInterface $output
+     * @param CliOutputInterface $output
      *
-     * @return  IO  Return self to support chaining.
+     * @return IO Return self to support chaining.
      */
     public function setOutput(CliOutputInterface $output)
     {
@@ -171,9 +171,9 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
     }
 
     /**
-     * getExecuted
+     * getExecuted.
      *
-     * @return  mixed
+     * @return mixed
      */
     public function getCalledScript()
     {
@@ -181,9 +181,9 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
     }
 
     /**
-     * getOptions
+     * getOptions.
      *
-     * @return  string[]
+     * @return string[]
      */
     public function getOptions()
     {
@@ -191,9 +191,9 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
     }
 
     /**
-     * getArguments
+     * getArguments.
      *
-     * @return  string[]
+     * @return string[]
      */
     public function getArguments()
     {
@@ -201,12 +201,12 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
     }
 
     /**
-     * Set value to property
+     * Set value to property.
      *
      * @param mixed $offset Property key.
-     * @param mixed $value Property value to set.
+     * @param mixed $value  Property value to set.
      *
-     * @return  void
+     * @return void
      */
     public function offsetSet($offset, $value)
     {
@@ -218,7 +218,7 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
      *
      * @param mixed $offset Key to unset.
      *
-     * @return  void
+     * @return void
      */
     public function offsetUnset($offset)
     {
@@ -230,7 +230,7 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
      *
      * @param mixed $offset Property key.
      *
-     * @return  boolean
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -242,7 +242,7 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
      *
      * @param mixed $offset Property key.
      *
-     * @return  mixed The value of this property.
+     * @return mixed The value of this property.
      */
     public function offsetGet($offset)
     {
@@ -250,12 +250,12 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
     }
 
     /**
-     * getArgument
+     * getArgument.
      *
-     * @param integer $offset
+     * @param int   $offset
      * @param mixed $default
      *
-     * @return  mixed
+     * @return mixed
      */
     public function getArgument($offset, $default = null)
     {
@@ -265,7 +265,7 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
     /**
      * Get the data store for iterate.
      *
-     * @return  \Traversable The data to be iterator.
+     * @return \Traversable The data to be iterator.
      */
     public function getIterator()
     {
@@ -275,7 +275,7 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
     /**
      * Serialize data.
      *
-     * @return  string Serialized data string.
+     * @return string Serialized data string.
      */
     public function serialize()
     {
@@ -287,7 +287,7 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
      *
      * @param string $serialized THe serialized data string.
      *
-     * @return  IO Support chaining.
+     * @return IO Support chaining.
      */
     public function unserialize($serialized)
     {
@@ -299,7 +299,7 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
     /**
      * Count data.
      *
-     * @return  int
+     * @return int
      */
     public function count()
     {
@@ -309,13 +309,13 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
     /**
      * Serialize to json format.
      *
-     * @return  string Encoded json string.
+     * @return string Encoded json string.
      */
     public function jsonSerialize()
     {
         return [
             'arguments' => $this->input->args,
-            'options' => $this->input->all(),
+            'options'   => $this->input->all(),
         ];
     }
 }

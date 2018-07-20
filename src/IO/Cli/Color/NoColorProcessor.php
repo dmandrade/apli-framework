@@ -8,9 +8,9 @@ namespace Apli\IO\Cli\Color;
 class NoColorProcessor extends ColorProcessor
 {
     /**
-     * Flag to remove color codes from the output
+     * Flag to remove color codes from the output.
      *
-     * @var    boolean
+     * @var bool
      */
     public $noColors = true;
 }

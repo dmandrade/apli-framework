@@ -5,7 +5,7 @@ namespace Apli\IO\Cli;
 use Apli\Support\AbstractEnum;
 
 /**
- * Class Signal
+ * Class Signal.
  *
  * @method static Signal HUP()
  * @method static Signal INT()
@@ -43,8 +43,6 @@ use Apli\Support\AbstractEnum;
  * @method static Signal BLOCK()
  * @method static Signal UNBLOCK()
  * @method static Signal SETMASK()
- *
- * @package Apli\IO\Cli
  */
 class Signal extends AbstractEnum
 {

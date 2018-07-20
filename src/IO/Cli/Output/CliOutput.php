@@ -6,34 +6,34 @@ use Apli\IO\Cli\Color\ColorProcessor;
 use Apli\IO\Cli\Color\ColorProcessorInterface;
 
 /**
- * Simple Cli Output
+ * Simple Cli Output.
  */
 class CliOutput extends AbstractCliOutput implements ColorfulOutputInterface
 {
     /**
-     * Color processing object
+     * Color processing object.
      *
-     * @var    ColorProcessorInterface
+     * @var ColorProcessorInterface
      */
     protected $processor;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param   ColorProcessorInterface $processor The output processor.
+     * @param ColorProcessorInterface $processor The output processor.
      */
     public function __construct(ColorProcessorInterface $processor = null)
     {
-        $this->setProcessor(($processor instanceof ColorProcessorInterface) ? $processor : new ColorProcessor);
+        $this->setProcessor(($processor instanceof ColorProcessorInterface) ? $processor : new ColorProcessor());
     }
 
     /**
-     * Write a string to standard output
+     * Write a string to standard output.
      *
-     * @param   string $text The text to display.
-     * @param   boolean $nl True (default) to append a new line at the end of the output string.
+     * @param string $text The text to display.
+     * @param bool   $nl   True (default) to append a new line at the end of the output string.
      *
-     * @return  CliOutput  Instance of $this to allow chaining.
+     * @return CliOutput Instance of $this to allow chaining.
      */
     public function out($text = '', $nl = true)
     {
@@ -43,11 +43,11 @@ class CliOutput extends AbstractCliOutput implements ColorfulOutputInterface
     }
 
     /**
-     * Get a processor
+     * Get a processor.
      *
-     * @return  ColorProcessorInterface
+     * @throws \RuntimeException
      *
-     * @throws  \RuntimeException
+     * @return ColorProcessorInterface
      */
     public function getProcessor()
     {
@@ -59,11 +59,11 @@ class CliOutput extends AbstractCliOutput implements ColorfulOutputInterface
     }
 
     /**
-     * Set a processor
+     * Set a processor.
      *
-     * @param   ColorProcessorInterface $processor The output processor.
+     * @param ColorProcessorInterface $processor The output processor.
      *
-     * @return  CliOutput  Instance of $this to allow chaining.
+     * @return CliOutput Instance of $this to allow chaining.
      */
     public function setProcessor(ColorProcessorInterface $processor)
     {
@@ -75,8 +75,8 @@ class CliOutput extends AbstractCliOutput implements ColorfulOutputInterface
     /**
      * Write a string to standard error output.
      *
-     * @param   string $text The text to display.
-     * @param   boolean $nl True (default) to append a new line at the end of the output string.
+     * @param string $text The text to display.
+     * @param bool   $nl   True (default) to append a new line at the end of the output string.
      *
      * @return $this
      */
@@ -87,4 +87,3 @@ class CliOutput extends AbstractCliOutput implements ColorfulOutputInterface
         return $this;
     }
 }
-

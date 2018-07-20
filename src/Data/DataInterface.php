@@ -3,17 +3,16 @@
 namespace Apli\Data;
 
 /**
- * Interface DataInterface
- * @package Apli\Data
+ * Interface DataInterface.
  */
 interface DataInterface
 {
-
     /**
-     * Get a value from data
+     * Get a value from data.
      *
      * @param $path
      * @param null $default
+     *
      * @return null
      */
     public function get($path, $default = null);
@@ -23,15 +22,17 @@ interface DataInterface
      *
      * @param $field
      * @param $value
+     *
      * @return $this
      */
     public function set($field, $value);
 
     /**
-     * Push value to a path in data
+     * Push value to a path in data.
      *
      * @param $path
      * @param $value
+     *
      * @return mixed
      */
     public function push($path, $value);
@@ -41,6 +42,7 @@ interface DataInterface
      *
      * @param $path
      * @param $value
+     *
      * @return mixed
      */
     public function unshift($path, $value);
@@ -49,31 +51,33 @@ interface DataInterface
      * To remove first element from the path of this data.
      *
      * @param $path
+     *
      * @return mixed
      */
     public function shift($path);
-
 
     /**
      * To remove last element from the path of this data.
      *
      * @param $path
+     *
      * @return mixed
      */
     public function pop($path);
 
     /**
-     * remove a value from data
+     * remove a value from data.
      *
-     * @param   string $path
-     * @return  static
+     * @param string $path
+     *
+     * @return static
      */
     public function remove($path);
 
     /**
      * Reset all data.
      *
-     * @return  static
+     * @return static
      */
     public function reset();
 
@@ -82,6 +86,7 @@ interface DataInterface
      *
      * @param $source
      * @param bool $raw
+     *
      * @return mixed
      */
     public function merge($source, $raw = false);
@@ -90,48 +95,50 @@ interface DataInterface
      * Check if a data path exists.
      *
      * @param $path
-     * @return boolean
+     *
+     * @return bool
      */
     public function exists($path);
 
     /**
-     * Bind the data
+     * Bind the data.
      *
      * @param $values
      * @param bool $replaceNulls
+     *
      * @return mixed
      */
     public function bind($values, $replaceNulls = false);
 
     /**
-     * Check if data is empty
+     * Check if data is empty.
      *
-     * @return boolean
+     * @return bool
      */
     public function isNull();
 
     /**
-     * Check if data is not null
+     * Check if data is not null.
      *
-     * @return boolean
+     * @return bool
      */
     public function notNull();
 
     /**
-     * Check a value is set
+     * Check a value is set.
      *
-     * @param   string $field
+     * @param string $field
      *
-     * @return  boolean
+     * @return bool
      */
     public function __isset($field);
 
     /**
-     * Get a value
+     * Get a value.
      *
-     * @param   string $name
+     * @param string $name
      *
-     * @return  mixed
+     * @return mixed
      */
     public function __get($name);
 
@@ -139,42 +146,45 @@ interface DataInterface
      * Set value.
      *
      * @param string $field The field to set.
-     * @param mixed $value The value to set.
+     * @param mixed  $value The value to set.
      *
-     * @return  void
      * @throws \InvalidArgumentException
+     *
+     * @return void
      */
     public function __set($field, $value = null);
 
     /**
-     * Unset a value
+     * Unset a value.
      *
-     * @param   string $name
+     * @param string $name
      *
-     * @return  void
+     * @return void
      */
     public function __unset($name);
 
     /**
-     * Transforms data to an array
+     * Transforms data to an array.
      *
      * @return mixed
      */
     public function toArray();
 
     /**
-     * Transforms data to an object
+     * Transforms data to an object.
      *
      * @param string $class
+     *
      * @return mixed
      */
     public function toObject($class = 'stdClass');
 
     /**
-     * Get data in a given string format
+     * Get data in a given string format.
      *
      * @param $format
      * @param array $options
+     *
      * @return mixed
      */
     public function toString($format, $options = []);

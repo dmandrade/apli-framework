@@ -1,13 +1,15 @@
 <?php
 /**
- *  Copyright (c) 2017 Danilo Andrade (http://daniloandrade.net)
+ *  Copyright (c) 2017 Danilo Andrade (http://daniloandrade.net).
  *
  *  This file is part of the Aplí Framework.
  *
  * @project Aplí Framework
  * @file Server.php
+ *
  * @author Danilo Andrade <danilo@daniloandrade.net>
  * @date 16/12/17 at 15:11
+ *
  * @copyright  Copyright (c) 2017 Danilo Andrade
  * @license    GNU Lesser General Public License version 3 or later.
  */
@@ -15,17 +17,14 @@
 namespace Apli\Environment;
 
 /**
- * Class Server
- *
- * @package Apli\Environment
+ * Class Server.
  */
 class Server
 {
-
     /**
      * Property server data.
      *
-     * @var  array
+     * @var array
      */
     protected $server = [];
 
@@ -54,7 +53,7 @@ class Server
     }
 
     /**
-     * Get root directory
+     * Get root directory.
      *
      * @return string
      */
@@ -64,7 +63,7 @@ class Server
     }
 
     /**
-     * Get script entry
+     * Get script entry.
      *
      * @return bool|mixed|string
      */
@@ -84,7 +83,7 @@ class Server
     }
 
     /**
-     * Get current working directory
+     * Get current working directory.
      *
      * @return string
      */
@@ -94,7 +93,7 @@ class Server
     }
 
     /**
-     * Get a server param
+     * Get a server param.
      *
      * @param $key
      * @param null $default
@@ -111,7 +110,7 @@ class Server
     }
 
     /**
-     * Get server document root
+     * Get server document root.
      *
      * @return mixed|null
      */
@@ -121,7 +120,7 @@ class Server
     }
 
     /**
-     * Get server requested uri
+     * Get server requested uri.
      *
      * @param bool $withParams
      *
@@ -137,7 +136,7 @@ class Server
     }
 
     /**
-     * Get server host
+     * Get server host.
      *
      * @return mixed|null
      */
@@ -147,7 +146,7 @@ class Server
     }
 
     /**
-     * Get server port
+     * Get server port.
      *
      * @return mixed|null
      */
@@ -157,7 +156,7 @@ class Server
     }
 
     /**
-     * Get server schema
+     * Get server schema.
      *
      * @return mixed|null
      */

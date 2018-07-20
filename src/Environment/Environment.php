@@ -1,13 +1,15 @@
 <?php
 /**
- *  Copyright (c) 2017 Danilo Andrade (http://daniloandrade.net)
+ *  Copyright (c) 2017 Danilo Andrade (http://daniloandrade.net).
  *
  *  This file is part of the Aplí Framework.
  *
  * @project Aplí Framework
  * @file Environment.php
+ *
  * @author Danilo Andrade <danilo@daniloandrade.net>
  * @date 05/12/17 at 10:56
+ *
  * @copyright  Copyright (c) 2017 Danilo Andrade
  * @license    GNU Lesser General Public License version 3 or later.
  */
@@ -15,16 +17,14 @@
 namespace Apli\Environment;
 
 /**
- * Class Environment
- * @package Apli\Environment
+ * Class Environment.
  */
 class Environment
 {
-
     /**
      * Property sapi name.
      *
-     * @var  string
+     * @var string
      */
     protected $sapi = '';
 
@@ -45,7 +45,7 @@ class Environment
     }
 
     /**
-     * Set sapi interface name
+     * Set sapi interface name.
      *
      * @param $interface
      */
@@ -63,7 +63,8 @@ class Environment
     }
 
     /**
-     * Check if is running in a web environment
+     * Check if is running in a web environment.
+     *
      * @return bool
      */
     public function isWeb()
@@ -72,16 +73,17 @@ class Environment
     }
 
     /**
-     * Check if is running in a cli environment
+     * Check if is running in a cli environment.
+     *
      * @return bool
      */
     public function isCli()
     {
-        return (substr($this->sapi, 0, 3) === 'cli');
+        return substr($this->sapi, 0, 3) === 'cli';
     }
 
     /**
-     * Get PHP/HHVM version
+     * Get PHP/HHVM version.
      *
      * @return string
      */
@@ -103,9 +105,9 @@ class Environment
     }
 
     /**
-     * isPHP
+     * isPHP.
      *
-     * @return  boolean
+     * @return bool
      */
     public function isPHP()
     {

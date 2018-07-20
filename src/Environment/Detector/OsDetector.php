@@ -1,13 +1,15 @@
 <?php
 /**
- *  Copyright (c) 2017 Danilo Andrade (http://daniloandrade.net)
+ *  Copyright (c) 2017 Danilo Andrade (http://daniloandrade.net).
  *
  *  This file is part of the Aplí Framework.
  *
  * @project Aplí Framework
  * @file OsDetector.php
+ *
  * @author Danilo Andrade <danilo@daniloandrade.net>
  * @date 09/12/17 at 20:34
+ *
  * @copyright  Copyright (c) 2017 Danilo Andrade
  * @license    GNU Lesser General Public License version 3 or later.
  */
@@ -16,14 +18,13 @@
  * Created by PhpStorm.
  * User: danil
  * Date: 09/12/2017
- * Time: 20:23
+ * Time: 20:23.
  */
 
 namespace Apli\Environment\Detector;
 
 class OsDetector
 {
-
     const OTHER_FAMILY = 0;
     const UNIX_FAMILY = 1;
     const WINDOWS_FAMILY = 2;
@@ -51,25 +52,25 @@ class OsDetector
     {
         foreach ($this->detectors as $class) {
             /** @var OsInterface $os */
-            $os = (new $class);
+            $os = (new $class());
             $detected = $this->isOs($kernel, $os->getVariants());
             if ($detected) {
                 return $os;
             }
         }
 
-        return (new UnknownOs());
+        return new UnknownOs();
     }
 
     /**
      * @param string $kernel
-     * @param array $os
+     * @param array  $os
      *
-     * @return boolean
+     * @return bool
      */
     private function isOs($kernel, $variants)
     {
-        return (bool)preg_grep('/^'.preg_quote($kernel).'$/i', $variants);
+        return (bool) preg_grep('/^'.preg_quote($kernel).'$/i', $variants);
     }
 
     /**

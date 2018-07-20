@@ -2,15 +2,14 @@
 
 namespace Apli\Data;
 
-
 class Helper
 {
-
     /**
      * Utility function to convert all types to an array.
      *
      * @param $data
      * @param bool $recursive
+     *
      * @return array
      */
     public static function toArray($data, $recursive = false)
@@ -21,7 +20,7 @@ class Helper
         } elseif (is_object($data)) {
             $data = get_object_vars($data);
         } else {
-            $data = (array)$data;
+            $data = (array) $data;
         }
 
         if ($recursive) {
@@ -35,14 +34,14 @@ class Helper
         return $data;
     }
 
-
     /**
-     * Set value in a specified path in data structure
+     * Set value in a specified path in data structure.
      *
      * @param array $data
      * @param $path
      * @param $value
      * @param string $separator
+     *
      * @return bool
      */
     public static function setByPath(array &$data, $path, $value, $separator = '.')
@@ -78,10 +77,11 @@ class Helper
 
     /**
      * Explode the data path into an sequential array and remove empty
-     * nodes that occur as a result of a double dot. ex: apli..test
+     * nodes that occur as a result of a double dot. ex: apli..test.
      *
      * @param $path
      * @param string $separator
+     *
      * @return array
      */
     public static function getPathNodes($path, $separator = '.')
@@ -95,6 +95,7 @@ class Helper
      * @param array $data
      * @param $path
      * @param string $separator
+     *
      * @return array|mixed|null
      */
     public static function getByPath(array $data, $path, $separator = '.')
@@ -102,7 +103,7 @@ class Helper
         $nodes = static::getPathNodes($path, $separator);
 
         if (empty($nodes)) {
-            return null;
+            return;
         }
 
         $dataTmp = $data;
@@ -115,7 +116,7 @@ class Helper
             } elseif (is_array($dataTmp) && isset($dataTmp[$arg])) {
                 $dataTmp = $dataTmp[$arg];
             } else {
-                return null;
+                return;
             }
         }
 
@@ -123,11 +124,12 @@ class Helper
     }
 
     /**
-     * Remove a specified path in data
+     * Remove a specified path in data.
      *
      * @param array $data
      * @param $path
      * @param string $separator
+     *
      * @return bool
      */
     public static function removeByPath(array &$data, $path, $separator = '.')
