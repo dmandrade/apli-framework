@@ -6,10 +6,15 @@ A personal project to create a fully decoupled framework.
 
 Packages ready to use or in development.
 
-- [ ] Core
+- [ ] [Platform](https://github.com/dmandrade/apli-platform)
+- [ ] [Core](https://github.com/dmandrade/apli-core)
 - [x] [Environment](https://github.com/dmandrade/apli-environment)
-- [ ] Session
-- [ ] Application
+- [ ] [Session](https://github.com/dmandrade/apli-session)
+- [ ] [Filter & Sanitize](https://github.com/dmandrade/apli-filter)
+- [ ] [Application](https://github.com/dmandrade/apli-application)
+- [ ] [Data Container](https://github.com/dmandrade/apli-data)
+- [ ] [Support](https://github.com/dmandrade/apli-support)
+- [ ] [Input & Outpu](https://github.com/dmandrade/apli-io)
 - [ ] Authentication
 - [ ] Cache
 - [ ] Console
@@ -28,6 +33,5 @@ Packages ready to use or in development.
 - [ ] Middlewares
 - [ ] Router
 - [ ] Validator
-- [ ] Support
 
 *Each package can be used individually without the need of the entire framework.*
