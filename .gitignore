@@ -2,6 +2,7 @@
 .*
 !.gitignre
 !.editorconfig
+!.styleci.yml
 !/.travis.yml
 
 # Composer #
