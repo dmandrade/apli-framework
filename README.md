@@ -14,7 +14,7 @@ Packages ready to use or in development.
 - [ ] [Application](https://github.com/dmandrade/apli-application)
 - [ ] [Data Container](https://github.com/dmandrade/apli-data)
 - [ ] [Support](https://github.com/dmandrade/apli-support)
-- [ ] [Input & Outpu](https://github.com/dmandrade/apli-io)
+- [ ] [Input & Output](https://github.com/dmandrade/apli-io)
 - [ ] Authentication
 - [ ] Cache
 - [ ] Console

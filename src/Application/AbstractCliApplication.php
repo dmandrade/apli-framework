@@ -13,7 +13,7 @@ use Apli\IO\Cli\IO;
 use Apli\IO\Cli\IOInterface;
 
 /**
- * Simple class for a Apli command line application.
+ * Simple class for a Aplí command line application.
  *
  * @property-read  IOInterface $io
  */

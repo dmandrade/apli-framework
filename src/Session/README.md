@@ -1,6 +1,6 @@
-# Apli Session
+# Aplí Session
        
-Apli Session package provides a simple interface to manage session data.
+Aplí Session package provides a simple interface to manage session data.
 
 ## Installation via Composer
 

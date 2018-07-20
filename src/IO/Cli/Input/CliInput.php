@@ -6,7 +6,7 @@ use Apli\IO\Filter\NullFilter;
 use Apli\IO\Input;
 
 /**
- * Apli Input CLI Class
+ * Aplí Input CLI Class
  */
 class CliInput extends Input implements CliInputInterface
 {

@@ -1,6 +1,6 @@
-# Apli Data
+# Aplí Data
 
-Apli Data help us to work with data structures like array; object; json or xml.
+Aplí Data help us to work with data structures like array; object; json or xml.
 
 ## Installation via Composer
 

@@ -1,6 +1,6 @@
 # Aplí IO
 
-Apli IO package is an input & output handler to get request or send output to user.
+Aplí IO package is an input & output handler to get request or send output to user.
 
 ## Installation via Composer
 
