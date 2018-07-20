@@ -8,32 +8,32 @@ namespace Apli\IO\Cli\Color;
 class ColorProcessor implements ColorProcessorInterface
 {
     /**
-     * Regex used for removing color codes
+     * Regex used for removing color codes.
      *
-     * @var    string
+     * @var string
      */
     protected static $stripFilter = '/<[\/]?[a-z=;]+>/';
     /**
-     * Flag to remove color codes from the output
+     * Flag to remove color codes from the output.
      *
-     * @var    boolean
+     * @var bool
      */
     public $noColors = false;
     /**
-     * Regex to match tags
+     * Regex to match tags.
      *
-     * @var    string
+     * @var string
      */
     protected $tagFilter = '/<([a-z=;]+)>(.*?)<\/\\1>/s';
     /**
-     * Array of ColorStyle objects
+     * Array of ColorStyle objects.
      *
-     * @var    array
+     * @var array
      */
     protected $styles = [];
 
     /**
-     * Class constructor
+     * Class constructor.
      */
     public function __construct()
     {
@@ -41,9 +41,9 @@ class ColorProcessor implements ColorProcessorInterface
     }
 
     /**
-     * Adds predefined color styles to the ColorProcessor object
+     * Adds predefined color styles to the ColorProcessor object.
      *
-     * @return  static  Instance of $this to allow chaining.
+     * @return static Instance of $this to allow chaining.
      */
     protected function addPredefinedStyles()
     {
@@ -73,10 +73,10 @@ class ColorProcessor implements ColorProcessorInterface
     /**
      * Add a style.
      *
-     * @param   string $name The style name.
-     * @param   ColorStyle $style The color style.
+     * @param string     $name  The style name.
+     * @param ColorStyle $style The color style.
      *
-     * @return  ColorProcessor  Instance of $this to allow chaining.
+     * @return ColorProcessor Instance of $this to allow chaining.
      */
     public function addStyle($name, ColorStyle $style)
     {
@@ -88,9 +88,9 @@ class ColorProcessor implements ColorProcessorInterface
     /**
      * Strip color tags from a string.
      *
-     * @param   string $string The string.
+     * @param string $string The string.
      *
-     * @return  string
+     * @return string
      */
     public static function stripColors($string)
     {
@@ -100,9 +100,9 @@ class ColorProcessor implements ColorProcessorInterface
     /**
      * Process a string.
      *
-     * @param   string $string The string to process.
+     * @param string $string The string to process.
      *
-     * @return  string
+     * @return string
      */
     public function process($string)
     {
@@ -129,26 +129,26 @@ class ColorProcessor implements ColorProcessorInterface
     /**
      * Replace color tags in a string.
      *
-     * @param   string $text The original text.
-     * @param   string $tag The matched tag.
-     * @param   string $match The match.
-     * @param   ColorStyle $style The color style to apply.
+     * @param string     $text  The original text.
+     * @param string     $tag   The matched tag.
+     * @param string     $match The match.
+     * @param ColorStyle $style The color style to apply.
      *
-     * @return  mixed
+     * @return mixed
      */
     protected function replaceColors($text, $tag, $match, ColorStyle $style)
     {
         $replace = $this->noColors
             ? $match
-            : "\033[".$style."m".$match."\033[0m";
+            : "\033[".$style.'m'.$match."\033[0m";
 
         return str_replace('<'.$tag.'>'.$match.'</'.$tag.'>', $replace, $text);
     }
 
     /**
-     * Method to get property NoColors
+     * Method to get property NoColors.
      *
-     * @return  boolean
+     * @return bool
      */
     public function getNoColors()
     {
@@ -156,11 +156,11 @@ class ColorProcessor implements ColorProcessorInterface
     }
 
     /**
-     * Method to set property noColors
+     * Method to set property noColors.
      *
-     * @param   boolean $noColors
+     * @param bool $noColors
      *
-     * @return  static  Return self to support chaining.
+     * @return static Return self to support chaining.
      */
     public function setNoColors($noColors)
     {

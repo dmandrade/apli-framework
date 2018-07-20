@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: Danilo
  * Date: 09/07/2018
- * Time: 15:30
+ * Time: 15:30.
  */
 
 namespace Apli\Data;
@@ -13,14 +13,15 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     /**
      * Property separator.
      *
-     * @var  string
+     * @var string
      */
     protected $separator = '.';
 
     /**
      * Data store.
      *
-     * @var    array
+     * @var array
+     *
      * @since  2.0
      */
     protected $data = [];
@@ -28,7 +29,7 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     /**
      * Property ignoreValues.
      *
-     * @var  array
+     * @var array
      */
     protected $ignoreValues = [null];
 
@@ -45,10 +46,11 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     }
 
     /**
-     * Bind the data
+     * Bind the data.
      *
      * @param $values
      * @param bool $replaceNulls
+     *
      * @return mixed
      */
     public function bind($values, $replaceNulls = false)
@@ -97,7 +99,7 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
      *
      * This allows the data properties to be accessed via a foreach statement.
      *
-     * @return  \RecursiveArrayIterator a object iterator
+     * @return \RecursiveArrayIterator a object iterator
      */
     public function getIterator()
     {
@@ -108,6 +110,7 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
      * Checks whether an offset exists in the iterator.
      *
      * @param mixed $offset
+     *
      * @return bool
      */
     public function offsetExists($offset)
@@ -119,7 +122,8 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
      * Check if a data path exists.
      *
      * @param $path
-     * @return boolean
+     *
+     * @return bool
      */
     public function exists($path)
     {
@@ -127,10 +131,11 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     }
 
     /**
-     * Get a value from data
+     * Get a value from data.
      *
      * @param $path
      * @param null $default
+     *
      * @return null
      */
     public function get($path, $default = null)
@@ -144,6 +149,7 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
      * Gets an offset in the iterator.
      *
      * @param mixed $offset
+     *
      * @return mixed|null
      */
     public function offsetGet($offset)
@@ -167,6 +173,7 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
      *
      * @param $field
      * @param $value
+     *
      * @return $this
      */
     public function set($field, $value)
@@ -191,10 +198,11 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     }
 
     /**
-     * remove a value from data
+     * remove a value from data.
      *
-     * @param   string $path
-     * @return  static
+     * @param string $path
+     *
+     * @return static
      */
     public function remove($path)
     {
@@ -204,7 +212,7 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     }
 
     /**
-     * Count itens in data object
+     * Count itens in data object.
      *
      * @return int
      */
@@ -225,9 +233,9 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     }
 
     /**
-     * Check if data is not null
+     * Check if data is not null.
      *
-     * @return boolean
+     * @return bool
      */
     public function notNull()
     {
@@ -235,9 +243,9 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     }
 
     /**
-     * Check if data is empty
+     * Check if data is empty.
      *
-     * @return boolean
+     * @return bool
      */
     public function isNull()
     {
@@ -245,11 +253,11 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     }
 
     /**
-     * Check a value is set
+     * Check a value is set.
      *
-     * @param   string $field
+     * @param string $field
      *
-     * @return  boolean
+     * @return bool
      */
     public function __isset($field)
     {
@@ -257,11 +265,11 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     }
 
     /**
-     * Get a value
+     * Get a value.
      *
-     * @param   string $name
+     * @param string $name
      *
-     * @return  mixed
+     * @return mixed
      */
     public function __get($name)
     {
@@ -272,10 +280,11 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
      * Set value.
      *
      * @param string $field The field to set.
-     * @param mixed $value The value to set.
+     * @param mixed  $value The value to set.
      *
-     * @return  void
      * @throws \InvalidArgumentException
+     *
+     * @return void
      */
     public function __set($field, $value = null)
     {
@@ -283,11 +292,11 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     }
 
     /**
-     * Unset a value
+     * Unset a value.
      *
-     * @param   string $name
+     * @param string $name
      *
-     * @return  void
+     * @return void
      */
     public function __unset($name)
     {
@@ -295,10 +304,11 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     }
 
     /**
-     * Push value to a path in data
+     * Push value to a path in data.
      *
      * @param $path
      * @param $value
+     *
      * @return mixed
      */
     public function push($path, $value)
@@ -311,6 +321,7 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
      *
      * @param $path
      * @param $value
+     *
      * @return mixed
      */
     public function unshift($path, $value)
@@ -322,6 +333,7 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
      * To remove first element from the path of this data.
      *
      * @param $path
+     *
      * @return mixed
      */
     public function shift($path)
@@ -333,6 +345,7 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
      * To remove last element from the path of this data.
      *
      * @param $path
+     *
      * @return mixed
      */
     public function pop($path)
@@ -343,7 +356,7 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     /**
      * Reset all data.
      *
-     * @return  static
+     * @return static
      */
     public function reset()
     {
@@ -355,6 +368,7 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
      *
      * @param $source
      * @param bool $raw
+     *
      * @return mixed
      */
     public function merge($source, $raw = false)
@@ -363,7 +377,7 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     }
 
     /**
-     * Transforms data to an array
+     * Transforms data to an array.
      *
      * @return mixed
      */
@@ -373,9 +387,10 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     }
 
     /**
-     * Transforms data to an object
+     * Transforms data to an object.
      *
      * @param string $class
+     *
      * @return mixed
      */
     public function toObject($class = 'stdClass')
@@ -384,10 +399,11 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     }
 
     /**
-     * Get data in a given string format
+     * Get data in a given string format.
      *
      * @param $format
      * @param array $options
+     *
      * @return mixed
      */
     public function toString($format, $options = [])

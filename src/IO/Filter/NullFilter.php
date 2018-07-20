@@ -8,12 +8,12 @@ namespace Apli\IO\Filter;
 class NullFilter
 {
     /**
-     * clean
+     * clean.
      *
-     * @param string $source
+     * @param string                 $source
      * @param string|callable|object $filter
      *
-     * @return  mixed
+     * @return mixed
      */
     public function clean($source, $filter = 'string')
     {

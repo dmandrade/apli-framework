@@ -1,13 +1,15 @@
 <?php
 /**
- *  Copyright (c) 2018 Danilo Andrade (http://daniloandrade.net)
+ *  Copyright (c) 2018 Danilo Andrade (http://daniloandrade.net).
  *
  *  This file is part of the Aplí Framework.
  *
  * @project Aplí Framework
  * @file Environment.php
+ *
  * @author Danilo Andrade <danilo@daniloandrade.net>
  * @date 07/07/18 at 17:10
+ *
  * @copyright  Copyright (c) 2018 Danilo Andrade
  * @license    GNU Lesser General Public License version 3 or later.
  */
@@ -17,25 +19,22 @@ namespace Apli\Session;
 use Traversable;
 
 /**
- * Class Session
+ * Class Session.
  *
  * Class for managing HTTP sessions with access to session-state values as well as session-level
  * settings and lifetime management methods.
- *
- * @package Apli\Session
  */
 class Session implements \ArrayAccess, \IteratorAggregate
 {
-
     /**
      * Internal state.
-     * One of State constants
+     * One of State constants.
      *
      * @var State
+     *
      * @see getState()
      */
     protected $state;
-
 
     /**
      * Session constructor.
@@ -46,10 +45,13 @@ class Session implements \ArrayAccess, \IteratorAggregate
     }
 
     /**
-     * Retrieve an external iterator
+     * Retrieve an external iterator.
+     *
      * @link http://php.net/manual/en/iteratoraggregate.getiterator.php
+     *
      * @return Traversable An instance of an object implementing <b>Iterator</b> or
-     * <b>Traversable</b>
+     *                     <b>Traversable</b>
+     *
      * @since 5.0.0
      */
     public function getIterator()
@@ -58,15 +60,19 @@ class Session implements \ArrayAccess, \IteratorAggregate
     }
 
     /**
-     * Whether a offset exists
+     * Whether a offset exists.
+     *
      * @link http://php.net/manual/en/arrayaccess.offsetexists.php
+     *
      * @param mixed $offset <p>
-     * An offset to check for.
-     * </p>
-     * @return boolean true on success or false on failure.
-     * </p>
-     * <p>
-     * The return value will be casted to boolean if non-boolean was returned.
+     *                      An offset to check for.
+     *                      </p>
+     *
+     * @return bool true on success or false on failure.
+     *              </p>
+     *              <p>
+     *              The return value will be casted to boolean if non-boolean was returned.
+     *
      * @since 5.0.0
      */
     public function offsetExists($offset)
@@ -75,12 +81,16 @@ class Session implements \ArrayAccess, \IteratorAggregate
     }
 
     /**
-     * Offset to retrieve
+     * Offset to retrieve.
+     *
      * @link http://php.net/manual/en/arrayaccess.offsetget.php
+     *
      * @param mixed $offset <p>
-     * The offset to retrieve.
-     * </p>
+     *                      The offset to retrieve.
+     *                      </p>
+     *
      * @return mixed Can return all value types.
+     *
      * @since 5.0.0
      */
     public function offsetGet($offset)
@@ -89,15 +99,19 @@ class Session implements \ArrayAccess, \IteratorAggregate
     }
 
     /**
-     * Offset to set
+     * Offset to set.
+     *
      * @link http://php.net/manual/en/arrayaccess.offsetset.php
+     *
      * @param mixed $offset <p>
-     * The offset to assign the value to.
-     * </p>
-     * @param mixed $value <p>
-     * The value to set.
-     * </p>
+     *                      The offset to assign the value to.
+     *                      </p>
+     * @param mixed $value  <p>
+     *                      The value to set.
+     *                      </p>
+     *
      * @return void
+     *
      * @since 5.0.0
      */
     public function offsetSet($offset, $value)
@@ -106,12 +120,16 @@ class Session implements \ArrayAccess, \IteratorAggregate
     }
 
     /**
-     * Offset to unset
+     * Offset to unset.
+     *
      * @link http://php.net/manual/en/arrayaccess.offsetunset.php
+     *
      * @param mixed $offset <p>
-     * The offset to unset.
-     * </p>
+     *                      The offset to unset.
+     *                      </p>
+     *
      * @return void
+     *
      * @since 5.0.0
      */
     public function offsetUnset($offset)

@@ -1,13 +1,15 @@
 <?php
 /**
- *  Copyright (c) 2017 Danilo Andrade (http://daniloandrade.net)
+ *  Copyright (c) 2017 Danilo Andrade (http://daniloandrade.net).
  *
  *  This file is part of the Aplí Framework.
  *
  * @project Aplí Framework
  * @file EnvironmentTest.php
+ *
  * @author Danilo Andrade <danilo@daniloandrade.net>
  * @date 05/12/17 at 11:22
+ *
  * @copyright  Copyright (c) 2017 Danilo Andrade
  * @license    GNU Lesser General Public License version 3 or later.
  */
@@ -26,23 +28,23 @@ class EnvironmentTest extends \Codeception\Test\Unit
     protected $environment;
 
     /**
-     * Is hhvm flag
+     * Is hhvm flag.
      *
-     * @var boolean
+     * @var bool
      */
     protected $isHHVM;
 
     /**
-     * PHP/HHVM runtime version
+     * PHP/HHVM runtime version.
      *
      * @var string
      */
     protected $phpVersion;
 
     /**
-     * getOSTestData
+     * getOSTestData.
      *
-     * @return  array
+     * @return array
      */
     public function getIsOsxTestData()
     {
@@ -56,14 +58,14 @@ class EnvironmentTest extends \Codeception\Test\Unit
             ['SunOS', false],
             ['WIN32', false],
             ['WINNT', false],
-            ['Windows', false]
+            ['Windows', false],
         ];
     }
 
     /**
-     * getOSTestData
+     * getOSTestData.
      *
-     * @return  array
+     * @return array
      */
     public function getIsWinTestData()
     {
@@ -77,14 +79,14 @@ class EnvironmentTest extends \Codeception\Test\Unit
             ['SunOS', false],
             ['WIN32', true],
             ['WINNT', true],
-            ['Windows', true]
+            ['Windows', true],
         ];
     }
 
     /**
-     * getOSTestData
+     * getOSTestData.
      *
-     * @return  array
+     * @return array
      */
     public function getIsUnixTestData()
     {
@@ -98,14 +100,14 @@ class EnvironmentTest extends \Codeception\Test\Unit
             ['SunOS', true],
             ['WIN32', false],
             ['WINNT', false],
-            ['Windows', false]
+            ['Windows', false],
         ];
     }
 
     /**
-     * getOSTestData
+     * getOSTestData.
      *
-     * @return  array
+     * @return array
      */
     public function getIsUnixOnWindowsTestData()
     {
@@ -119,16 +121,16 @@ class EnvironmentTest extends \Codeception\Test\Unit
             ['SunOS', false],
             ['WIN32', false],
             ['WINNT', false],
-            ['Windows', false]
+            ['Windows', false],
         ];
     }
 
     /**
-     * getIsCliTestData
+     * getIsCliTestData.
      *
      * @see http://php.net/manual/en/function.php-sapi-name.php
      *
-     * @return  array
+     * @return array
      */
     public function getIsCliTestData()
     {
@@ -160,11 +162,11 @@ class EnvironmentTest extends \Codeception\Test\Unit
     }
 
     /**
-     * getIsWebTestData
+     * getIsWebTestData.
      *
      * @see http://php.net/manual/en/function.php-sapi-name.php
      *
-     * @return  array
+     * @return array
      */
     public function getIsWebTestData()
     {
@@ -199,7 +201,7 @@ class EnvironmentTest extends \Codeception\Test\Unit
      * Method to test isOsx().
      *
      * @param string $os
-     * @param boolean $value
+     * @param bool   $value
      *
      * @return void
      *
@@ -218,7 +220,7 @@ class EnvironmentTest extends \Codeception\Test\Unit
      * Method to test isWindows().
      *
      * @param string $os
-     * @param boolean $value
+     * @param bool   $value
      *
      * @return void
      *
@@ -237,7 +239,7 @@ class EnvironmentTest extends \Codeception\Test\Unit
      * Method to test isUnix().
      *
      * @param string $os
-     * @param boolean $value
+     * @param bool   $value
      *
      * @return void
      *
@@ -256,7 +258,7 @@ class EnvironmentTest extends \Codeception\Test\Unit
      * Method to test isUnixOnWindows().
      *
      * @param string $os
-     * @param boolean $value
+     * @param bool   $value
      *
      * @return void
      *
@@ -275,7 +277,7 @@ class EnvironmentTest extends \Codeception\Test\Unit
      * Method to test isCli().
      *
      * @param string $interface
-     * @param boolean $value
+     * @param bool   $value
      *
      * @return void
      *
@@ -294,7 +296,7 @@ class EnvironmentTest extends \Codeception\Test\Unit
      * Method to test isWeb().
      *
      * @param string $interface
-     * @param boolean $value
+     * @param bool   $value
      *
      * @return void
      *
@@ -318,7 +320,6 @@ class EnvironmentTest extends \Codeception\Test\Unit
      */
     public function testIsHHVM()
     {
-
         $this->assertEquals($this->isHHVM, $this->environment->isHHVM());
     }
 
@@ -331,7 +332,6 @@ class EnvironmentTest extends \Codeception\Test\Unit
      */
     public function testIsPHP()
     {
-
         $this->assertEquals(!$this->isHHVM, $this->environment->isPHP());
     }
 

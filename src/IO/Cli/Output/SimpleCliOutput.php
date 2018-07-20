@@ -3,17 +3,17 @@
 namespace Apli\IO\Cli\Output;
 
 /**
- * Class SimpleCliOutput
+ * Class SimpleCliOutput.
  */
 class SimpleCliOutput extends AbstractCliOutput
 {
     /**
-     * Write a string to standard output
+     * Write a string to standard output.
      *
-     * @param   string $text The text to display.
-     * @param   boolean $nl True (default) to append a new line at the end of the output string.
+     * @param string $text The text to display.
+     * @param bool   $nl   True (default) to append a new line at the end of the output string.
      *
-     * @return  SimpleCliOutput  Instance of $this to allow chaining.
+     * @return SimpleCliOutput Instance of $this to allow chaining.
      */
     public function out($text = '', $nl = true)
     {
@@ -25,8 +25,8 @@ class SimpleCliOutput extends AbstractCliOutput
     /**
      * Write a string to standard error output.
      *
-     * @param   string $text The text to display.
-     * @param   boolean $nl True (default) to append a new line at the end of the output string.
+     * @param string $text The text to display.
+     * @param bool   $nl   True (default) to append a new line at the end of the output string.
      *
      * @return $this
      */
@@ -37,4 +37,3 @@ class SimpleCliOutput extends AbstractCliOutput
         return $this;
     }
 }
-
