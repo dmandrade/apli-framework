@@ -1,4 +1,5 @@
 [![StyleCI](https://github.styleci.io/repos/113188079/shield?branch=master)](https://github.styleci.io/repos/113188079)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f219ba400ca2488c92d488c8d6945b53)](https://www.codacy.com/app/mandrade.danilo/apli-environment?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dmandrade/apli-environment&amp;utm_campaign=Badge_Grade)
 
 # Aplí Environment
 
