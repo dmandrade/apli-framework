@@ -351,7 +351,32 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
      */
     public function unshift($path, $value)
     {
-        // TODO: Implement unshift() method.
+        $node = $this->get($path);
+
+        if (!$node) {
+            $node = [];
+        } elseif (is_object($node)) {
+            $node = get_object_vars($node);
+        }
+
+        if (!is_array($node)) {
+            throw new \UnexpectedValueException(sprintf('The value at path: %s should be object or array but is %s.',
+                $path, gettype($node)));
+        }
+
+        $args = func_get_args();
+
+        if (count($args) <= 2) {
+            $key = array_unshift($node, $value);
+        } else {
+            $args[0] = &$node;
+
+            $key = call_user_func_array('array_unshift', $args);
+        }
+
+        $this->set($path, $node);
+
+        return $key;
     }
 
     /**
