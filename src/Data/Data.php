@@ -388,7 +388,22 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
      */
     public function shift($path)
     {
-        // TODO: Implement shift() method.
+        $node = $this->get($path);
+
+        if (is_object($node)) {
+            $node = get_object_vars($node);
+        }
+
+        if (!is_array($node)) {
+            throw new \UnexpectedValueException(sprintf('The value at path: %s should be object or array but is %s.',
+                $path, gettype($node)));
+        }
+
+        $value = array_shift($node);
+
+        $this->set($path, $node);
+
+        return $value;
     }
 
     /**
