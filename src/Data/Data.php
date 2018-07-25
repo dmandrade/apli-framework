@@ -280,7 +280,7 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
      * Set value.
      *
      * @param string $field The field to set.
-     * @param mixed  $value The value to set.
+     * @param mixed $value The value to set.
      *
      * @throws \InvalidArgumentException
      *
