@@ -48,7 +48,7 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     /**
      * Bind the data.
      *
-     * @param $values
+     * @param      $values
      * @param bool $replaceNulls
      *
      * @return mixed
@@ -63,8 +63,8 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     /**
      * Method to recursively bind data to a parent object.
      *
-     * @param $parent
-     * @param $data
+     * @param      $parent
+     * @param      $data
      * @param bool $replaceNulls
      */
     protected function bindData(&$parent, $data, $replaceNulls = false)
@@ -133,7 +133,7 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     /**
      * Get a value from data.
      *
-     * @param $path
+     * @param      $path
      * @param null $default
      *
      * @return null
@@ -280,7 +280,7 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
      * Set value.
      *
      * @param string $field The field to set.
-     * @param mixed $value The value to set.
+     * @param mixed  $value The value to set.
      *
      * @throws \InvalidArgumentException
      *
@@ -446,7 +446,7 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     /**
      * Merge a data into this object.
      *
-     * @param $source
+     * @param      $source
      * @param bool $raw
      *
      * @return mixed
@@ -481,7 +481,7 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     /**
      * Get data in a given string format.
      *
-     * @param $format
+     * @param       $format
      * @param array $options
      *
      * @return mixed
