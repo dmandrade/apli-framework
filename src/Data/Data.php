@@ -440,20 +440,28 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
      */
     public function reset()
     {
-        // TODO: Implement reset() method.
+        $this->data = [];
+
+        return $this;
     }
 
     /**
      * Merge a data into this object.
      *
-     * @param      $source
-     * @param bool $raw
+     * @param Data|mixed $source
+     * @param bool       $raw
      *
      * @return mixed
      */
     public function merge($source, $raw = false)
     {
-        // TODO: Implement merge() method.
+        if ($source instanceof Data) {
+            $source = $source->getRaw();
+        }
+
+        $this->bindData($this->data, $source, $raw);
+
+        return $this;
     }
 
     /**
