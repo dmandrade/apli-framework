@@ -455,7 +455,7 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
      */
     public function merge($source, $raw = false)
     {
-        if ($source instanceof Data) {
+        if ($source instanceof self) {
             $source = $source->getRaw();
         }
 
@@ -467,11 +467,9 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     /**
      * Method to recursively convert an object of data to an array.
      *
-     * @param   mixed $data An object of data to return as an array.
+     * @param mixed $data An object of data to return as an array.
      *
-     * @return  array  Array representation of the input object.
-     *
-     * @since   2.0
+     * @return array Array representation of the input object.
      */
     protected function asArray($data)
     {
@@ -499,7 +497,7 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
      */
     public function toArray()
     {
-        return (array)$this->asArray($this->data);
+        return (array) $this->asArray($this->data);
     }
 
     /**
