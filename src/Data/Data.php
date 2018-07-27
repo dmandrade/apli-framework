@@ -465,13 +465,41 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     }
 
     /**
+     * Method to recursively convert an object of data to an array.
+     *
+     * @param   mixed $data An object of data to return as an array.
+     *
+     * @return  array  Array representation of the input object.
+     *
+     * @since   2.0
+     */
+    protected function asArray($data)
+    {
+        $array = [];
+
+        if (is_object($data)) {
+            $data = get_object_vars($data);
+        }
+
+        foreach ($data as $k => $v) {
+            if (is_object($v) || is_array($v)) {
+                $array[$k] = $this->asArray($v);
+            } else {
+                $array[$k] = $v;
+            }
+        }
+
+        return $array;
+    }
+
+    /**
      * Transforms data to an array.
      *
      * @return mixed
      */
     public function toArray()
     {
-        // TODO: Implement toArray() method.
+        return (array)$this->asArray($this->data);
     }
 
     /**
