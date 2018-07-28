@@ -108,7 +108,7 @@ interface DataInterface
      *
      * @return mixed
      */
-    public function bind($values, $replaceNulls = false);
+    public function putAll($values, $replaceNulls = false);
 
     /**
      * Check if data is empty.

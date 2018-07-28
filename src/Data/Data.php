@@ -41,7 +41,7 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
     public function __construct($data = null)
     {
         if (null !== $data) {
-            $this->bind($data);
+            $this->putAll($data);
         }
     }
 
@@ -53,7 +53,7 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
      *
      * @return mixed
      */
-    public function bind($values, $replaceNulls = false)
+    public function putAll($values, $replaceNulls = false)
     {
         $this->bindData($this->data, $values, $replaceNulls);
 
@@ -509,7 +509,7 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
      */
     public function toObject($class = 'stdClass')
     {
-        // TODO: Implement toObject() method.
+        return Helper::toObject($this->data, $class);
     }
 
     /**
@@ -522,6 +522,6 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
      */
     public function toString($format, $options = [])
     {
-        // TODO: Implement toString() method.
+        return Helper::toString($this->data, $format, $options);
     }
 }

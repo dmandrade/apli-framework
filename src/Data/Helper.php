@@ -35,6 +35,67 @@ class Helper
     }
 
     /**
+     * Utility function to map an array to a object.
+     *
+     * @param array  $array The array to map.
+     * @param string $class Name of the class to create
+     *
+     * @return object The object mapped from the given array
+     */
+    public static function toObject($array, $class = 'stdClass')
+    {
+        $object = new $class;
+
+        foreach ($array as $k => $v) {
+            if (is_array($v)) {
+                $object->$k = static::toObject($v, $class);
+            } else {
+                $object->$k = $v;
+            }
+        }
+
+        return $object;
+    }
+
+    /**
+     * Get a namespace in a given string format
+     *
+     * @param array|object $data    The structure data to convert to markup string.
+     * @param string       $format  Format to return the string in
+     * @param mixed        $options Parameters used by the formatter, see formatters for more info
+     *
+     * @return string Namespace in string format
+     */
+    public static function toString($data, $format = Format::JSON, $options = [])
+    {
+        $class = static::getFormatClass($format);
+
+        return $class::structToString($data, $options);
+    }
+
+    /**
+     * Get a formatter class
+     *
+     * @param string $format
+     *
+     * @return string|\Apli\Data\Format\FormatInterface
+     *
+     * @throws  \DomainException
+     */
+    public static function getFormatClass($format)
+    {
+        // Return a namespace in a given format
+        $class = sprintf('%s\Format\%sFormat', __NAMESPACE__, ucfirst(strtolower($format)));
+
+        if (!class_exists($class)) {
+            throw new \DomainException(sprintf('Structure format: %s not supported. Class: %s not found.', $format,
+                $class));
+        }
+
+        return $class;
+    }
+
+    /**
      * Set value in a specified path in data structure.
      *
      * @param array $data
