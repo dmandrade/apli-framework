@@ -261,7 +261,7 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
      */
     public function __isset($field)
     {
-        $this->exists($field);
+        return $this->exists($field);
     }
 
     /**
@@ -273,7 +273,7 @@ class Data implements DataInterface, \JsonSerializable, \ArrayAccess, \IteratorA
      */
     public function __get($name)
     {
-        $this->get($name);
+        return $this->get($name);
     }
 
     /**
