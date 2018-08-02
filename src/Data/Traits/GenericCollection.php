@@ -1,9 +1,11 @@
 <?php
+namespace Apli\Data\Traits;
 
 use Apli\Data\Collection;
 
 /**
  * Trait GenericCollection
+ * @package Apli\Data\Traits
  */
 trait GenericCollection
 {
