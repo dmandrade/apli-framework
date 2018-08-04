@@ -12,20 +12,20 @@ use OutOfBoundsException;
 use JsonSerializable;
 
 /**
- * Class pair  represents a key and an associated value.
+ * Class entry represents a key and an associated value.
  *
  * @package Apli\Data
  */
-class Pair implements JsonSerializable
+class Entry implements JsonSerializable
 {
 
     /**
-     * @var mixed $key The pair key's.
+     * @var mixed $key The entry key's.
      */
     public $key;
 
     /**
-     * @var mixed $value The pair value.
+     * @var mixed $value The entry value.
      */
     public $value;
 
@@ -42,7 +42,7 @@ class Pair implements JsonSerializable
     }
 
     /**
-     * This allows unset($pair->key) to not completely remove the property,
+     * This allows unset($entry->key) to not completely remove the property,
      * but be set to null instead.
      *
      * @param mixed $name
@@ -62,7 +62,7 @@ class Pair implements JsonSerializable
     /**
      * Returns a copy of the Pair
      *
-     * @return Pair
+     * @return Entry
      */
     public function copy()
     {
@@ -86,10 +86,42 @@ class Pair implements JsonSerializable
     }
 
     /**
-     * Returns a string representation of the pair.
+     * Returns a string representation of the entry.
      */
     public function __toString()
     {
         return 'object(' . get_class($this) . ')';
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    /**
+     * @param mixed $key
+     */
+    public function setKey($key)
+    {
+        $this->key = $key;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * @param mixed $value
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
     }
 }
