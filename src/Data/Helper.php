@@ -78,7 +78,7 @@ class Helper
      *
      * @param string $format
      *
-     * @return string|\Apli\Data\Format\FormatInterface
+     * @return string|\Apli\Data\Format\FormatConverter
      *
      * @throws  \DomainException
      */

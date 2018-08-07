@@ -50,7 +50,7 @@ final class Map implements \IteratorAggregate, \ArrayAccess, Collection
     }
 
     /**
-     * @inheritDoc
+     * Reset object to initial state
      */
     public function clear()
     {
@@ -189,6 +189,8 @@ final class Map implements \IteratorAggregate, \ArrayAccess, Collection
                 return $entry;
             }
         }
+
+        return null;
     }
 
     /**
@@ -205,6 +207,8 @@ final class Map implements \IteratorAggregate, \ArrayAccess, Collection
                 return $entry;
             }
         }
+
+        return null;
     }
 
     /**
@@ -329,7 +333,7 @@ final class Map implements \IteratorAggregate, \ArrayAccess, Collection
      */
     public function entries()
     {
-        $copy = function($entry) {
+        $copy = function(Entry $entry) {
             return $entry->copy();
         };
 
@@ -394,6 +398,9 @@ final class Map implements \IteratorAggregate, \ArrayAccess, Collection
     /**
      * Completely removes a entry from the internal array by position. It is
      * important to remove it from the array and not just use 'unset'.
+     *
+     * @param int $position
+     * @return mixed
      */
     private function delete($position)
     {
@@ -435,9 +442,7 @@ final class Map implements \IteratorAggregate, \ArrayAccess, Collection
     }
 
     /**
-     * Returns a reversed copy of the map.
-     *
-     * @return Map
+     * Reverse map entries.
      */
     public function reverse()
     {
@@ -513,7 +518,11 @@ final class Map implements \IteratorAggregate, \ArrayAccess, Collection
 
         } else {
             usort($this->entries, function($a, $b) {
-                return $a->value <=> $b->value;
+                if ($a->value == $b->value) {
+                    return 0;
+                }
+
+                return ($a->value < $b->value) ? -1 : 1;
             });
         }
     }
@@ -549,7 +558,11 @@ final class Map implements \IteratorAggregate, \ArrayAccess, Collection
 
         } else {
             usort($this->entries, function($a, $b) {
-                return $a->key <=> $b->key;
+                if ($a->key == $b->key) {
+                    return 0;
+                }
+
+                return ($a->key < $b->key) ? -1 : 1;
             });
         }
     }
@@ -630,7 +643,7 @@ final class Map implements \IteratorAggregate, \ArrayAccess, Collection
      * @return Map A new map containing keys in the current instance as well
      *                 as another map, but not in both.
      */
-    public function xor(Map $map)
+    public function doXor(Map $map)
     {
         return $this->merge($map)->filter(function($key) use ($map) {
             return $this->hasKey($key) ^ $map->hasKey($key);
