@@ -16,7 +16,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Apli\\Environment\\": ""
+      "Apli\\Environment\\": "src"
     }
   },
   "extra": {
