@@ -36,9 +36,9 @@ trait GenericCollection
     }
 
     /**
-     * Creates a shallow copy of the collection.
+     * Creates a shallow copy of the object.
      *
-     * @return Collection a shallow copy of the collection.
+     * @return self|Collection
      */
     public function copy()
     {
