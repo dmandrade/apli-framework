@@ -96,14 +96,6 @@ final class Set implements \IteratorAggregate, \ArrayAccess, Collection
     }
 
     /**
-     * @return Collection
-     */
-    public function copy()
-    {
-        return new self($this);
-    }
-
-    /**
      * Returns the number of elements in the Stack
      *
      * @return int
@@ -137,9 +129,9 @@ final class Set implements \IteratorAggregate, \ArrayAccess, Collection
      *
      * @return Set
      */
-    public function xor(Set $set)
+    public function doXor(Set $set)
     {
-        return $this->table->xor($set->table)->keys();
+        return $this->table->doXor($set->table)->keys();
     }
 
     /**

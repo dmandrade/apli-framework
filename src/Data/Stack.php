@@ -9,6 +9,7 @@
 namespace Apli\Data;
 
 use Error;
+use OutOfBoundsException;
 
 /**
  * Class Stack only allows access to the value at the top
@@ -43,7 +44,9 @@ class Stack implements \IteratorAggregate, \ArrayAccess, Collection
     }
 
     /**
-     * @return Collection
+     * Creates a shallow copy of the object.
+     *
+     * @return self|Collection
      */
     public function copy()
     {
