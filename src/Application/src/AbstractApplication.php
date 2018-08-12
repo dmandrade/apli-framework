@@ -2,7 +2,7 @@
 
 namespace Apli\Application;
 
-use Apli\Data\Data;
+use Apli\Data\Map;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -10,7 +10,7 @@ use Psr\Log\NullLogger;
 /**
  * The Abstract Application Class.
  *
- * @property-read  Data $config
+ * @property-read  Map $config
  */
 abstract class AbstractApplication implements LoggerAwareInterface
 {
@@ -31,11 +31,11 @@ abstract class AbstractApplication implements LoggerAwareInterface
     /**
      * Class constructor of Application.
      *
-     * @param Data $config An optional argument to provide a Structure object to be config.
+     * @param Map $config An optional argument to provide a Map object to be config.
      */
-    public function __construct(Data $config = null)
+    public function __construct(Map $config = null)
     {
-        $this->config = $config instanceof Data ? $config : new Data();
+        $this->config = $config instanceof Map ? $config : new Map();
 
         $this->init();
     }
@@ -163,7 +163,7 @@ abstract class AbstractApplication implements LoggerAwareInterface
     {
         $previous = $this->config->get($key);
 
-        $this->config->set($key, $value);
+        $this->config->put($key, $value);
 
         return $previous;
     }

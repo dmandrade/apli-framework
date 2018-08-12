@@ -8,7 +8,7 @@
 
 namespace Apli\Application;
 
-use Apli\Data\Data;
+use Apli\Data\Collection;
 use Apli\IO\Cli\IO;
 use Apli\IO\Cli\IOInterface;
 
@@ -29,13 +29,10 @@ abstract class AbstractCliApplication extends AbstractApplication
     /**
      * Class constructor.
      *
-     * @param IOInterface $io     An optional argument to provide dependency injection for the application's
-     *                            IO object.
-     * @param Data        $config An optional argument to provide dependency injection for the application's
-     *                            config object.  If the argument is a Structure object that object will become
-     *                            the application's config object, otherwise a default config object is created.
+     * @param IOInterface $io An optional argument to provide dependency injection for the application's IO object.
+     * @param param Map $config An optional argument to provide a Map object to be config.
      */
-    public function __construct(IOInterface $io = null, Data $config = null)
+    public function __construct(IOInterface $io = null, Map $config = null)
     {
         // Close the application if we are not executed from the command line.
         if (!defined('STDOUT') || !defined('STDIN') || !isset($_SERVER['argv'])) {
@@ -43,9 +40,7 @@ abstract class AbstractCliApplication extends AbstractApplication
         }
 
         $this->io = $io instanceof IOInterface ? $io : new IO();
-        $this->config = $config instanceof Data ? $config : new Data();
-
-        $this->init();
+        parent::__construct($config);
 
         // Set the execution datetime and timestamp;
         $this->set('execution.datetime', gmdate('Y-m-d H:i:s'));
