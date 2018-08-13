@@ -11,10 +11,11 @@ interface IOInterface
      * Write a string to standard output.
      *
      * @param string $text The text to display.
+     * @param bool   $nl   True (default) to append a new line at the end of the output string.
      *
      * @return IOInterface Instance of $this to allow chaining.
      */
-    public function out($text = '');
+    public function out($text = '', $nl = true);
 
     /**
      * Get a value from standard input.
