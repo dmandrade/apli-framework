@@ -20,7 +20,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Apli\\Application\\": "src"
+      "Apli\\Application\\": ""
     }
   },
   "extra": {
