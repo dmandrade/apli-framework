@@ -43,7 +43,7 @@ class Queue implements \IteratorAggregate, \ArrayAccess, Collection
      */
     function clear()
     {
-        // TODO: Implement clear() method.
+        $this->deque->clear();
     }
 
     /**
@@ -53,94 +53,130 @@ class Queue implements \IteratorAggregate, \ArrayAccess, Collection
      */
     function count()
     {
-        // TODO: Implement count() method.
+        return count($this->deque);
     }
 
     /**
-     * Retrieve an external iterator
-     * @link http://php.net/manual/en/iteratoraggregate.getiterator.php
-     * @return Traversable An instance of an object implementing <b>Iterator</b> or
-     * <b>Traversable</b>
-     * @since 5.0.0
-     */
-    public function getIterator()
-    {
-        // TODO: Implement getIterator() method.
-    }
-
-    /**
-     * Whether a offset exists
-     * @link http://php.net/manual/en/arrayaccess.offsetexists.php
-     * @param mixed $offset <p>
-     * An offset to check for.
-     * </p>
-     * @return boolean true on success or false on failure.
-     * </p>
-     * <p>
-     * The return value will be casted to boolean if non-boolean was returned.
-     * @since 5.0.0
-     */
-    public function offsetExists($offset)
-    {
-        // TODO: Implement offsetExists() method.
-    }
-
-    /**
-     * Offset to retrieve
-     * @link http://php.net/manual/en/arrayaccess.offsetget.php
-     * @param mixed $offset <p>
-     * The offset to retrieve.
-     * </p>
-     * @return mixed Can return all value types.
-     * @since 5.0.0
-     */
-    public function offsetGet($offset)
-    {
-        // TODO: Implement offsetGet() method.
-    }
-
-    /**
-     * Offset to set
-     * @link http://php.net/manual/en/arrayaccess.offsetset.php
-     * @param mixed $offset <p>
-     * The offset to assign the value to.
-     * </p>
-     * @param mixed $value <p>
-     * The value to set.
-     * </p>
-     * @return void
-     * @since 5.0.0
-     */
-    public function offsetSet($offset, $value)
-    {
-        // TODO: Implement offsetSet() method.
-    }
-
-    /**
-     * Offset to unset
-     * @link http://php.net/manual/en/arrayaccess.offsetunset.php
-     * @param mixed $offset <p>
-     * The offset to unset.
-     * </p>
-     * @return void
-     * @since 5.0.0
-     */
-    public function offsetUnset($offset)
-    {
-        // TODO: Implement offsetUnset() method.
-    }
-
-    /**
-     * Returns an array representation of the collection.
+     * Ensures that enough memory is allocated for a specified capacity. This
+     * potentially reduces the number of reallocations as the size increases.
      *
-     * The format of the returned array is implementation-dependent. Some
-     * implementations may throw an exception if an array representation
-     * could not be created (for example when object are used as keys).
+     * @param int $capacity The capacity allocated.
+     */
+    public function allocate(int $capacity)
+    {
+        $this->deque->allocate($capacity);
+    }
+
+    /**
+     * Returns the current capacity of the queue.
+     *
+     * @return int
+     */
+    public function capacity()
+    {
+        return $this->deque->capacity();
+    }
+
+    /**
+     * Copy queue to a new object
+     *
+     * @return Queue
+     */
+    public function copy()
+    {
+        return new self($this->deque);
+    }
+
+    /**
+     * Returns the value at the top of the queue without removing it.
+     *
+     * @return
+     */
+    public function peek()
+    {
+        return $this->deque->first();
+    }
+
+    /**
+     * Returns and removes the value at the top of the Queue.
+     *
+     * @return mixed
+     */
+    public function pop()
+    {
+        return $this->deque->shift();
+    }
+
+    /**
+     * Pushes values into the top of the queue.
+     *
+     * @param mixed ...$values
+     */
+    public function push(...$values)
+    {
+        $this->deque->push(...$values);
+    }
+
+    /**
+     * Return array of Queue values
      *
      * @return array
      */
     public function toArray()
     {
-        // TODO: Implement toArray() method.
+        return $this->deque->toArray();
+    }
+
+    /**
+     * Get iterator
+     *
+     * @return \Generator|Traversable
+     */
+    public function getIterator()
+    {
+        while ( ! $this->isEmpty()) {
+            yield $this->pop();
+        }
+    }
+
+
+    /**
+     * Pushe value into the top of queue
+     *
+     * @param mixed $offset
+     * @param mixed $value
+     * @throws OutOfBoundsException
+     */
+    public function offsetSet($offset, $value)
+    {
+        if ($offset === null) {
+            $this->push($value);
+        } else {
+            throw new OutOfBoundsException();
+        }
+    }
+
+    /**
+     * @throws Error
+     */
+    public function offsetGet($offset)
+    {
+        throw new Error();
+    }
+
+    /**
+     * @throws Error
+     */
+    public function offsetUnset($offset)
+    {
+        throw new Error();
+    }
+
+    /**
+     * @throws Error
+     */
+    public function offsetExists($offset)
+    {
+        throw new Error();
     }
 }

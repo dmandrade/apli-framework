@@ -12,14 +12,20 @@ trait GenericCollection
     /**
      * Returns whether the collection is empty.
      *
-     * This should be equivalent to a count of zero, but is not required.
-     * Implementations should define what empty means in their own context.
-     *
      * @return bool whether the collection is empty.
      */
     public function isEmpty()
     {
         return count($this) === 0;
+    }
+    /**
+     * Returns whether the collection is  notempty.
+     *
+     * @return bool whether the collection is not empty.
+     */
+    public function isNotEmpty()
+    {
+        return!$this->isEmpty();
     }
 
     /**
