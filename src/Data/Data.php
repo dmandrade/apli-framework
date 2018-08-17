@@ -33,7 +33,7 @@ class Data implements \ArrayAccess, \IteratorAggregate, \Countable, \JsonSeriali
     /**
      * Bind the data into this object.
      *
-     * @param   mixed   $values       The data array or object.
+     * @param   mixed   $values The data array or object.
      * @param   boolean $replaceNulls Replace null or not.
      *
      * @return  static Return self to support chaining.
@@ -100,7 +100,7 @@ class Data implements \ArrayAccess, \IteratorAggregate, \Countable, \JsonSeriali
     /**
      * Get value.
      *
-     * @param string $field   The field to get.
+     * @param string $field The field to get.
      * @param mixed  $default The default value if not exists.
      *
      * @throws  \InvalidArgumentException
@@ -192,7 +192,7 @@ class Data implements \ArrayAccess, \IteratorAggregate, \Countable, \JsonSeriali
      * Set a value to property.
      *
      * @param mixed $offset Offset key.
-     * @param mixed $value  The value to set.
+     * @param mixed $value The value to set.
      *
      * @throws  \InvalidArgumentException
      * @return  void
@@ -231,7 +231,6 @@ class Data implements \ArrayAccess, \IteratorAggregate, \Countable, \JsonSeriali
      * @param   callable $callback Callback to handle every element.
      *
      * @return  static  Support chaining.
-     * @since   3.1.3
      */
     public function mapping($callback)
     {
@@ -332,7 +331,7 @@ class Data implements \ArrayAccess, \IteratorAggregate, \Countable, \JsonSeriali
      */
     public function except($fields)
     {
-        $fields = (array) $fields;
+        $fields = (array)$fields;
 
         $new = clone $this;
 
@@ -353,7 +352,7 @@ class Data implements \ArrayAccess, \IteratorAggregate, \Countable, \JsonSeriali
      */
     public function only($fields)
     {
-        $fields = (array) $fields;
+        $fields = (array)$fields;
 
         $new = new static();
 
@@ -405,8 +404,6 @@ class Data implements \ArrayAccess, \IteratorAggregate, \Countable, \JsonSeriali
      * Clone this object.
      *
      * @return  void
-     *
-     * @since   2.0.9
      */
     public function __clone()
     {

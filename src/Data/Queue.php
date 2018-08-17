@@ -134,7 +134,7 @@ class Queue implements \IteratorAggregate, \ArrayAccess, Collection
      */
     public function getIterator()
     {
-        while ( ! $this->isEmpty()) {
+        while (!$this->isEmpty()) {
             yield $this->pop();
         }
     }
