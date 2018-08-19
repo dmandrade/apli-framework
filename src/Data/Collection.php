@@ -8,20 +8,63 @@
 
 namespace Apli\Data;
 
+use Traversable;
+use IteratorAggregate;
+use ArrayAccess;
+use JsonSerializable;
+use Countable;
+use Apli\Support\Arrayable;
+use Apli\Support\Jsonable;
 
-interface Collection extends \Traversable, \Countable, \JsonSerializable
+interface Collection extends Traversable, IteratorAggregate, ArrayAccess, JsonSerializable, Countable, Arrayable, Jsonable
 {
+    /**
+     * Get all of the items in the collection.
+     *
+     * @return mixed
+     */
+    public function all();
+
+    /**
+     * Replaces the value at a given key in the collection with a new value.
+     *
+     * @param int   $key
+     * @param mixed $value
+     *
+     * @throws \OutOfRangeException if the index is not in the range [0, size-1]
+     */
+    function set($key, $value);
+
+    /**
+     * Execute a callback over each item.
+     *
+     * @param  callable  $callback
+     * @return $this
+     */
+    function each(callable $callback);
+
+    /**
+     * Returns the key of a given value, or false if it could not be found.
+     *
+     * @param mixed $value
+     *
+     * @return false|int|string
+     */
+    function searchStrict($value);
+
+    /**
+     * Returns the key of a given value, or false if it could not be found.
+     *
+     * @param mixed $value
+     *
+     * @return false|int|string
+     */
+    public function search($value);
+
     /**
      * Removes all values from the collection.
      */
     function clear();
-
-    /**
-     * Returns the size of the collection.
-     *
-     * @return int
-     */
-    function count();
 
     /**
      * Returns a shallow copy of the collection.
@@ -38,13 +81,10 @@ interface Collection extends \Traversable, \Countable, \JsonSerializable
     function isEmpty();
 
     /**
-     * Returns an array representation of the collection.
+     * Returns whether the collection is  notempty.
      *
-     * The format of the returned array is implementation-dependent.
-     * Some implementations may throw an exception if an array representation
-     * could not be created.
-     *
-     * @return array
+     * @return bool whether the collection is not empty.
      */
-    function toArray();
+    public function isNotEmpty();
+
 }

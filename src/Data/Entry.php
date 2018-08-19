@@ -86,11 +86,11 @@ class Entry implements JsonSerializable
     }
 
     /**
-     * Returns a string representation of the entry.
+     * @return mixed
      */
     public function __toString()
     {
-        return 'object(' . get_class($this) . ')';
+        return $this->getValue();
     }
 
     /**

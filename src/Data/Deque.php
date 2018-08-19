@@ -13,7 +13,7 @@ namespace Apli\Data;
  * that grows and shrinks automatically.
  * @package Apli\Data
  */
-class Deque implements \IteratorAggregate, \ArrayAccess, Sequence
+class Deque implements Sequence
 {
     use Traits\GenericCollection;
     use Traits\GenericSequence;

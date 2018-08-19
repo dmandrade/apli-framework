@@ -61,15 +61,6 @@ interface Sequence extends Collection
     function filter(callable $callback = null);
 
     /**
-     * Returns the index of a given value, or false if it could not be found.
-     *
-     * @param mixed $value
-     *
-     * @return int|bool
-     */
-    function find($value);
-
-    /**
      * Returns the first value in the sequence.
      *
      * @return mixed
@@ -200,16 +191,6 @@ interface Sequence extends Collection
      * @param int $rotations The number of rotations (can be negative).
      */
     function rotate($rotations);
-
-    /**
-     * Replaces the value at a given index in the sequence with a new value.
-     *
-     * @param int   $index
-     * @param mixed $value
-     *
-     * @throws \OutOfRangeException if the index is not in the range [0, size-1]
-     */
-    function set($index, $value);
 
     /**
      * Removes and returns the first value in the sequence.

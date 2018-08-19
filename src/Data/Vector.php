@@ -6,7 +6,7 @@ namespace Apli\Data;
  * shrinks automatically.
  * @package Apli\Data
  */
-final class Vector implements \IteratorAggregate, \ArrayAccess, Sequence
+final class Vector implements Sequence
 {
     use Traits\GenericCollection;
     use Traits\GenericSequence;

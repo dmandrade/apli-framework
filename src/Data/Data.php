@@ -14,24 +14,32 @@ use Apli\Data\Traits\GenericCollection;
  * Data is a container to store properties values
  * @package Apli\Data
  */
-class Data implements \ArrayAccess, \IteratorAggregate, \Countable, \JsonSerializable
+class Data implements Collection
 {
     use GenericCollection;
 
     /**
-     * Constructor.
+     * All of the attributes set on the container.
      *
-     * @param mixed $data
+     * @var array
      */
-    public function __construct($data = null)
+    protected $attributes = [];
+
+    /**
+     * Create a new data container instance.
+     *
+     * @param  array|object    $attributes
+     * @return void
+     */
+    public function __construct($attributes = [])
     {
-        if (null !== $data) {
-            $this->bind($data);
+        if (null !== $attributes) {
+            $this->fill($attributes);
         }
     }
 
     /**
-     * Bind the data into this object.
+     * Fill data container with values.
      *
      * @param   mixed   $values The data array or object.
      * @param   boolean $replaceNulls Replace null or not.
@@ -40,201 +48,210 @@ class Data implements \ArrayAccess, \IteratorAggregate, \Countable, \JsonSeriali
      *
      * @throws \InvalidArgumentException
      */
-    public function bind($values, $replaceNulls = false)
+    public function fill($values, $replaceNulls = false)
     {
         if ($values === null) {
             return $this;
         }
 
-        // Check properties type.
         if (!is_array($values) && !is_object($values)) {
             throw new \InvalidArgumentException(sprintf('Please bind array or object, %s given.', gettype($values)));
         }
 
-        // If is Traversable, get iterator.
         if ($values instanceof \Traversable) {
             $values = iterator_to_array($values);
-        } // If is object, convert it to array
-        elseif (is_object($values)) {
+        } elseif (is_object($values)) {
             $values = get_object_vars($values);
         }
 
         // Bind the properties.
         foreach ($values as $field => $value) {
-            // Check if the value is null and should be bound.
             if ($value === null && !$replaceNulls) {
                 continue;
             }
 
-            // Set the property.
-            $this->set($field, $value);
+            $this->attributes[$field] = $value;
         }
 
         return $this;
     }
 
     /**
-     * Set value to Data object.
+     * Count properties in data container.
      *
-     * @param string $field The field to set.
-     * @param mixed  $value The value to set.
-     *
-     * @note  If you get "Cannot access property started with '\0'" error message, means you should not
-     *        use (array) to convert object to array. This action will make protected property contains in array
-     *        and start with \0 of property name. Use `get_object_vars()` instead.
-     *
-     * @throws  \InvalidArgumentException
-     * @return  static Return self to support chaining.
+     * @return  int
      */
-    public function set($field, $value = null)
+    public function count()
     {
-        if ($field === null) {
+        return count($this->attributes);
+    }
+
+    /**
+     * Set a new property value
+     *
+     * @param      $key
+     * @param null $value
+     * @throws  \InvalidArgumentException
+     * @return static Return self to support chaining.
+     */
+    public function set($key, $value = null)
+    {
+        if ($key === null) {
             throw new \InvalidArgumentException('Cannot access empty property');
         }
 
-        $this->$field = $value;
+        $this->attributes[$key] = $value;
 
         return $this;
     }
 
     /**
-     * Get value.
+     * Get an attribute from the container.
      *
-     * @param string $field The field to get.
-     * @param mixed  $default The default value if not exists.
-     *
-     * @throws  \InvalidArgumentException
-     * @return  mixed The value we want ot get.
+     * @param  string  $key
+     * @param  mixed   $default
+     * @return mixed
      */
-    public function get($field, $default = null)
+    public function get($key, $default = null)
     {
-        if (isset($this->$field)) {
-            return $this->$field;
+        if (array_key_exists($key, $this->attributes)) {
+            return $this->attributes[$key];
         }
 
         return $default;
     }
 
     /**
-     * Method to check a field exists.
+     * Get all the attributes.
      *
-     * @param string $field The field name to check.
-     *
-     * @return  boolean True if exists.
+     * @return array
      */
-    public function exists($field)
+    public function getAttributes()
     {
-        return isset($this->$field);
+        return $this->attributes;
     }
 
     /**
-     * Set value.
+     * Convert the data instance to an array.
      *
-     * @param string $field The field to set.
-     * @param mixed  $value The value to set.
-     *
-     * @return  void
-     * @throws \InvalidArgumentException
+     * @return array
      */
-    public function __set($field, $value = null)
+    public function toArray()
     {
-        $this->set($field, $value);
+        return $this->attributes;
     }
 
     /**
-     * Get value.
+     * Determine if the given offset exists.
      *
-     * @param string $field The field to get.
-     *
-     * @return  mixed The value we want ot get.
-     */
-    public function __get($field)
-    {
-        return $this->get($field);
-    }
-
-    /**
-     * Retrieve an external iterator
-     *
-     * @return \Traversable An instance of an object implementing Iterator or Traversable
-     */
-    public function getIterator()
-    {
-        return new \ArrayIterator(get_object_vars($this));
-    }
-
-    /**
-     * Is a property exists or not.
-     *
-     * @param mixed $offset Offset key.
-     *
-     * @return  boolean
+     * @param  string  $offset
+     * @return bool
      */
     public function offsetExists($offset)
     {
-        return $this->exists($offset);
+        return $this->has($offset);
     }
 
     /**
-     * Get a property.
+     * Get the value for a given offset.
      *
-     * @param mixed $offset Offset key.
-     *
-     * @throws  \InvalidArgumentException
-     * @return  mixed The value to return.
+     * @param  string  $offset
+     * @return mixed
      */
     public function offsetGet($offset)
     {
-        return $this->get($offset);
+        return $this->{$offset};
     }
 
     /**
-     * Set a value to property.
+     * Set the value at the given offset.
      *
-     * @param mixed $offset Offset key.
-     * @param mixed $value The value to set.
-     *
-     * @throws  \InvalidArgumentException
-     * @return  void
+     * @param  string  $offset
+     * @param  mixed   $value
+     * @return void
      */
     public function offsetSet($offset, $value)
     {
-        $this->set($offset, $value);
+        $this->{$offset} = $value;
     }
 
     /**
-     * Unset a property.
+     * Unset the value at the given offset.
      *
-     * @param mixed $offset Offset key to unset.
-     *
-     * @throws  \InvalidArgumentException
-     * @return  void
+     * @param  string  $offset
+     * @return void
      */
     public function offsetUnset($offset)
     {
-        unset($this->$offset);
+        unset($this->{$offset});
     }
 
     /**
-     * Count this object.
+     * Dynamically retrieve the value of an attribute.
      *
-     * @return  int
+     * @param  string  $key
+     * @return mixed
      */
-    public function count()
+    public function __get($key)
     {
-        return count(get_object_vars($this));
+        return $this->get($key);
     }
 
     /**
-     * Mapping all elements and return new instance.
+     * Dynamically set the value of an attribute.
      *
-     * @param   callable $callback Callback to handle every element.
-     *
-     * @return  static  Support chaining.
+     * @param  string  $key
+     * @param  mixed   $value
+     * @return void
      */
-    public function mapping($callback)
+    public function __set($key, $value)
     {
-        return $this->map($callback);
+        $this->set($key, $value);
+    }
+
+    /**
+     * Dynamically check if an attribute is set.
+     *
+     * @param  string  $key
+     * @return bool
+     */
+    public function __isset($key)
+    {
+        return $this->has($key);
+    }
+
+    /**
+     * Dynamically unset an attribute.
+     *
+     * @param  string  $key
+     * @return void
+     */
+    public function __unset($key)
+    {
+        unset($this->attributes[$key]);
+    }
+
+    /**
+     * Check if key exists in container
+     *
+     * @param $key
+     * @return bool
+     */
+    public function has($key)
+    {
+        return isset($this->attributes[$key]);
+    }
+
+    /**
+     * Retrieve a external iterator
+     *
+     * @return \Generator|\Traversable
+     */
+    public function getIterator()
+    {
+        foreach ($this->attributes as $key => $value) {
+            yield $key => $value;
+        }
     }
 
     /**
@@ -257,147 +274,13 @@ class Data implements \ArrayAccess, \IteratorAggregate, \Countable, \JsonSeriali
     }
 
     /**
-     * Get all object properties names
+     * Get all data properties names
      *
      * @return  array
      */
     public function keys()
     {
         return array_keys($this->toArray());
-    }
-
-    /**
-     * diff
-     *
-     * @param array|DataInterface $array
-     *
-     * @return  array
-     */
-    public function diff($array)
-    {
-        $self = $this->toArray();
-
-        return array_diff($self, $this->convertArray($array));
-    }
-
-    /**
-     * diffKeys
-     *
-     * @param array|DataInterface $array
-     *
-     * @return  array
-     */
-    public function diffKeys($array)
-    {
-        $self = $this->toArray();
-
-        return array_diff_key($self, $this->convertArray($array));
-    }
-
-    /**
-     * intersect
-     *
-     * @param array|DataInterface $array
-     *
-     * @return  array
-     */
-    public function intersect($array)
-    {
-        $self = $this->toArray();
-
-        return array_intersect($self, $this->convertArray($array));
-    }
-
-    /**
-     * intersectKeys
-     *
-     * @param array|DataInterface $array
-     *
-     * @return  array
-     */
-    public function intersectKeys($array)
-    {
-        $self = $this->toArray();
-
-        return array_intersect_key($self, $this->convertArray($array));
-    }
-
-    /**
-     * remove
-     *
-     * @param array|string $fields
-     *
-     * @return  static
-     */
-    public function except($fields)
-    {
-        $fields = (array)$fields;
-
-        $new = clone $this;
-
-        foreach ($fields as $field) {
-            unset($new->$field);
-        }
-
-        return $new;
-    }
-
-    /**
-     * only
-     *
-     * @param array|string $fields
-     *
-     *
-     * @return  static
-     */
-    public function only($fields)
-    {
-        $fields = (array)$fields;
-
-        $new = new static();
-
-        foreach ($fields as $origin => $field) {
-            if (is_numeric($origin)) {
-                $new->$field = $this->$field;
-            } else {
-                $new->$field = $this->$origin;
-            }
-        }
-
-        return $new;
-    }
-
-    /**
-     * sum
-     *
-     * @return  float|int
-     */
-    public function sum()
-    {
-        return array_sum($this->toArray());
-    }
-
-    /**
-     * avg
-     *
-     * @return  float|int
-     */
-    public function avg()
-    {
-        return $this->sum() / count($this);
-    }
-
-    /**
-     * contains
-     *
-     * @param mixed $value
-     * @param bool  $strict
-     *
-     * @return  bool
-     */
-    public function contains($value, $strict = false)
-    {
-        return in_array($value, $this->toArray(), $strict);
     }
 
     /**
@@ -415,16 +298,10 @@ class Data implements \ArrayAccess, \IteratorAggregate, \Countable, \JsonSeriali
     }
 
     /**
-     * Returns an array representation of the collection.
-     *
-     * The format of the returned array is implementation-dependent. Some
-     * implementations may throw an exception if an array representation
-     * could not be created (for example when object are used as keys).
-     *
-     * @return array
+     * Removes all values from the collection.
      */
-    public function toArray()
+    function clear()
     {
-        return get_object_vars($this);
+        $this->attributes = [];
     }
 }

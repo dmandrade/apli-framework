@@ -12,7 +12,7 @@ use UnderflowException;
  *
  * @package Ds
  */
-final class Map implements \IteratorAggregate, \ArrayAccess, Collection
+final class Map implements Collection
 {
     use Traits\GenericCollection;
     use Traits\SquaredCapacity;
@@ -56,38 +56,6 @@ final class Map implements \IteratorAggregate, \ArrayAccess, Collection
     {
         $this->entries = [];
         $this->capacity = self::MIN_CAPACITY;
-    }
-
-    /**
-     * Return the first Entry from the Map
-     *
-     * @return Entry
-     *
-     * @throws UnderflowException
-     */
-    public function first()
-    {
-        if ($this->isEmpty()) {
-            throw new UnderflowException();
-        }
-
-        return $this->entries[0];
-    }
-
-    /**
-     * Return the last Entry from the Map
-     *
-     * @return Entry
-     *
-     * @throws UnderflowException
-     */
-    public function last()
-    {
-        if ($this->isEmpty()) {
-            throw new UnderflowException();
-        }
-
-        return $this->entries[count($this->entries) - 1];
     }
 
     /**
@@ -143,17 +111,27 @@ final class Map implements \IteratorAggregate, \ArrayAccess, Collection
     }
 
     /**
-     * Returns the result of removing all keys from the current instance that
-     * are present in a given map.
+     * Get the items in the collection that are not present in the given items.
      *
-     * @param Map $map The map containing the keys to exclude.
-     *
-     * @return Map The result of removing all keys from the current instance
-     *                 that are present in a given map.
+     * @param  mixed  $items
+     * @return static
      */
     public function diff(Map $map)
     {
-        return $this->filter(function($key) use ($map) {
+        return $this->filter(function($value) use ($map) {
+            return ! $map->hasValue($value);
+        });
+    }
+
+    /**
+     * Get the items in the collection that are not present in the given items.
+     *
+     * @param  mixed  $items
+     * @return static
+     */
+    public function diffKeys(Map $map)
+    {
+        return $this->filter(function($value, $key) use ($map) {
             return ! $map->hasKey($key);
         });
     }
@@ -242,29 +220,6 @@ final class Map implements \IteratorAggregate, \ArrayAccess, Collection
     public function count()
     {
         return count($this->entries);
-    }
-
-    /**
-     * Returns a new map containing only the values for which a predicate
-     * returns true. A boolean test will be used if a predicate is not provided.
-     *
-     * @param callable|null $callback Accepts a key and a value, and returns:
-     *                                true : include the value,
-     *                                false: skip the value.
-     *
-     * @return Map
-     */
-    public function filter(callable $callback = null)
-    {
-        $filtered = new self();
-
-        foreach ($this as $key => $value) {
-            if ($callback ? $callback($key, $value) : $value) {
-                $filtered->put($key, $value);
-            }
-        }
-
-        return $filtered;
     }
 
     /**
@@ -361,6 +316,18 @@ final class Map implements \IteratorAggregate, \ArrayAccess, Collection
     }
 
     /**
+     * Replaces the value at a given key in the collection with a new value.
+     *
+     * @param int   $key
+     * @param mixed $value
+     *
+     * @throws \OutOfRangeException if the index is not in the range [0, size-1]
+     */
+    public function set($key, $value) {
+        $this->put($key, $value);
+    }
+
+    /**
      * Creates associations for all keys and corresponding values of either an
      * array or iterable object.
      *
@@ -396,18 +363,20 @@ final class Map implements \IteratorAggregate, \ArrayAccess, Collection
     }
 
     /**
-     * Completely removes a entry from the internal array by position. It is
-     * important to remove it from the array and not just use 'unset'.
+     * Removes and returns the value at a given index in the sequence.
      *
-     * @param int $position
-     * @return mixed
+     * @param int $index this index to remove.
+     *
+     * @return mixed the removed value.
+     *
+     * @throws \OutOfRangeException if the index is not in the range [0, size-1]
      */
-    private function delete($position)
+    function delete($index)
     {
-        $entry  = $this->entries[$position];
+        $entry  = $this->entries[$index];
         $value = $entry->value;
 
-        array_splice($this->entries, $position, 1, null);
+        array_splice($this->entries, $index, 1, null);
         $this->checkCapacity();
 
         return $value;
@@ -651,6 +620,8 @@ final class Map implements \IteratorAggregate, \ArrayAccess, Collection
     }
 
     /**
+     * Retrieve a external iterator
+     *
      * @return \Generator|Traversable
      */
     public function getIterator()

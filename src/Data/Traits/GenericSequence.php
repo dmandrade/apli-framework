@@ -17,7 +17,7 @@ trait GenericSequence
     /**
      * @var array internal array used to store the values of the sequence.
      */
-    private $array = [];
+    private $values = [];
 
     /**
      * GenericSequence constructor.
@@ -35,7 +35,7 @@ trait GenericSequence
      */
     public function toArray()
     {
-        return $this->array;
+        return $this->values;
     }
 
     /**
@@ -43,7 +43,7 @@ trait GenericSequence
      */
     public function apply(callable $callback)
     {
-        foreach ($this->array as &$value) {
+        foreach ($this->values as &$value) {
             $value = $callback($value);
         }
     }
@@ -64,52 +64,7 @@ trait GenericSequence
      */
     public function count()
     {
-        return count($this->array);
-    }
-
-    /**
-     * @param mixed ...$values
-     * @return bool
-     */
-    public function contains(...$values)
-    {
-        foreach ($values as $value) {
-            if ($this->find($value) === false) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * @param callable|null $callback
-     * @return Sequence
-     */
-    public function filter(callable $callback = null)
-    {
-        return new self(array_filter($this->array, $callback ?: 'boolval'));
-    }
-
-    /**
-     * @param $value
-     * @return false|int|string
-     */
-    public function find($value)
-    {
-        return array_search($value, $this->array, true);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function first()
-    {
-        if ($this->isEmpty()) {
-            throw new UnderflowException();
-        }
-
-        return $this->array[0];
+        return count($this->values);
     }
 
     /**
@@ -122,7 +77,7 @@ trait GenericSequence
             throw new OutOfRangeException();
         }
 
-        return $this->array[$index];
+        return $this->values[$index];
     }
 
     /**
@@ -135,7 +90,7 @@ trait GenericSequence
             throw new OutOfRangeException();
         }
 
-        array_splice($this->array, $index, 0, $values);
+        array_splice($this->values, $index, 0, $values);
     }
 
     /**
@@ -144,19 +99,7 @@ trait GenericSequence
      */
     public function join($glue = null)
     {
-        return implode($glue, $this->array);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function last()
-    {
-        if ($this->isEmpty()) {
-            throw new UnderflowException();
-        }
-
-        return $this->array[count($this) - 1];
+        return implode($glue, $this->values);
     }
 
     /**
@@ -165,7 +108,7 @@ trait GenericSequence
      */
     public function map(callable $callback)
     {
-        return new self(array_map($callback, $this->array));
+        return new self(array_map($callback, $this->values));
     }
 
     /**
@@ -177,7 +120,7 @@ trait GenericSequence
             throw new UnderflowException();
         }
 
-        $value = array_pop($this->array);
+        $value = array_pop($this->values);
         $this->checkCapacity();
 
         return $value;
@@ -189,7 +132,7 @@ trait GenericSequence
     private function pushAll($values)
     {
         foreach ($values as $value) {
-            $this->array[] = $value;
+            $this->values[] = $value;
         }
 
         $this->checkCapacity();
@@ -210,7 +153,7 @@ trait GenericSequence
      */
     public function reduce(callable $callback, $initial = null)
     {
-        return array_reduce($this->array, $callback, $initial);
+        return array_reduce($this->values, $callback, $initial);
     }
 
     /**
@@ -223,7 +166,7 @@ trait GenericSequence
             throw new OutOfRangeException();
         }
 
-        $value = array_splice($this->array, $index, 1, null)[0];
+        $value = array_splice($this->values, $index, 1, null)[0];
         $this->checkCapacity();
 
         return $value;
@@ -234,7 +177,7 @@ trait GenericSequence
      */
     public function reverse()
     {
-        $this->array = array_reverse($this->array);
+        $this->values = array_reverse($this->values);
     }
 
     /**
@@ -242,7 +185,7 @@ trait GenericSequence
      */
     public function reversed()
     {
-        return new self(array_reverse($this->array));
+        return new self(array_reverse($this->values));
     }
 
     /**
@@ -268,7 +211,7 @@ trait GenericSequence
     public function rotate($rotations)
     {
         for ($r = $this->normalizeRotations($rotations); $r > 0; $r--) {
-            array_push($this->array, array_shift($this->array));
+            array_push($this->values, array_shift($this->values));
         }
     }
 
@@ -282,7 +225,7 @@ trait GenericSequence
             throw new OutOfRangeException();
         }
 
-        $this->array[$index] = $value;
+        $this->values[$index] = $value;
     }
 
     /**
@@ -294,7 +237,7 @@ trait GenericSequence
             throw new UnderflowException();
         }
 
-        $value = array_shift($this->array);
+        $value = array_shift($this->values);
         $this->checkCapacity();
 
         return $value;
@@ -311,7 +254,7 @@ trait GenericSequence
             $length = count($this);
         }
 
-        return new self(array_slice($this->array, $offset, $length));
+        return new self(array_slice($this->values, $offset, $length));
     }
 
     /**
@@ -320,9 +263,9 @@ trait GenericSequence
     public function sort(callable $comparator = null)
     {
         if ($comparator) {
-            usort($this->array, $comparator);
+            usort($this->values, $comparator);
         } else {
-            sort($this->array);
+            sort($this->values);
         }
     }
 
@@ -342,7 +285,7 @@ trait GenericSequence
      */
     public function sum()
     {
-        return array_sum($this->array);
+        return array_sum($this->values);
     }
 
     /**
@@ -351,7 +294,7 @@ trait GenericSequence
     public function unshift(...$values)
     {
         if ($values) {
-            $this->array = array_merge($values, $this->array);
+            $this->values = array_merge($values, $this->values);
             $this->checkCapacity();
         }
     }
@@ -370,7 +313,7 @@ trait GenericSequence
      */
     public function getIterator()
     {
-        foreach ($this->array as $value) {
+        foreach ($this->values as $value) {
             yield $value;
         }
     }
@@ -380,7 +323,7 @@ trait GenericSequence
      */
     public function clear()
     {
-        $this->array = [];
+        $this->values = [];
         $this->capacity = self::MIN_CAPACITY;
     }
 
@@ -407,7 +350,7 @@ trait GenericSequence
             throw new OutOfRangeException();
         }
 
-        return $this->array[$offset];
+        return $this->values[$offset];
     }
 
     /**

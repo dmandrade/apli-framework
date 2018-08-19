@@ -16,7 +16,7 @@ use OutOfBoundsException;
  * of the structure and iterates in that order, destructively.
  * @package Apli\Data
  */
-class Stack implements \IteratorAggregate, \ArrayAccess, Collection
+class Stack implements Collection
 {
     use Traits\GenericCollection;
 
@@ -175,5 +175,22 @@ class Stack implements \IteratorAggregate, \ArrayAccess, Collection
     public function offsetExists($offset)
     {
         throw new Error();
+    }
+
+    /**
+     * Replaces the value at a given key in the collection with a new value.
+     *
+     * @param int   $key
+     * @param mixed $value
+     *
+     * @throws \OutOfRangeException if the index is not in the range [0, size-1]
+     */
+    function set($key, $value)
+    {
+        if ($key === null) {
+            $this->push($value);
+        } else {
+            throw new OutOfBoundsException();
+        }
     }
 }

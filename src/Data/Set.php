@@ -9,7 +9,7 @@ use OutOfRangeException;
  * Class Set represent a sequence of unique values.
  * @package Apli\Data
  */
-final class Set implements \IteratorAggregate, \ArrayAccess, Collection
+final class Set implements Collection
 {
     use Traits\GenericCollection;
 
@@ -102,7 +102,7 @@ final class Set implements \IteratorAggregate, \ArrayAccess, Collection
      */
     public function count()
     {
-        return count($this->table);
+        return $this->table->count();
     }
 
     /**
@@ -188,14 +188,6 @@ final class Set implements \IteratorAggregate, \ArrayAccess, Collection
     public function intersect(Set $set)
     {
         return $this->table->intersect($set->table)->keys();
-    }
-
-    /**
-     * @return bool
-     */
-    public function isEmpty()
-    {
-        return $this->table->isEmpty();
     }
 
     /**
@@ -447,5 +439,18 @@ final class Set implements \IteratorAggregate, \ArrayAccess, Collection
     public function offsetUnset($offset)
     {
         throw new Error();
+    }
+
+    /**
+     * Replaces the value at a given key in the collection with a new value.
+     *
+     * @param int   $key
+     * @param mixed $value
+     *
+     * @throws \OutOfRangeException if the index is not in the range [0, size-1]
+     */
+    function set($key, $value)
+    {
+        $this->table->put($value, null);
     }
 }

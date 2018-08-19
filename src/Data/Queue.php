@@ -17,7 +17,7 @@ use Traversable;
  *
  * @package Apli\Data
  */
-class Queue implements \IteratorAggregate, \ArrayAccess, Collection
+class Queue implements Collection
 {
     use Traits\GenericCollection;
 
@@ -90,7 +90,7 @@ class Queue implements \IteratorAggregate, \ArrayAccess, Collection
     /**
      * Returns the value at the top of the queue without removing it.
      *
-     * @return
+     * @return mixed
      */
     public function peek()
     {
@@ -178,5 +178,18 @@ class Queue implements \IteratorAggregate, \ArrayAccess, Collection
     public function offsetExists($offset)
     {
         throw new Error();
+    }
+
+    /**
+     * Replaces the value at a given key in the collection with a new value.
+     *
+     * @param int   $key
+     * @param mixed $value
+     *
+     * @throws \OutOfRangeException if the index is not in the range [0, size-1]
+     */
+    function set($key, $value)
+    {
+        // TODO: Implement set() method.
     }
 }
