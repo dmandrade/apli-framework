@@ -8,6 +8,7 @@
 
 namespace Apli\Data;
 
+use Apli\Support\Hashable;
 use Traversable;
 use IteratorAggregate;
 use ArrayAccess;
@@ -16,7 +17,7 @@ use Countable;
 use Apli\Support\Arrayable;
 use Apli\Support\Jsonable;
 
-interface Collection extends Traversable, IteratorAggregate, ArrayAccess, JsonSerializable, Countable, Arrayable, Jsonable
+interface Collection extends Traversable, IteratorAggregate, ArrayAccess, JsonSerializable, Countable, Arrayable, Jsonable, Hashable
 {
     /**
      * Get all of the items in the collection.

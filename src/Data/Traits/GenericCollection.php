@@ -2,6 +2,9 @@
 namespace Apli\Data\Traits;
 
 use Apli\Data\Collection;
+use Apli\Data\Map;
+use Apli\Support\Hashable;
+use Apli\Support\Traits\HashableTrait;
 
 /**
  * Trait GenericCollection
@@ -9,6 +12,8 @@ use Apli\Data\Collection;
  */
 trait GenericCollection
 {
+    use HashableTrait;
+
     /**
      * Get all of the items in the collection.
      *
@@ -32,8 +37,7 @@ trait GenericCollection
             throw new UnderflowException();
         }
 
-
-        $array = $this->toArray();
+        $array = $this->all();
         return current($array);
     }
 
@@ -50,7 +54,7 @@ trait GenericCollection
             throw new UnderflowException();
         }
 
-        $array = $this->toArray();
+        $array = $this->all();
         return end($array);
     }
 
@@ -109,7 +113,16 @@ trait GenericCollection
      */
     public function diff($items)
     {
-        return new static(array_diff($this->toArray(), $this->getArrayableItems($items)));
+        $array = array_values($this->getArrayableItems($items));
+        return $this->filter(function($value) use ($array) {
+            foreach ($array as $otherValue) {
+                if($otherValue === $value) {
+                    return false;
+                }
+            }
+
+            return true;
+        });
     }
 
     /**
@@ -120,7 +133,20 @@ trait GenericCollection
      */
     public function diffKeys($items)
     {
-        return new static(array_diff_key($this->toArray(), $this->getArrayableItems($items)));
+        $array = array_keys($this->getArrayableItems($items));
+        return $this->filter(function($value, $key) use ($array) {
+            if (is_object($key) && $key instanceof Hashable) {
+                $key = $key->hash();
+            }
+
+            foreach ($array as $otherKey) {
+                if($otherKey === $key) {
+                    return false;
+                }
+            }
+
+            return true;
+        });
     }
 
     /**
@@ -182,7 +208,7 @@ trait GenericCollection
     {
         if (! $this->useAsCallable($value)) {
             $value = function($itemValue) use ($value) {
-                return $itemValue == $value;
+                return $itemValue === $value;
             };
         }
 
@@ -228,7 +254,7 @@ trait GenericCollection
             } else {
                 return $value;
             }
-        }, $this->toArray());
+        }, $this->all());
     }
 
     /**
@@ -273,14 +299,14 @@ trait GenericCollection
             return $items;
         } elseif ($items instanceof self) {
             return $items->all();
+        } elseif ($items instanceof Traversable) {
+            return iterator_to_array($items);
         } elseif ($items instanceof Arrayable) {
             return $items->toArray();
         } elseif ($items instanceof Jsonable) {
             return json_decode($items->toJson(), true);
         } elseif ($items instanceof JsonSerializable) {
             return $items->jsonSerialize();
-        } elseif ($items instanceof Traversable) {
-            return iterator_to_array($items);
         }
 
         return (array) $items;

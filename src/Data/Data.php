@@ -39,6 +39,16 @@ class Data implements Collection
     }
 
     /**
+     * Get all attributes.
+     *
+     * @return array
+     */
+    public function all()
+    {
+        return $this->attributes;
+    }
+
+    /**
      * Fill data container with values.
      *
      * @param   mixed   $values The data array or object.
@@ -119,16 +129,6 @@ class Data implements Collection
         }
 
         return $default;
-    }
-
-    /**
-     * Get all the attributes.
-     *
-     * @return array
-     */
-    public function getAttributes()
-    {
-        return $this->attributes;
     }
 
     /**

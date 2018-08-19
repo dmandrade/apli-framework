@@ -8,6 +8,8 @@
 
 namespace Apli\Data;
 
+use Apli\Support\Hashable;
+use Apli\Support\Traits\HashableTrait;
 use OutOfBoundsException;
 use JsonSerializable;
 
@@ -16,8 +18,9 @@ use JsonSerializable;
  *
  * @package Apli\Data
  */
-class Entry implements JsonSerializable
+class Entry implements JsonSerializable, Hashable
 {
+    use HashableTrait;
 
     /**
      * @var mixed $key The entry key's.

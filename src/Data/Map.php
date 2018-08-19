@@ -1,10 +1,10 @@
 <?php
 namespace Apli\Data;
 
+use Apli\Support\Hashable;
 use OutOfBoundsException;
 use OutOfRangeException;
 use Traversable;
-use UnderflowException;
 
 /**
  * A Map is a sequential collection of key-value entries, almost identical to an
@@ -107,32 +107,6 @@ final class Map implements Collection
     {
         return $this->filter(function($key) use ($map) {
             return $map->hasKey($key);
-        });
-    }
-
-    /**
-     * Get the items in the collection that are not present in the given items.
-     *
-     * @param  mixed  $items
-     * @return static
-     */
-    public function diff(Map $map)
-    {
-        return $this->filter(function($value) use ($map) {
-            return ! $map->hasValue($value);
-        });
-    }
-
-    /**
-     * Get the items in the collection that are not present in the given items.
-     *
-     * @param  mixed  $items
-     * @return static
-     */
-    public function diffKeys(Map $map)
-    {
-        return $this->filter(function($value, $key) use ($map) {
-            return ! $map->hasKey($key);
         });
     }
 
@@ -304,6 +278,10 @@ final class Map implements Collection
      */
     public function put($key, $value)
     {
+        if (is_object($key) && $key instanceof Hashable === false) {
+            throw new \Exception("Objects as key need to implement Hashable");
+        }
+
         $entry = $this->lookupKey($key);
 
         if ($entry) {
@@ -569,7 +547,13 @@ final class Map implements Collection
         $array = [];
 
         foreach ($this->entries as $entry) {
-            $array[$entry->key] = $entry->value;
+            $key = $entry->key;
+
+            if (is_object($key) && $key instanceof Hashable) {
+                $key = $key->hash();
+            }
+
+            $array[$key] = $entry->value;
         }
 
         return $array;
