@@ -212,11 +212,12 @@ trait GenericCollection
      */
     public function splice($offset, $length = null, $replacement = [])
     {
+        $itens = $this->all();
         if (func_num_args() == 1) {
-            return new static(array_splice($this->all(), $offset));
+            return new static(array_splice($itens, $offset));
         }
 
-        return new static(array_splice($this->all(), $offset, $length, $replacement));
+        return new static(array_splice($itens, $offset, $length, $replacement));
     }
 
     /**
