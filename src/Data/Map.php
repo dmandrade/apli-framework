@@ -237,25 +237,6 @@ final class Map implements Collection
     }
 
     /**
-     * Returns a new map using the results of applying a callback to each value.
-     *
-     * The keys will be equal in both maps.
-     *
-     * @param callable $callback Accepts two arguments: key and value, should
-     *                           return what the updated value will be.
-     *
-     * @return Map
-     */
-    public function map(callable $callback)
-    {
-        $apply = function($entry) use ($callback) {
-            return $callback($entry->key, $entry->value);
-        };
-
-        return new self(array_map($apply, $this->entries));
-    }
-
-    /**
      * Returns a sequence of entries representing all associations.
      *
      * @return Sequence
@@ -655,5 +636,97 @@ final class Map implements Collection
     public function offsetExists($offset)
     {
         return $this->get($offset, null) !== null;
+    }
+
+    /**
+     * Filter items by the given key value pair.
+     *
+     * @param  string  $key
+     * @param  mixed  $operator
+     * @param  mixed  $value
+     * @return static
+     */
+    public function where($key, $operator, $value = null)
+    {
+        if (func_num_args() == 2) {
+            $value = $operator;
+
+            $operator = '=';
+        }
+
+        return $this->filter($this->operatorForWhere($key, $operator, $value));
+    }
+
+    /**
+     * Filter items by the given key value pair using strict comparison.
+     *
+     * @param  string  $key
+     * @param  mixed  $value
+     * @return static
+     */
+    public function whereStrict($key, $value)
+    {
+        return $this->where($key, '===', $value);
+    }
+
+    /**
+     * Filter items by the given key value pair.
+     *
+     * @param  string  $key
+     * @param  mixed  $values
+     * @return static
+     */
+    public function whereIn($key, $values)
+    {
+        $values = $this->getArrayableItems($values);
+
+        return $this->filter(function ($item) use ($key, $values) {
+            return in_array($item[$key], $values, false);
+        });
+    }
+
+    /**
+     * Filter items by the given key value pair using strict comparison.
+     *
+     * @param  string  $key
+     * @param  mixed  $values
+     * @return static
+     */
+    public function whereInStrict($key, $values)
+    {
+        $values = $this->getArrayableItems($values);
+
+        return $this->filter(function ($item) use ($key, $values) {
+            return in_array($item[$key], $values, true);
+        });
+    }
+
+    /**
+     * Get an operator checker callback.
+     *
+     * @param  string  $key
+     * @param  string  $operator
+     * @param  mixed  $value
+     * @return \Closure
+     */
+    protected function operatorForWhere($key, $operator, $value)
+    {
+        return function ($item) use ($key, $operator, $value) {
+            $retrieved = $item[$key];
+
+            switch ($operator) {
+                default:
+                case '=':
+                case '==':  return $retrieved == $value;
+                case '!=':
+                case '<>':  return $retrieved != $value;
+                case '<':   return $retrieved < $value;
+                case '>':   return $retrieved > $value;
+                case '<=':  return $retrieved <= $value;
+                case '>=':  return $retrieved >= $value;
+                case '===': return $retrieved === $value;
+                case '!==': return $retrieved !== $value;
+            }
+        };
     }
 }

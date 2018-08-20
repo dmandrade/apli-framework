@@ -77,25 +77,6 @@ final class Set implements Collection
     }
 
     /**
-     * Determines whether the set contains all of zero or more values.
-     *
-     * @param mixed ...$values
-     *
-     * @return bool true if at least one value was provided and the set
-     *              contains all given values, false otherwise.
-     */
-    public function contains(...$values)
-    {
-        foreach ($values as $value) {
-            if ( ! $this->table->hasKey($value)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
      * Returns the number of elements in the Stack
      *
      * @return int
@@ -103,20 +84,6 @@ final class Set implements Collection
     public function count()
     {
         return $this->table->count();
-    }
-
-    /**
-     * Creates a new set using values from this set that aren't in another set.
-     *
-     * Formally: A \ B = {x ∈ A | x ∉ B}
-     *
-     * @param Set $set
-     *
-     * @return Set
-     */
-    public function diff(Set $set)
-    {
-        return $this->table->diff($set->table)->keys();
     }
 
     /**
@@ -132,31 +99,6 @@ final class Set implements Collection
     public function doXor(Set $set)
     {
         return $this->table->doXor($set->table)->keys();
-    }
-
-    /**
-     * Returns a new set containing only the values for which a callback
-     * returns true. A boolean test will be used if a callback is not provided.
-     *
-     * @param callable|null $callback Accepts a value, returns a boolean:
-     *                                 true : include the value,
-     *                                 false: skip the value.
-     *
-     * @return Set
-     */
-    public function filter(callable $callback = null)
-    {
-        return new self(array_filter($this->toArray(), $callback ?: 'boolval'));
-    }
-
-    /**
-     * Returns the first value in the set.
-     *
-     * @return mixed the first value in the set.
-     */
-    public function first()
-    {
-        return $this->table->first()->key;
     }
 
     /**
@@ -201,16 +143,6 @@ final class Set implements Collection
     public function join($glue = null)
     {
         return implode($glue, $this->toArray());
-    }
-
-    /**
-     * Returns the last value in the set.
-     *
-     * @return mixed the last value in the set.
-     */
-    public function last()
-    {
-        return $this->table->last()->key;
     }
 
     /**
@@ -452,5 +384,15 @@ final class Set implements Collection
     function set($key, $value)
     {
         $this->table->put($value, null);
+    }
+
+    /**
+     * @param $items
+     *
+     * @throws Error
+     */
+    public function diffKeys($items)
+    {
+        throw new Error();
     }
 }

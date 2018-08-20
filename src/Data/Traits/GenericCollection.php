@@ -77,13 +77,62 @@ trait GenericCollection
      */
     public function each(callable $callback)
     {
-        foreach ($this as $key => $value) {
-            if (call_user_func($callback, $value, $key) === false) {
+        foreach ($this as $key => $item) {
+            if ($callback($item, $key) === false) {
                 break;
             }
         }
 
         return $this;
+    }
+
+    /**
+     * Run a map over each of the items.
+     *
+     * @param  callable  $callback
+     * @return static
+     */
+    public function map(callable $callback)
+    {
+        $itens = [];
+
+        foreach ($this as $key => $value) {
+            $newKey = $key;
+            $newValue = $callback($value, $key);
+
+            if(is_array($newValue)) {
+                $newKey = key($newValue);
+                $newValue = current($newValue);
+            }
+
+            $itens[$newKey] = $newValue;
+        }
+
+        return new static($itens);
+    }
+
+    /**
+     * Create a new collection consisting of every n-th element.
+     *
+     * @param  int  $step
+     * @param  int  $offset
+     * @return static
+     */
+    public function every($step, $offset = 0)
+    {
+        $new = [];
+
+        $position = 0;
+
+        foreach ($this as $key => $item) {
+            if ($position % $step === $offset) {
+                $new[$key] = $item;
+            }
+
+            $position++;
+        }
+
+        return new static($new);
     }
 
     /**
@@ -103,6 +152,107 @@ trait GenericCollection
         }
 
         return $filtered;
+    }
+
+    /**
+     * Create a collection of all elements that do not pass a given truth test.
+     *
+     * @param  callable|mixed  $callback
+     * @return static
+     */
+    public function reject($callback)
+    {
+        if ($this->useAsCallable($callback)) {
+            return $this->filter(function ($value, $key) use ($callback) {
+                return ! $callback($value, $key);
+            });
+        }
+
+        return $this->filter(function ($item) use ($callback) {
+            return $item != $callback;
+        });
+    }
+
+    /**
+     * Slice the underlying collection array.
+     *
+     * @param  int  $offset
+     * @param  int  $length
+     * @return static
+     */
+    public function slice($offset, $length = null)
+    {
+        return new static(array_slice($this->all(), $offset, $length, true));
+    }
+
+    /**
+     * Split a collection into a certain number of groups.
+     *
+     * @param  int  $numberOfGroups
+     * @return static
+     */
+    public function split($numberOfGroups)
+    {
+        if ($this->isEmpty()) {
+            return new static;
+        }
+
+        $groupSize = ceil($this->count() / $numberOfGroups);
+
+        return $this->chunk($groupSize);
+    }
+
+    /**
+     * Splice a portion of the underlying collection array.
+     *
+     * @param  int  $offset
+     * @param  int|null  $length
+     * @param  mixed  $replacement
+     * @return static
+     */
+    public function splice($offset, $length = null, $replacement = [])
+    {
+        if (func_num_args() == 1) {
+            return new static(array_splice($this->all(), $offset));
+        }
+
+        return new static(array_splice($this->all(), $offset, $length, $replacement));
+    }
+
+    /**
+     * Take the first or last {$limit} items.
+     *
+     * @param  int  $limit
+     * @return static
+     */
+    public function take($limit)
+    {
+        if ($limit < 0) {
+            return $this->slice($limit, abs($limit));
+        }
+
+        return $this->slice(0, $limit);
+    }
+
+    /**
+     * Chunk the underlying collection array.
+     *
+     * @param  int  $size
+     * @return static
+     */
+    public function chunk($size)
+    {
+        if ($size <= 0) {
+            return new static;
+        }
+
+        $chunks = [];
+
+        foreach (array_chunk($this->all(), $size, true) as $chunk) {
+            $chunks[] = new static($chunk);
+        }
+
+        return new static($chunks);
     }
 
     /**
