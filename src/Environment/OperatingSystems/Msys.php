@@ -5,10 +5,10 @@
  *  This file is part of the Aplí Framework.
  *
  * @project Aplí Framework
- * @file Unix.php
+ * @file Msys.php
  *
  * @author Danilo Andrade <danilo@daniloandrade.net>
- * @date 09/12/17 at 19:48
+ * @date 09/12/17 at 21:47
  *
  * @copyright  Copyright (c) 2017 Danilo Andrade
  * @license    GNU Lesser General Public License version 3 or later.
@@ -23,7 +23,7 @@
 
 namespace Apli\Environment\Detector;
 
-class Windows implements OsInterface
+class Msys implements OperatingSystem
 {
     /**
      * @return array
@@ -31,12 +31,9 @@ class Windows implements OsInterface
     public function getVariants()
     {
         return [
-            'WINDOWS',
-            'WINNT',
-            'WIN32',
-            'INTERIX',
-            'UWIN',
-            'UWIN-W7',
+            'MINGW',
+            'MINGW32_NT-6.1',
+            'MSYS_NT-6.1',
         ];
     }
 
@@ -45,7 +42,7 @@ class Windows implements OsInterface
      */
     public function getName()
     {
-        return 'Windows';
+        return 'Msys';
     }
 
     /**
@@ -53,6 +50,6 @@ class Windows implements OsInterface
      */
     public function getFamily()
     {
-        return OsDetector::WINDOWS_FAMILY;
+        return SystemDetector::UNIX_ON_WINDOWS_FAMILY;
     }
 }

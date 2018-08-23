@@ -5,10 +5,10 @@
  *  This file is part of the Aplí Framework.
  *
  * @project Aplí Framework
- * @file Unknown.php
+ * @file Sun.php
  *
  * @author Danilo Andrade <danilo@daniloandrade.net>
- * @date 09/12/17 at 22:30
+ * @date 09/12/17 at 21:51
  *
  * @copyright  Copyright (c) 2017 Danilo Andrade
  * @license    GNU Lesser General Public License version 3 or later.
@@ -23,14 +23,17 @@
 
 namespace Apli\Environment\Detector;
 
-class UnknownOs implements OsInterface
+class Sun implements OperatingSystem
 {
     /**
      * @return array
      */
     public function getVariants()
     {
-        return [];
+        return [
+            'SOLARIS',
+            'SUNOS',
+        ];
     }
 
     /**
@@ -38,7 +41,7 @@ class UnknownOs implements OsInterface
      */
     public function getName()
     {
-        return 'UNKNOWN';
+        return 'Sun OS';
     }
 
     /**
@@ -46,6 +49,6 @@ class UnknownOs implements OsInterface
      */
     public function getFamily()
     {
-        return OsDetector::OTHER_FAMILY;
+        return SystemDetector::UNIX_FAMILY;
     }
 }

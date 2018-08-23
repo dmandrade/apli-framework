@@ -23,7 +23,7 @@
 
 namespace Apli\Environment\Detector;
 
-class OsDetector
+class SystemDetector
 {
     const OTHER_FAMILY = 0;
     const UNIX_FAMILY = 1;
@@ -31,9 +31,9 @@ class OsDetector
     const UNIX_ON_WINDOWS_FAMILY = 3;
 
     /**
-     * @var OsInterface[]
+     * @var OperatingSystem[]
      */
-    private $detectors = [
+    private static $operationalSystems = [
         Bsd::class,
         Cygwin::class,
         Linux::class,
@@ -46,16 +46,14 @@ class OsDetector
     /**
      * @param $kernel
      *
-     * @return OsInterface
+     * @return OperatingSystem
      */
-    public function detectOs($kernel)
+    public function detect($kernel)
     {
-        foreach ($this->detectors as $class) {
-            /** @var OsInterface $os */
-            $os = (new $class());
-            $detected = $this->isOs($kernel, $os->getVariants());
+        foreach (self::$operationalSystems as $class) {
+            $detected = $this->isOs($kernel,$class::getVariants());
             if ($detected) {
-                return $os;
+                return new $class();
             }
         }
 
@@ -74,12 +72,25 @@ class OsDetector
     }
 
     /**
-     * @param OsInterface $detector
+     * Register a new operating system.
+     *
+     * @param OperatingSystem $class
      */
-    public function extend($detector)
+    public static function registeOperatingSystem(OperatingSystem $class)
     {
-        if (!in_array($detector, $this->detectors)) {
-            $this->detectors[] = $detector;
+        static::macro(Str::camel(class_basename($class)), function (...$parameters) use ($class) {
+            return new $class(...$parameters);
+        });
+    }
+
+
+    /**
+     * @param OperatingSystem $class
+     */
+    public function extend($class)
+    {
+        if (!in_array($class, self::$operationalSystems)) {
+            self::$operationalSystems[class_basename($class)] = $class;
         }
     }
 }

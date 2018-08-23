@@ -5,10 +5,10 @@
  *  This file is part of the Aplí Framework.
  *
  * @project Aplí Framework
- * @file Osx.php
+ * @file Unix.php
  *
  * @author Danilo Andrade <danilo@daniloandrade.net>
- * @date 09/12/17 at 21:48
+ * @date 09/12/17 at 19:48
  *
  * @copyright  Copyright (c) 2017 Danilo Andrade
  * @license    GNU Lesser General Public License version 3 or later.
@@ -23,7 +23,7 @@
 
 namespace Apli\Environment\Detector;
 
-class MacOsx implements OsInterface
+class Windows implements OperatingSystem
 {
     /**
      * @return array
@@ -31,7 +31,12 @@ class MacOsx implements OsInterface
     public function getVariants()
     {
         return [
-            'DARWIN',
+            'WINDOWS',
+            'WINNT',
+            'WIN32',
+            'INTERIX',
+            'UWIN',
+            'UWIN-W7',
         ];
     }
 
@@ -40,7 +45,7 @@ class MacOsx implements OsInterface
      */
     public function getName()
     {
-        return 'Mac OSX';
+        return 'Windows';
     }
 
     /**
@@ -48,6 +53,6 @@ class MacOsx implements OsInterface
      */
     public function getFamily()
     {
-        return OsDetector::UNIX_FAMILY;
+        return SystemDetector::WINDOWS_FAMILY;
     }
 }

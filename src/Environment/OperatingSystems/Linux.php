@@ -23,7 +23,7 @@
 
 namespace Apli\Environment\Detector;
 
-class Linux implements OsInterface
+class Linux implements OperatingSystem
 {
     /**
      * @return array
@@ -50,6 +50,6 @@ class Linux implements OsInterface
      */
     public function getFamily()
     {
-        return OsDetector::UNIX_FAMILY;
+        return SystemDetector::UNIX_FAMILY;
     }
 }

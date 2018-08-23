@@ -5,10 +5,10 @@
  *  This file is part of the Aplí Framework.
  *
  * @project Aplí Framework
- * @file Bsd.php
+ * @file Cygwin.php
  *
  * @author Danilo Andrade <danilo@daniloandrade.net>
- * @date 09/12/17 at 21:58
+ * @date 09/12/17 at 21:45
  *
  * @copyright  Copyright (c) 2017 Danilo Andrade
  * @license    GNU Lesser General Public License version 3 or later.
@@ -23,7 +23,7 @@
 
 namespace Apli\Environment\Detector;
 
-class Bsd implements OsInterface
+class Cygwin implements OperatingSystem
 {
     /**
      * @return array
@@ -31,13 +31,10 @@ class Bsd implements OsInterface
     public function getVariants()
     {
         return [
-            'DRAGONFLY',
-            'OPENBSD',
-            'FREEBSD',
-            'NETBSD',
-            'GNU/KFREEBSD',
-            'GNU/FREEBSD',
-            'DEBIAN/FREEBSD',
+            'CYGWIN',
+            'CYGWIN_NT-5.1',
+            'CYGWIN_NT-6.1',
+            'CYGWIN_NT-6.1-WOW64',
         ];
     }
 
@@ -46,7 +43,7 @@ class Bsd implements OsInterface
      */
     public function getName()
     {
-        return 'BSD';
+        return 'Cygwin';
     }
 
     /**
@@ -54,6 +51,6 @@ class Bsd implements OsInterface
      */
     public function getFamily()
     {
-        return OsDetector::UNIX_FAMILY;
+        return SystemDetector::UNIX_ON_WINDOWS_FAMILY;
     }
 }
