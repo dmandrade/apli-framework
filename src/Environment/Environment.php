@@ -35,13 +35,11 @@ class Environment
 
     /**
      * Environment constructor.
-     *
-     * @param array $server
+     * @param string $sapi
      */
-    public function __construct(array $server = [], $sapi = '')
+    public function __construct($sapi = '')
     {
         $this->setSapiName($sapi);
-        $this->server = new Server($server);
     }
 
     /**
@@ -59,6 +57,10 @@ class Environment
      */
     public function server()
     {
+        if(is_null($this->server)) {
+            $this->server = new Server();
+        }
+
         return $this->server;
     }
 

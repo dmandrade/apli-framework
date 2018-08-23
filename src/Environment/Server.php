@@ -31,7 +31,7 @@ class Server
     /**
      * @var Platform
      */
-    protected $os;
+    protected $platform;
 
     /**
      * Server constructor.
@@ -41,15 +41,18 @@ class Server
     public function __construct(array $server = [])
     {
         $this->server = $server ?: $_SERVER;
-        $this->os = new Platform();
     }
 
     /**
      * @return Platform
      */
-    public function os()
+    public function platform()
     {
-        return $this->os;
+        if(is_null($this->platform)) {
+            $this->platform = new Platform();
+        }
+
+        return $this->platform;
     }
 
     /**

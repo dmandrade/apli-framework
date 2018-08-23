@@ -16,9 +16,7 @@
 
 namespace Apli\Environment;
 
-use Apli\Environment\Detector\MacOsx;
-use Apli\Environment\Detector\OsDetector;
-use Apli\Environment\Detector\OsInterface;
+use Apli\Environment\OperatingSystems\MacOsx;
 
 /**
  * Class Platform.
@@ -42,21 +40,20 @@ class Platform
     /**
      * OS type constant.
      *
-     * @var OsInterface
+     * @var OperatingSystem
      */
-    protected $os;
+    protected $operatingSystem = null;
 
     /**
-     * @var OsDetector
+     * @var SystemDetector
      */
-    protected $detector;
+    protected $systemDetector;
 
     /**
      * Platform constructor.
      */
     public function __construct()
     {
-        $this->detector = new OsDetector();
         $this->setKernelName(PHP_OS);
     }
 
@@ -69,21 +66,36 @@ class Platform
      */
     public function setKernelName($kernel)
     {
-        $this->os = null;
         $this->kernel = strtolower($kernel);
-        $this->detectOs();
 
         return $this;
     }
 
     /**
-     * Set detected os.
+     * Detect Operating system
      *
      * @return void
      */
-    private function detectOs()
+    private function detectOperatingSystem()
     {
-        $this->os = $this->detector->detectOs($this->kernel);
+        if(is_null($this->systemDetector)) {
+            $this->systemDetector = new SystemDetector();
+        }
+
+        $this->operatingSystem = $this->systemDetector->detect($this->kernel);
+    }
+
+    /**
+     * Get operating system
+     * @return OperatingSystem
+     */
+    public function operatingSystem()
+    {
+        if(is_null($this->operatingSystem)){
+            $this->detectOperatingSystem();
+        }
+
+        return $this->operatingSystem;
     }
 
     /**
@@ -103,7 +115,7 @@ class Platform
      */
     public function getOsFamily()
     {
-        return $this->os->getFamily();
+        return $this->operatingSystem()->getFamily();
     }
 
     /**
@@ -113,7 +125,7 @@ class Platform
      */
     public function getOsName()
     {
-        return $this->os->getName();
+        return $this->operatingSystem()->getName();
     }
 
     /**
@@ -123,7 +135,7 @@ class Platform
      */
     public function isUnix()
     {
-        return $this->os->getFamily() === OsDetector::UNIX_FAMILY;
+        return $this->operatingSystem()->getFamily() === SystemDetector::UNIX_FAMILY;
     }
 
     /**
@@ -133,7 +145,7 @@ class Platform
      */
     public function isUnixOnWindows()
     {
-        return $this->os->getFamily() === OsDetector::UNIX_ON_WINDOWS_FAMILY;
+        return $this->operatingSystem()->getFamily() === SystemDetector::UNIX_ON_WINDOWS_FAMILY;
     }
 
     /**
@@ -143,7 +155,7 @@ class Platform
      */
     public function isWindows()
     {
-        return $this->os->getFamily() === OsDetector::WINDOWS_FAMILY;
+        return $this->operatingSystem()->getFamily() === SystemDetector::WINDOWS_FAMILY;
     }
 
     /**
@@ -153,6 +165,6 @@ class Platform
      */
     public function isOsx()
     {
-        return $this->os instanceof MacOsx;
+        return $this->operatingSystem() instanceof MacOsx;
     }
 }
