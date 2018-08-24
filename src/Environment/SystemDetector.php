@@ -21,7 +21,18 @@
  * Time: 20:23.
  */
 
-namespace Apli\Environment\Detector;
+namespace Apli\Environment;
+
+use Apli\Environment\OperatingSystems\Bsd;
+use Apli\Environment\OperatingSystems\Cygwin;
+use Apli\Environment\OperatingSystems\Linux;
+use Apli\Environment\OperatingSystems\MacOsx;
+use Apli\Environment\OperatingSystems\Msys;
+use Apli\Environment\OperatingSystems\Sun;
+use Apli\Environment\OperatingSystems\UnknownOs;
+use Apli\Environment\OperatingSystems\Windows;
+use ReflectionClass;
+use Exception;
 
 class SystemDetector
 {
@@ -33,7 +44,7 @@ class SystemDetector
     /**
      * @var OperatingSystem[]
      */
-    private static $operationalSystems = [
+    private static $operatingSystems = [
         Bsd::class,
         Cygwin::class,
         Linux::class,
@@ -50,7 +61,7 @@ class SystemDetector
      */
     public function detect($kernel)
     {
-        foreach (self::$operationalSystems as $class) {
+        foreach (self::$operatingSystems as $class) {
             $detected = $this->isOs($kernel,$class::getVariants());
             if ($detected) {
                 return new $class();
@@ -61,9 +72,10 @@ class SystemDetector
     }
 
     /**
-     * @param string $kernel
-     * @param array  $os
+     * Check if kernel is from operating system variants
      *
+     * @param $kernel
+     * @param $variants
      * @return bool
      */
     private function isOs($kernel, $variants)
@@ -74,23 +86,19 @@ class SystemDetector
     /**
      * Register a new operating system.
      *
-     * @param OperatingSystem $class
+     * @param $class
+     * @throws \ReflectionException
+     * @throws Exception
      */
-    public static function registeOperatingSystem(OperatingSystem $class)
+    public static function registerOperatingSystem($class)
     {
-        static::macro(Str::camel(class_basename($class)), function (...$parameters) use ($class) {
-            return new $class(...$parameters);
-        });
-    }
+        $reflection = new ReflectionClass($class);
+        if ( !$reflection->implementsInterface(OperatingSystem::class) ) {
+            throw new Exception($reflection->getName() . ' need to implement OperatingSystem');
+        }
 
-
-    /**
-     * @param OperatingSystem $class
-     */
-    public function extend($class)
-    {
-        if (!in_array($class, self::$operationalSystems)) {
-            self::$operationalSystems[class_basename($class)] = $class;
+        if (!in_array($class, self::$operatingSystems)) {
+            self::$operatingSystems[] = $class;
         }
     }
 }
