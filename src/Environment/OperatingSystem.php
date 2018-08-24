@@ -21,9 +21,9 @@
  * Time: 19:48.
  */
 
-namespace Apli\Environment\Detector;
+namespace Apli\Environment;
 
-interface OsInterface
+interface OperatingSystem
 {
     /**
      * @return string
@@ -38,5 +38,7 @@ interface OsInterface
     /**
      * @return array
      */
-    public function getVariants();
+    public static function getVariants();
+
+    public function __toString();
 }
