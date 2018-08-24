@@ -23,18 +23,82 @@ Add this to the require block in your `composer.json`.
 $env = new Environment;
 $env->isWeb();
 $env->isCli();
-$env->server()->os()->isUnix();
-$env->server()->os()->getKernelName(); // OPENBSD, WIN32, DARWIN
-$env->server()->os()->getOsName(); // Windows, Linux, Mac OSX, BSD, Sun OS
+$env->server()->platform()->isUnix();
+$env->server()->platform()->getKernelName(); // OPENBSD, WIN32, DARWIN
+$env->server()->platform()->getOsName(); // Windows, Linux, Mac OSX, BSD, Sun OS
 
 $server = new Server();
 $server->getHost();
 $server->getPort();
 
-$os = new Platform();
-$os->getKernelName();
-$os->getOsName();
+$platform = new Platform();
+$platform->getKernelName();
+$platform->getOsName();
 
+$systemDetector = new SystemDetector();
+$systemDetector->detect('LINUX');
+
+```
+
+### Registering a new Operating System to SystemDetector
+
+Create a operating system class, for example `Linux.php`
+``` php
+use Apli\Environment\OperatingSystem;
+use Apli\Environment\SystemDetector;
+
+class Linux implements OperatingSystem
+{
+    /**
+     * Array ir kernel variant names
+     *
+     * @return array
+     */
+    public static function getVariants()
+    {
+        return [
+            'LINUX',
+            'GNU',
+            'GNU/LINUX',
+        ];
+    }
+
+    /**
+     * Operating system name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Linux';
+    }
+
+    /**
+     * Operating system family
+     *
+     * @return int
+     */
+    public function getFamily()
+    {
+        return SystemDetector::UNIX_FAMILY;
+    }
+
+    /**
+     * Operating system name
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
+}
+```
+
+Register class in SystemDetector
+
+```php
+SystemDetector::registerOperatingSystem(Linux::class);
 ```
 
 ### Complete list of methods
@@ -46,6 +110,7 @@ Environment methods
 - [x] $env->getPhpVersion();
 - [x] $env->isPHP();
 - [x] $env->isHHVM();
+- [x] $env->server();
 
 Server methods
 - [x] $env->server()->getRoot();
@@ -57,13 +122,15 @@ Server methods
 - [x] $env->server()->getHost();
 - [x] $env->server()->getPort();
 - [x] $env->server()->getScheme();
+- [x] $env->server()->platform();
 
 OS related methods
 
-- [x] $env->server()->os()->getKernelName();
-- [x] $env->server()->os()->getOsFamily();
-- [x] $env->server()->os()->getOsName();
-- [x] $env->server()->os()->isUnix();
-- [x] $env->server()->os()->isUnixOnWindows();
-- [x] $env->server()->os()->isWindows();
-- [x] $env->server()->os()->isOsx();
+- [x] $env->server()->platform()->getKernelName();
+- [x] $env->server()->platform()->getOsFamily();
+- [x] $env->server()->platform()->getOsName();
+- [x] $env->server()->platform()->isUnix();
+- [x] $env->server()->platform()->isUnixOnWindows();
+- [x] $env->server()->platform()->isWindows();
+- [x] $env->server()->platform()->isOsx();
+- [x] $env->server()->platform()->operatingSystem();
