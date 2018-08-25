@@ -21,14 +21,17 @@
  * Time: 19:48.
  */
 
-namespace Apli\Environment\Detector;
+namespace Apli\Environment\OperatingSystems;
+
+use Apli\Environment\OperatingSystem;
+use Apli\Environment\SystemDetector;
 
 class Sun implements OperatingSystem
 {
     /**
      * @return array
      */
-    public function getVariants()
+    public static function getVariants()
     {
         return [
             'SOLARIS',
@@ -50,5 +53,15 @@ class Sun implements OperatingSystem
     public function getFamily()
     {
         return SystemDetector::UNIX_FAMILY;
+    }
+
+    /**
+     * Operating system name
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
     }
 }

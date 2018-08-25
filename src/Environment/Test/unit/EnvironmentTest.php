@@ -211,9 +211,9 @@ class EnvironmentTest extends \Codeception\Test\Unit
      */
     public function testIsOsx($os, $value)
     {
-        $this->environment->server()->os()->setKernelName($os);
+        $this->environment->server()->platform()->setKernelName($os);
 
-        $this->assertEquals($value, $this->environment->server()->os()->isOsx());
+        $this->assertEquals($value, $this->environment->server()->platform()->isOsx());
     }
 
     /**
@@ -230,9 +230,9 @@ class EnvironmentTest extends \Codeception\Test\Unit
      */
     public function testIsWin($os, $value)
     {
-        $this->environment->server()->os()->setKernelName($os);
+        $this->environment->server()->platform()->setKernelName($os);
 
-        $this->assertEquals($value, $this->environment->server()->os()->isWindows());
+        $this->assertEquals($value, $this->environment->server()->platform()->isWindows());
     }
 
     /**
@@ -249,9 +249,9 @@ class EnvironmentTest extends \Codeception\Test\Unit
      */
     public function testIsUnix($os, $value)
     {
-        $this->environment->server()->os()->setKernelName($os);
+        $this->environment->server()->platform()->setKernelName($os);
 
-        $this->assertEquals($value, $this->environment->server()->os()->isUnix());
+        $this->assertEquals($value, $this->environment->server()->platform()->isUnix());
     }
 
     /**
@@ -268,9 +268,9 @@ class EnvironmentTest extends \Codeception\Test\Unit
      */
     public function testIsUnixOnWindows($os, $value)
     {
-        $this->environment->server()->os()->setKernelName($os);
+        $this->environment->server()->platform()->setKernelName($os);
 
-        $this->assertEquals($value, $this->environment->server()->os()->isUnixOnWindows());
+        $this->assertEquals($value, $this->environment->server()->platform()->isUnixOnWindows());
     }
 
     /**

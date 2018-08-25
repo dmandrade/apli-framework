@@ -21,19 +21,26 @@
  * Time: 19:48.
  */
 
-namespace Apli\Environment\Detector;
+namespace Apli\Environment\OperatingSystems;
+
+use Apli\Environment\OperatingSystem;
+use Apli\Environment\SystemDetector;
 
 class UnknownOs implements OperatingSystem
 {
     /**
+     * Array ir kernel variant names
+     *
      * @return array
      */
-    public function getVariants()
+    public static function getVariants()
     {
         return [];
     }
 
     /**
+     * Operating system name
+     *
      * @return string
      */
     public function getName()
@@ -41,11 +48,24 @@ class UnknownOs implements OperatingSystem
         return 'UNKNOWN';
     }
 
+
     /**
+     * Operating system family
+     *
      * @return int
      */
     public function getFamily()
     {
         return SystemDetector::OTHER_FAMILY;
+    }
+
+    /**
+     * Operating system name
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
     }
 }

@@ -21,14 +21,19 @@
  * Time: 19:48.
  */
 
-namespace Apli\Environment\Detector;
+namespace Apli\Environment\OperatingSystems;
+
+use Apli\Environment\OperatingSystem;
+use Apli\Environment\SystemDetector;
 
 class Linux implements OperatingSystem
 {
     /**
+     * Array ir kernel variant names
+     *
      * @return array
      */
-    public function getVariants()
+    public static function getVariants()
     {
         return [
             'LINUX',
@@ -38,6 +43,8 @@ class Linux implements OperatingSystem
     }
 
     /**
+     * Operating system name
+     *
      * @return string
      */
     public function getName()
@@ -46,10 +53,22 @@ class Linux implements OperatingSystem
     }
 
     /**
+     * Operating system family
+     *
      * @return int
      */
     public function getFamily()
     {
         return SystemDetector::UNIX_FAMILY;
+    }
+
+    /**
+     * Operating system name
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
     }
 }
