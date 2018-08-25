@@ -6,7 +6,7 @@ use Apli\Filter\Cleaner\AlnumCleaner;
 use Apli\Filter\Cleaner\ArrayCleaner;
 use Apli\Filter\Cleaner\Base64Cleaner;
 use Apli\Filter\Cleaner\BooleanCleaner;
-use Apli\Filter\Cleaner\CleanerInterface;
+use Apli\Filter\Cleaner\Cleaner;
 use Apli\Filter\Cleaner\CmdCleaner;
 use Apli\Filter\Cleaner\EmailCleaner;
 use Apli\Filter\Cleaner\FloatCleaner;
@@ -27,9 +27,31 @@ class InputFilter implements \Serializable
     /**
      * Property handlers.
      *
-     * @var CleanerInterface[]|callable[]
+     * @var string|callable[]
      */
     protected $handlers = [];
+
+    /**
+     * A list of native handlers for filter
+     * @var array
+     */
+    protected $nativeHandlers = [
+        'HTML' => HtmlCleaner::class,
+        'INTEGER' => IntegerCleaner::class,
+        'UINT' => UintCleaner::class,
+        'FLOAT' => FloatCleaner::class,
+        'BOOLEAN' => BooleanCleaner::class,
+        'WORD' => WordCleaner::class,
+        'ALNUM' => AlnumCleaner::class,
+        'CMD' => CmdCleaner::class,
+        'BASE64' => Base64Cleaner::class,
+        'STRING' => StringCleaner::class,
+        'ARRAY' => ArrayCleaner::class,
+        'PATH' => PathCleaner::class,
+        'USERNAME' => UsernameCleaner::class,
+        'EMAIL' => EmailCleaner::class,
+        'URL' => UrlCleaner::class,
+    ];
 
     /**
      * Property unknownHandler.
@@ -39,56 +61,38 @@ class InputFilter implements \Serializable
     protected $defaultHandler = null;
 
     /**
-     * Property htmlCleaner.
-     *
-     * @var HtmlCleaner
+     * InputFilter constructor.
      */
-    protected $htmlCleaner = null;
-
-    /**
-     * Class init.
-     *
-     * @param $htmlCleaner
-     */
-    public function __construct(HtmlCleaner $htmlCleaner = null)
+    public function __construct()
     {
-        $this->htmlCleaner = $htmlCleaner ?: new HtmlCleaner();
-
         $this->loadDefaultHandlers();
     }
 
+
     /**
-     * loadDefaultHandlers.
+     * Load default clean handlers.
      *
      * @return void
      */
     protected function loadDefaultHandlers()
     {
-        $filter = $this->htmlCleaner;
+        foreach ($this->nativeHandlers as $name => $handler) {
+            if(!$this->hasHandler($name)) {
+                $this->setHandler($name, $handler);
+            }
+        }
 
-        $this->addHandler('HTML', $this->htmlCleaner);
-        $this->addHandler('INTEGER', new IntegerCleaner());
-        $this->addHandler('UINT', new UintCleaner());
-        $this->addHandler('FLOAT', new FloatCleaner());
-        $this->addHandler('BOOLEAN', new BooleanCleaner());
-        $this->addHandler('WORD', new WordCleaner());
-        $this->addHandler('ALNUM', new AlnumCleaner());
-        $this->addHandler('CMD', new CmdCleaner());
-        $this->addHandler('BASE64', new Base64Cleaner());
-        $this->addHandler('STRING', new StringCleaner($this->htmlCleaner));
-        $this->addHandler('ARRAY', new ArrayCleaner());
-        $this->addHandler('PATH', new PathCleaner());
-        $this->addHandler('USERNAME', new UsernameCleaner());
-        $this->addHandler('EMAIL', new EmailCleaner());
-        $this->addHandler('URL', new UrlCleaner());
+        // Function to handle raw data
+        if(!$this->hasHandler('RAW')) {
+            $this->handlers['RAW'] = function ($source) {
+                return $source;
+            };
+        }
 
-        // RAW
-        $this->handlers['RAW'] = function ($source) {
-            return $source;
-        };
-
-        // UNKNOWN
-        $this->defaultHandler = function ($source) use ($filter) {
+        // Function to handler unknown clean
+        $this->defaultHandler = function ($source) {
+            /** @var HtmlCleaner $filter **/
+            $filter = $this->getHandler('html');
             // Are we dealing with an array?
             if (is_array($source)) {
                 foreach ($source as $key => $value) {
@@ -113,24 +117,51 @@ class InputFilter implements \Serializable
     }
 
     /**
-     * setHandlers.
+     * Check if passed handler is valid
      *
-     * @param string                     $name
-     * @param CleanerInterface|\callable $handler
-     *
+     * @param $handler
+     * @return bool
+     * @throws \ReflectionException
      * @throws \InvalidArgumentException
-     *
-     * @return static Return self to support chaining.
      */
-    public function addHandler($name, $handler)
+    private function isValidHandler($handler)
     {
-        if (is_object($handler) && !($handler instanceof CleanerInterface) && !($handler instanceof \Closure)) {
-            throw new \InvalidArgumentException('Object filter handler should extends CleanerInterface or be a Closure.');
+        if(is_string($handler)) {
+            $reflection = new \ReflectionClass($handler);
+            if (!$reflection->implementsInterface(Cleaner::class)) {
+                throw new \InvalidArgumentException($reflection->getName().' should implements Cleaner');
+            }
+
+            return true;
         }
 
-        $this->handlers[strtoupper($name)] = $handler;
+        if (!($handler instanceof \Closure)) {
+            throw new \InvalidArgumentException('The filter handler must be a class that implements the Cleaner or a Closure.');
+        }
+
+        return true;
+    }
+
+    /**
+     * Add a new clean handler
+     *
+     * @param $name
+     * @param $handler
+     * @return $this
+     * @throws \ReflectionException
+     */
+    public function setHandler($name, $handler)
+    {
+        if($this->isValidHandler($handler)) {
+            $this->handlers[strtoupper($name)] = $handler;
+        }
 
         return $this;
+    }
+
+    public function hasHandler($name)
+    {
+        return isset($this->handlers[strtoupper($name)]);
     }
 
     /**
@@ -150,7 +181,7 @@ class InputFilter implements \Serializable
 
         $filter = strtoupper($filter);
 
-        if (!empty($this->handlers[$filter]) && $this->handlers[$filter] instanceof CleanerInterface) {
+        if (!empty($this->handlers[$filter]) && $this->handlers[$filter] instanceof Cleaner) {
             return $this->handlers[$filter]->clean($source);
         } elseif (!empty($this->handlers[$filter]) && is_callable($this->handlers[$filter])) {
             return $this->handlers[$filter]($source);
@@ -176,41 +207,7 @@ class InputFilter implements \Serializable
      */
     public function getHandler($name)
     {
-        return $this->handlers[strtoupper($name)];
-    }
-
-    /**
-     * gethtmlCleaner.
-     *
-     * @return \Apli\Filter\Cleaner\HtmlCleaner
-     */
-    public function getHtmlCleaner()
-    {
-        return $this->htmlCleaner;
-    }
-
-    /**
-     * sethtmlCleaner.
-     *
-     * @param \Apli\Filter\Cleaner\HtmlCleaner $htmlCleaner
-     *
-     * @return static Return self to support chaining.
-     */
-    public function setHtmlCleaner($htmlCleaner)
-    {
-        $this->htmlCleaner = $htmlCleaner;
-
-        return $this;
-    }
-
-    /**
-     * getDefaultHandler.
-     *
-     * @return callable
-     */
-    public function getDefaultHandler()
-    {
-        return $this->defaultHandler;
+        return new $this->handlers[strtoupper($name)]();
     }
 
     /**
@@ -234,11 +231,17 @@ class InputFilter implements \Serializable
      */
     public function serialize()
     {
-        $this->handlers = null;
         $this->defaultHandler = null;
+        $handlers =  $this->handlers;
+
+        foreach ($handlers as $name => $handler) {
+            if(!is_string($handler)) {
+                unset($handlers[$name]);
+            }
+        }
 
         // Serialize the options, data, and inputs.
-        return serialize($this->htmlCleaner);
+        return serialize($handlers);
     }
 
     /**
@@ -250,10 +253,9 @@ class InputFilter implements \Serializable
      */
     public function unserialize($input)
     {
-        $htmlCleaner = unserialize($input);
+        $handlers = unserialize($input);
 
-        $this->htmlCleaner = $htmlCleaner;
-
+        $this->handlers = $handlers;
         $this->loadDefaultHandlers();
     }
 }
