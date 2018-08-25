@@ -32,7 +32,7 @@ use Apli\Environment\OperatingSystems\Sun;
 use Apli\Environment\OperatingSystems\UnknownOs;
 use Apli\Environment\OperatingSystems\Windows;
 use ReflectionClass;
-use Exception;
+use InvalidArgumentException;
 
 class SystemDetector
 {
@@ -88,13 +88,13 @@ class SystemDetector
      *
      * @param $class
      * @throws \ReflectionException
-     * @throws Exception
+     * @throws InvalidArgumentException
      */
     public static function registerOperatingSystem($class)
     {
         $reflection = new ReflectionClass($class);
         if ( !$reflection->implementsInterface(OperatingSystem::class) ) {
-            throw new Exception($reflection->getName() . ' need to implement OperatingSystem');
+            throw new InvalidArgumentException($reflection->getName() . ' should implements OperatingSystem');
         }
 
         if (!in_array($class, self::$operatingSystems)) {

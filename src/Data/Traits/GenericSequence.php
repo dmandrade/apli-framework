@@ -103,15 +103,6 @@ trait GenericSequence
     }
 
     /**
-     * @param callable $callback
-     * @return Sequence
-     */
-    public function map(callable $callback)
-    {
-        return new self(array_map($callback, $this->values));
-    }
-
-    /**
      * @return mixed
      */
     public function pop()
@@ -241,20 +232,6 @@ trait GenericSequence
         $this->checkCapacity();
 
         return $value;
-    }
-
-    /**
-     * @param int      $offset
-     * @param int|null $length
-     * @return Sequence
-     */
-    public function slice($offset, $length = null)
-    {
-        if (func_num_args() === 1) {
-            $length = count($this);
-        }
-
-        return new self(array_slice($this->values, $offset, $length));
     }
 
     /**
