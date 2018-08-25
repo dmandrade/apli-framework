@@ -1,4 +1,15 @@
 <?php
+/**
+ *  Copyright (c) 2018 Danilo Andrade
+ *
+ *  This file is part of the apli project.
+ *
+ *  @project apli
+ *  @file Vector.php
+ *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
+ *  @date 19/08/18 at 17:19
+ */
+
 namespace Apli\Data;
 
 /**

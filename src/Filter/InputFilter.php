@@ -1,4 +1,14 @@
 <?php
+/**
+ *  Copyright (c) 2018 Danilo Andrade
+ *
+ *  This file is part of the apli project.
+ *
+ *  @project apli
+ *  @file InputFilter.php
+ *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
+ *  @date 25/08/18 at 09:22
+ */
 
 namespace Apli\Filter;
 

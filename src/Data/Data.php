@@ -1,5 +1,16 @@
 <?php
 /**
+ *  Copyright (c) 2018 Danilo Andrade
+ *
+ *  This file is part of the apli project.
+ *
+ *  @project apli
+ *  @file Data.php
+ *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
+ *  @date 19/08/18 at 17:26
+ */
+
+/**
  * Created by PhpStorm.
  * User: Danilo
  * Date: 17/08/2018

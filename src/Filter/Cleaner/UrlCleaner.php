@@ -1,5 +1,16 @@
 <?php
 /**
+ *  Copyright (c) 2018 Danilo Andrade
+ *
+ *  This file is part of the apli project.
+ *
+ *  @project apli
+ *  @file UrlCleaner.php
+ *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
+ *  @date 25/08/18 at 07:52
+ */
+
+/**
  * Created by PhpStorm.
  * User: Danilo
  * Date: 15/07/2018

@@ -1,4 +1,14 @@
 <?php
+/**
+ *  Copyright (c) 2018 Danilo Andrade
+ *
+ *  This file is part of the apli project.
+ *
+ *  @project apli
+ *  @file AbstractApplication.php
+ *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
+ *  @date 12/08/18 at 09:49
+ */
 
 namespace Apli\Application;
 

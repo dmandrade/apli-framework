@@ -1,5 +1,16 @@
 <?php
 /**
+ *  Copyright (c) 2018 Danilo Andrade
+ *
+ *  This file is part of the apli project.
+ *
+ *  @project apli
+ *  @file PriorityQueue.php
+ *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
+ *  @date 18/08/18 at 18:17
+ */
+
+/**
  * Created by PhpStorm.
  * User: Danilo
  * Date: 02/08/2018

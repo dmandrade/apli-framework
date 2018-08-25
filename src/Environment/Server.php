@@ -1,17 +1,13 @@
 <?php
 /**
- *  Copyright (c) 2017 Danilo Andrade (http://daniloandrade.net).
+ *  Copyright (c) 2018 Danilo Andrade
  *
- *  This file is part of the Aplí Framework.
+ *  This file is part of the apli project.
  *
- * @project Aplí Framework
- * @file Server.php
- *
- * @author Danilo Andrade <danilo@daniloandrade.net>
- * @date 16/12/17 at 15:11
- *
- * @copyright  Copyright (c) 2017 Danilo Andrade
- * @license    GNU Lesser General Public License version 3 or later.
+ *  @project apli
+ *  @file Server.php
+ *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
+ *  @date 25/08/18 at 07:09
  */
 
 namespace Apli\Environment;
