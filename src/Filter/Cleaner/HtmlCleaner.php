@@ -5,7 +5,7 @@ namespace Apli\Filter\Cleaner;
 /**
  * Html Cleaner object.
  */
-class HtmlCleaner implements CleanerInterface
+class HtmlCleaner implements Cleaner
 {
     const USE_WHITE_LIST = 0;
 
@@ -618,6 +618,6 @@ class HtmlCleaner implements CleanerInterface
      */
     public function clean($source)
     {
-        return (string) $this->clean((string) $source);
+        return (string) $this->remove((string) $source);
     }
 }

@@ -5,7 +5,7 @@ namespace Apli\Filter\Cleaner;
 /**
  * Interface FilterRuleInterface.
  */
-interface CleanerInterface
+interface Cleaner
 {
     /**
      * Method to clean text by rule.

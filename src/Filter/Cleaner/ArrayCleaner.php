@@ -8,7 +8,7 @@
 
 namespace Apli\Filter\Cleaner;
 
-class ArrayCleaner implements CleanerInterface
+class ArrayCleaner implements Cleaner
 {
     /**
      * Method to clean text by rule.

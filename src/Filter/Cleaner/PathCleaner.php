@@ -8,7 +8,7 @@
 
 namespace Apli\Filter\Cleaner;
 
-class PathCleaner implements CleanerInterface
+class PathCleaner implements Cleaner
 {
     /**
      * Method to clean text by rule.

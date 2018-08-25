@@ -8,7 +8,7 @@
 
 namespace Apli\Filter\Cleaner;
 
-class CmdCleaner implements CleanerInterface
+class CmdCleaner implements Cleaner
 {
     /**
      * Method to clean text by rule.

@@ -8,7 +8,7 @@
 
 namespace Apli\Filter\Cleaner;
 
-class IntegerCleaner implements CleanerInterface
+class IntegerCleaner implements Cleaner
 {
     /**
      * Method to clean text by rule.

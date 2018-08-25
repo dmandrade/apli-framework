@@ -8,7 +8,7 @@
 
 namespace Apli\Filter\Cleaner;
 
-class FloatCleaner implements CleanerInterface
+class FloatCleaner implements Cleaner
 {
     /**
      * Method to clean text by rule.

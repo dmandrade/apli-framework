@@ -8,7 +8,7 @@
 
 namespace Apli\Filter\Cleaner;
 
-class UintCleaner implements CleanerInterface
+class UintCleaner implements Cleaner
 {
     /**
      * Method to clean text by rule.

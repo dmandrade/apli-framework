@@ -8,7 +8,7 @@
 
 namespace Apli\Filter\Cleaner;
 
-class UrlCleaner implements CleanerInterface
+class UrlCleaner implements Cleaner
 {
     /**
      * Method to clean text by rule.

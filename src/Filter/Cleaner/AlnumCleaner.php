@@ -8,7 +8,7 @@
 
 namespace Apli\Filter\Cleaner;
 
-class AlnumCleaner implements CleanerInterface
+class AlnumCleaner implements Cleaner
 {
     /**
      * Method to clean text by rule.

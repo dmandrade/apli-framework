@@ -8,7 +8,7 @@
 
 namespace Apli\Filter\Cleaner;
 
-class WordCleaner implements CleanerInterface
+class WordCleaner implements Cleaner
 {
     /**
      * Method to clean text by rule.

@@ -8,7 +8,7 @@
 
 namespace Apli\Filter\Cleaner;
 
-class Base64Cleaner implements CleanerInterface
+class Base64Cleaner implements Cleaner
 {
     /**
      * Method to clean text by rule.

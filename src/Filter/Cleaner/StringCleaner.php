@@ -8,16 +8,28 @@
 
 namespace Apli\Filter\Cleaner;
 
-class StringCleaner implements CleanerInterface
+class StringCleaner implements Cleaner
 {
     private $filter;
 
     /**
-     * StringCleaner constructor.
+     * @return HtmlCleaner
      */
-    public function __construct(HtmlCleaner $htmlCleaner)
+    public function getFilter()
     {
-        $this->filter = $htmlCleaner;
+        if(is_null($this->filter)) {
+            $this->filter = new HtmlCleaner();
+        }
+
+        return $this->filter;
+    }
+
+    /**
+     * @param HtmlCleaner $filter
+     */
+    public function setFilter($filter)
+    {
+        $this->filter = $filter;
     }
 
     /**
@@ -29,6 +41,6 @@ class StringCleaner implements CleanerInterface
      */
     public function clean($source)
     {
-        return (string) $this->filter->clean($this->filter->decode((string) $source));
+        return (string) $this->getFilter()->clean($this->getFilter()->decode((string) $source));
     }
 }

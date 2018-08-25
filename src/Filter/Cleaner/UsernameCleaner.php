@@ -8,7 +8,7 @@
 
 namespace Apli\Filter\Cleaner;
 
-class UsernameCleaner implements CleanerInterface
+class UsernameCleaner implements Cleaner
 {
     /**
      * Method to clean text by rule.

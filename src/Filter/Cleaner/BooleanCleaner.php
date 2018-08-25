@@ -8,7 +8,7 @@
 
 namespace Apli\Filter\Cleaner;
 
-class BooleanCleaner implements CleanerInterface
+class BooleanCleaner implements Cleaner
 {
     /**
      * Method to clean text by rule.

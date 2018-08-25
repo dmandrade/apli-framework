@@ -8,7 +8,7 @@
 
 namespace Apli\Filter\Cleaner;
 
-class EmailCleaner implements CleanerInterface
+class EmailCleaner implements Cleaner
 {
     /**
      * Method to clean text by rule.
