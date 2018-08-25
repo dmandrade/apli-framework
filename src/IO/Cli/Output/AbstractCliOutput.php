@@ -5,7 +5,7 @@ namespace Apli\IO\Cli\Output;
 /**
  * Class AbstractCliOutput.
  */
-abstract class AbstractCliOutput implements CliOutputInterface
+abstract class AbstractCliOutput implements CliOutput
 {
     /**
      * Property outStream.

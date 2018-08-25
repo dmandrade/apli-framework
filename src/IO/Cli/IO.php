@@ -2,11 +2,10 @@
 
 namespace Apli\IO\Cli;
 
+use Apli\IO\Cli\Input\BasicCliInput;
 use Apli\IO\Cli\Input\CliInput;
-use Apli\IO\Cli\Input\CliInputInterface;
+use Apli\IO\Cli\Output\ColorfulCliOutput;
 use Apli\IO\Cli\Output\CliOutput;
-use Apli\IO\Cli\Output\CliOutputInterface;
-use Apli\IO\Cli\Output\ColorfulOutputInterface;
 
 /**
  * The IO class.
@@ -16,27 +15,27 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
     /**
      * Property input.
      *
-     * @var CliInputInterface
+     * @var CliInput
      */
     protected $input = null;
 
     /**
      * Property output.
      *
-     * @var CliOutputInterface|ColorfulOutputInterface
+     * @var CliOutput
      */
     protected $output = null;
 
     /**
      * Class init.
      *
-     * @param CliInputInterface  $input
-     * @param CliOutputInterface $output
+     * @param CliInput  $input
+     * @param CliOutput $output
      */
-    public function __construct(CliInputInterface $input = null, CliOutputInterface $output = null)
+    public function __construct(CliInput $input = null, CliOutput $output = null)
     {
-        $this->input = $input ?: new CliInput();
-        $this->output = $output ?: new CliOutput();
+        $this->input = $input ?: new BasicCliInput();
+        $this->output = $output ?: new ColorfulCliOutput();
     }
 
     /**
@@ -125,7 +124,7 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
     /**
      * getInput.
      *
-     * @return CliInput|CliInputInterface
+     * @return CliInput
      */
     public function getInput()
     {
@@ -135,11 +134,11 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
     /**
      * setInput.
      *
-     * @param CliInputInterface $input
+     * @param CliInput $input
      *
      * @return IO Return self to support chaining.
      */
-    public function setInput(CliInputInterface $input)
+    public function setInput(CliInput $input)
     {
         $this->input = $input;
 
@@ -149,7 +148,7 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
     /**
      * getOutput.
      *
-     * @return CliOutputInterface|ColorfulOutputInterface
+     * @return CliOutput
      */
     public function getOutput()
     {
@@ -159,11 +158,11 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
     /**
      * setOutput.
      *
-     * @param CliOutputInterface $output
+     * @param CliOutput $output
      *
      * @return IO Return self to support chaining.
      */
-    public function setOutput(CliOutputInterface $output)
+    public function setOutput(CliOutput $output)
     {
         $this->output = $output;
 

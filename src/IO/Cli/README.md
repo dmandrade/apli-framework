@@ -102,9 +102,9 @@ You can also create your own styles.
 
 ``` php
 use Apli\IO\Cli\Color\ColorStyle;
-use Apli\IO\Cli\Output\ColorfulOutputInterface;
+use Apli\IO\Cli\Output\ColorfulCliOutput;
 
-if ($output instanceof ColorfulOutputInterface)
+if ($output instanceof ColorfulCliOutput)
 {
     $style = new Colorstyle('yellow', 'red', array('bold', 'blink'));
 
