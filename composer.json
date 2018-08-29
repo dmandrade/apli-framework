@@ -1,44 +1,48 @@
 {
-  "name": "apli/framework",
-  "description": "Apli Framework.",
-  "homepage": "https://github.com/dmandrade/apli-framework",
-  "license": "LGPL-2.0-or-later",
-  "minimum-stability": "dev",
-  "authors": [
-    {
-      "name": "Danilo Andrade",
-      "email": "danilo@daniloandrade.net",
-      "homepage": "https://daniloandrade.net"
-    }
-  ],
-  "require": {
-    "php": ">=5.6",
-    "psr/log": "~1.0",
-    "psr/http-message": "~1.0",
-    "psr/cache": "~1.0"
-  },
-  "require-dev": {
-  },
-  "suggest": {
-  },
-  "autoload": {
-    "psr-4": {
-      "Apli\\": "src/"
+    "name": "apli/framework",
+    "description": "Apli Framework.",
+    "homepage": "https://github.com/dmandrade/apli-framework",
+    "license": "LGPL-2.0-or-later",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Danilo Andrade",
+            "email": "danilo@daniloandrade.net",
+            "homepage": "https://daniloandrade.net"
+        }
+    ],
+    "require": {
+        "php": ">=5.6",
+        "psr/log": "~1.0",
+        "psr/cache": "~1.0",
+        "psr/container": "^1.0",
+        "psr/http-factory": "^1.0",
+        "psr/http-message": "^1.0",
+        "psr/http-server-handler": "^1.0",
+        "psr/http-server-middleware": "^1.0"
     },
-    "files": [
-    ]
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.x-dev"
+    "require-dev": {
+    },
+    "suggest": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Apli\\": "src/"
+        },
+        "files": [
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.x-dev"
+        }
+    },
+    "provide": {
+    },
+    "replace": {
+        "apli/data": "self.version",
+        "apli/environment": "self.version",
+        "apli/session": "self.version",
+        "apli/support": "self.version"
     }
-  },
-  "provide": {
-  },
-  "replace": {
-    "apli/data": "self.version",
-    "apli/environment": "self.version",
-    "apli/session": "self.version",
-    "apli/support": "self.version"
-  }
 }
