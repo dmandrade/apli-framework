@@ -7,7 +7,7 @@
  *  @project apli
  *  @file Windows.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 25/08/18 at 07:48
+ *  @date 27/08/18 at 10:27
  */
 
 /**
@@ -40,14 +40,6 @@ class Windows implements OperatingSystem
     }
 
     /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'Windows';
-    }
-
-    /**
      * @return int
      */
     public function getFamily()
@@ -63,5 +55,13 @@ class Windows implements OperatingSystem
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Windows';
     }
 }

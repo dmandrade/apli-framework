@@ -7,7 +7,7 @@
  *  @project apli
  *  @file Collection.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 19/08/18 at 17:25
+ *  @date 27/08/18 at 10:27
  */
 
 /**
@@ -19,14 +19,14 @@
 
 namespace Apli\Data;
 
-use Apli\Support\Hashable;
-use Traversable;
-use IteratorAggregate;
-use ArrayAccess;
-use JsonSerializable;
-use Countable;
 use Apli\Support\Arrayable;
+use Apli\Support\Hashable;
 use Apli\Support\Jsonable;
+use ArrayAccess;
+use Countable;
+use IteratorAggregate;
+use JsonSerializable;
+use Traversable;
 
 interface Collection extends Traversable, IteratorAggregate, ArrayAccess, JsonSerializable, Countable, Arrayable, Jsonable, Hashable
 {
@@ -50,7 +50,7 @@ interface Collection extends Traversable, IteratorAggregate, ArrayAccess, JsonSe
     /**
      * Execute a callback over each item.
      *
-     * @param  callable  $callback
+     * @param  callable $callback
      * @return $this
      */
     function each(callable $callback);

@@ -7,7 +7,7 @@
  *  @project apli
  *  @file CliOutput.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 25/08/18 at 10:22
+ *  @date 27/08/18 at 10:27
  */
 
 namespace Apli\IO\Cli\Output;

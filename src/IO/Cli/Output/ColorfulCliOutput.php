@@ -7,7 +7,7 @@
  *  @project apli
  *  @file ColorfulCliOutput.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 25/08/18 at 10:22
+ *  @date 27/08/18 at 10:27
  */
 
 namespace Apli\IO\Cli\Output;
@@ -41,7 +41,7 @@ class ColorfulCliOutput extends AbstractCliOutput
      * Write a string to standard output.
      *
      * @param string $text The text to display.
-     * @param bool   $nl   True (default) to append a new line at the end of the output string.
+     * @param bool   $nl True (default) to append a new line at the end of the output string.
      *
      * @return ColorfulCliOutput Instance of $this to allow chaining.
      */
@@ -86,7 +86,7 @@ class ColorfulCliOutput extends AbstractCliOutput
      * Write a string to standard error output.
      *
      * @param string $text The text to display.
-     * @param bool   $nl   True (default) to append a new line at the end of the output string.
+     * @param bool   $nl True (default) to append a new line at the end of the output string.
      *
      * @return $this
      */

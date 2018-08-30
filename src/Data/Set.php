@@ -7,7 +7,7 @@
  *  @project apli
  *  @file Set.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 20/08/18 at 18:06
+ *  @date 27/08/18 at 10:27
  */
 
 namespace Apli\Data;
@@ -157,9 +157,17 @@ final class Set implements Collection
     }
 
     /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return iterator_to_array($this);
+    }
+
+    /**
      * Iteratively reduces the set to a single value using a callback.
      *
-     * @param callable $callback Accepts the carry and current value, and
+     * @param callable   $callback Accepts the carry and current value, and
      *                           returns an updated carry value.
      *
      * @param mixed|null $initial Optional initial carry value.
@@ -284,14 +292,6 @@ final class Set implements Collection
         }
 
         return $merged;
-    }
-
-    /**
-     * @return array
-     */
-    public function toArray()
-    {
-        return iterator_to_array($this);
     }
 
     /**

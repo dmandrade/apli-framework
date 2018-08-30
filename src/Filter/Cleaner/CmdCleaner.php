@@ -7,7 +7,7 @@
  *  @project apli
  *  @file CmdCleaner.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 25/08/18 at 07:52
+ *  @date 27/08/18 at 10:27
  */
 
 /**
@@ -30,7 +30,7 @@ class CmdCleaner implements Cleaner
      */
     public function clean($source)
     {
-        $result = (string) preg_replace('/[^A-Z0-9_\.-]/i', '', $source);
+        $result = (string)preg_replace('/[^A-Z0-9_\.-]/i', '', $source);
 
         return ltrim($result, '.');
     }

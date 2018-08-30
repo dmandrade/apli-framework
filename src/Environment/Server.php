@@ -7,7 +7,7 @@
  *  @project apli
  *  @file Server.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 25/08/18 at 07:09
+ *  @date 27/08/18 at 10:27
  */
 
 namespace Apli\Environment;
@@ -44,7 +44,7 @@ class Server
      */
     public function platform()
     {
-        if(is_null($this->platform)) {
+        if (is_null($this->platform)) {
             $this->platform = new Platform();
         }
 
@@ -94,7 +94,7 @@ class Server
     /**
      * Get a server param.
      *
-     * @param $key
+     * @param      $key
      * @param null $default
      *
      * @return mixed|null

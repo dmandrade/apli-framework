@@ -7,7 +7,7 @@
  *  @project apli
  *  @file CliInput.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 25/08/18 at 10:22
+ *  @date 27/08/18 at 10:27
  */
 
 namespace Apli\IO\Cli\Input;
@@ -27,7 +27,7 @@ interface CliInput
     /**
      * Gets a value from the input data.
      *
-     * @param string $name    Name of the value to get.
+     * @param string $name Name of the value to get.
      * @param mixed  $default Default value to return if variable does not exist.
      *
      * @return mixed The filtered input value.
@@ -37,7 +37,7 @@ interface CliInput
     /**
      * Sets a value.
      *
-     * @param string $name  Name of the value to set.
+     * @param string $name Name of the value to set.
      * @param mixed  $value Value to assign to the input.
      *
      * @return CliInput

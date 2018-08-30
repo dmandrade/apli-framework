@@ -7,7 +7,7 @@
  *  @project apli
  *  @file Platform.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 25/08/18 at 07:25
+ *  @date 27/08/18 at 10:27
  */
 
 namespace Apli\Environment;
@@ -68,33 +68,6 @@ class Platform
     }
 
     /**
-     * Detect Operating system
-     *
-     * @return void
-     */
-    private function detectOperatingSystem()
-    {
-        if(is_null($this->systemDetector)) {
-            $this->systemDetector = new SystemDetector();
-        }
-
-        $this->operatingSystem = $this->systemDetector->detect($this->kernel);
-    }
-
-    /**
-     * Get operating system
-     * @return OperatingSystem
-     */
-    public function operatingSystem()
-    {
-        if(is_null($this->operatingSystem)){
-            $this->detectOperatingSystem();
-        }
-
-        return $this->operatingSystem;
-    }
-
-    /**
      * Get kernel name.
      *
      * @return string
@@ -112,6 +85,33 @@ class Platform
     public function getOsFamily()
     {
         return $this->operatingSystem()->getFamily();
+    }
+
+    /**
+     * Get operating system
+     * @return OperatingSystem
+     */
+    public function operatingSystem()
+    {
+        if (is_null($this->operatingSystem)) {
+            $this->detectOperatingSystem();
+        }
+
+        return $this->operatingSystem;
+    }
+
+    /**
+     * Detect Operating system
+     *
+     * @return void
+     */
+    private function detectOperatingSystem()
+    {
+        if (is_null($this->systemDetector)) {
+            $this->systemDetector = new SystemDetector();
+        }
+
+        $this->operatingSystem = $this->systemDetector->detect($this->kernel);
     }
 
     /**

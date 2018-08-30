@@ -7,7 +7,7 @@
  *  @project apli
  *  @file SystemDetector.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 25/08/18 at 08:29
+ *  @date 27/08/18 at 10:27
  */
 
 /**
@@ -27,8 +27,8 @@ use Apli\Environment\OperatingSystems\Msys;
 use Apli\Environment\OperatingSystems\Sun;
 use Apli\Environment\OperatingSystems\UnknownOs;
 use Apli\Environment\OperatingSystems\Windows;
-use ReflectionClass;
 use InvalidArgumentException;
+use ReflectionClass;
 
 class SystemDetector
 {
@@ -51,6 +51,25 @@ class SystemDetector
     ];
 
     /**
+     * Register a new operating system.
+     *
+     * @param $class
+     * @throws \ReflectionException
+     * @throws InvalidArgumentException
+     */
+    public static function registerOperatingSystem($class)
+    {
+        $reflection = new ReflectionClass($class);
+        if (!$reflection->implementsInterface(OperatingSystem::class)) {
+            throw new InvalidArgumentException($reflection->getName().' should implements OperatingSystem');
+        }
+
+        if (!in_array($class, self::$operatingSystems)) {
+            self::$operatingSystems[] = $class;
+        }
+    }
+
+    /**
      * @param $kernel
      *
      * @return OperatingSystem
@@ -58,7 +77,7 @@ class SystemDetector
     public function detect($kernel)
     {
         foreach (self::$operatingSystems as $class) {
-            $detected = $this->isOs($kernel,$class::getVariants());
+            $detected = $this->isOs($kernel, $class::getVariants());
             if ($detected) {
                 return new $class();
             }
@@ -76,25 +95,6 @@ class SystemDetector
      */
     private function isOs($kernel, $variants)
     {
-        return (bool) preg_grep('/^'.preg_quote($kernel).'$/i', $variants);
-    }
-
-    /**
-     * Register a new operating system.
-     *
-     * @param $class
-     * @throws \ReflectionException
-     * @throws InvalidArgumentException
-     */
-    public static function registerOperatingSystem($class)
-    {
-        $reflection = new ReflectionClass($class);
-        if ( !$reflection->implementsInterface(OperatingSystem::class) ) {
-            throw new InvalidArgumentException($reflection->getName() . ' should implements OperatingSystem');
-        }
-
-        if (!in_array($class, self::$operatingSystems)) {
-            self::$operatingSystems[] = $class;
-        }
+        return (bool)preg_grep('/^'.preg_quote($kernel).'$/i', $variants);
     }
 }

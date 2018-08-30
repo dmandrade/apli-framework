@@ -7,7 +7,7 @@
  *  @project apli
  *  @file Input.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 27/07/18 at 10:11
+ *  @date 27/08/18 at 10:27
  */
 
 namespace Apli\IO;
@@ -18,20 +18,20 @@ use Apli\IO\Filter\NullFilter;
 /**
  * Class Input.
  *
- * @property    Input $get
- * @property    Input $post
- * @property    FormDataInput $put
- * @property    FormDataInput $patch
- * @property    FormDataInput $delete
- * @property    FormDataInput $link
- * @property    FormDataInput $unlink
- * @property    Input $request
- * @property    Input $server
- * @property    Input $env
- * @property    Input $header
+ * @property    Input                    $get
+ * @property    Input                    $post
+ * @property    FormDataInput            $put
+ * @property    FormDataInput            $patch
+ * @property    FormDataInput            $delete
+ * @property    FormDataInput            $link
+ * @property    FormDataInput            $unlink
+ * @property    Input                    $request
+ * @property    Input                    $server
+ * @property    Input                    $env
+ * @property    Input                    $header
  * @property    FilesInput|PsrFilesInput $files
- * @property    CookieInput $cookie
- * @property    JsonInput $json
+ * @property    CookieInput              $cookie
+ * @property    JsonInput                $json
  *
  * @method      int  getInt()       getInt($name, $default = null, $separator = '.')    Get a signed integer.
  * @method      int  getUint()      getUint($name, $default = null, $separator = '.')   Get an unsigned integer.
@@ -103,7 +103,7 @@ class Input implements \Serializable, \Countable
     /**
      * Prepare source.
      *
-     * @param array $source    Optional source data. If omitted, a copy of the server variable '_REQUEST' is used.
+     * @param array $source Optional source data. If omitted, a copy of the server variable '_REQUEST' is used.
      * @param bool  $reference If set to true, he source in first argument will be reference.
      *
      * @return void
@@ -210,7 +210,7 @@ class Input implements \Serializable, \Countable
      */
     public function setMethod($method)
     {
-        $this->method = (string) strtoupper($method);
+        $this->method = (string)strtoupper($method);
 
         return $this;
     }
@@ -230,10 +230,10 @@ class Input implements \Serializable, \Countable
     /**
      * Gets a value from the input data.
      *
-     * @param string $name      Name of the value to get.
-     * @param mixed  $default   Default value to return if variable does not exist.
+     * @param string $name Name of the value to get.
+     * @param mixed  $default Default value to return if variable does not exist.
      * @param string $separator Separator for path.
-     * @param string $filter    Filter to apply to the value.
+     * @param string $filter Filter to apply to the value.
      *
      * @return mixed The filtered input value.
      */
@@ -257,8 +257,8 @@ class Input implements \Serializable, \Countable
      *
      * Example: `ArrayHelper::getByPath($array, 'foo.bar.yoo')` equals to $array['foo']['bar']['yoo'].
      *
-     * @param mixed  $data      An array or object to get value.
-     * @param mixed  $path      The key path.
+     * @param mixed  $data An array or object to get value.
+     * @param mixed  $path The key path.
      * @param string $separator Separator of paths.
      *
      * @return mixed Found value, null if not exists.
@@ -289,8 +289,8 @@ class Input implements \Serializable, \Countable
     /**
      * Define a value. The value will only be set if there's no value for the name or if it is null.
      *
-     * @param string $name      Name of the value to define.
-     * @param mixed  $value     Value to assign to the input.
+     * @param string $name Name of the value to define.
+     * @param mixed  $value Value to assign to the input.
      * @param string $separator Symbol to separate paths.
      */
     public function def($name, $value, $separator = '.')
@@ -305,7 +305,7 @@ class Input implements \Serializable, \Countable
     /**
      * Check if a value name exists.
      *
-     * @param string $name      Value name
+     * @param string $name Value name
      * @param string $separator Symbol to separate path.
      *
      * @return bool
@@ -318,9 +318,9 @@ class Input implements \Serializable, \Countable
     /**
      * Gets a value from the input data.
      *
-     * @param string $name      Name of the value to get.
-     * @param mixed  $default   Default value to return if variable does not exist.
-     * @param string $filter    Filter to apply to the value.
+     * @param string $name Name of the value to get.
+     * @param mixed  $default Default value to return if variable does not exist.
+     * @param string $filter Filter to apply to the value.
      * @param string $separator Separator for path.
      *
      * @return mixed The filtered input value.
@@ -339,8 +339,8 @@ class Input implements \Serializable, \Countable
     /**
      * Sets a value.
      *
-     * @param string $name      Name of the value to set.
-     * @param mixed  $value     Value to assign to the input.
+     * @param string $name Name of the value to set.
+     * @param mixed  $value Value to assign to the input.
      * @param string $separator Symbol to separate path.
      */
     public function set($name, $value, $separator = '.')
@@ -413,7 +413,7 @@ class Input implements \Serializable, \Countable
     /**
      * Gets an array of values from the request.
      *
-     * @param array $vars       Associative array of keys and filter types to apply.
+     * @param array $vars Associative array of keys and filter types to apply.
      *                          If empty and datasource is null, all the input data will be returned
      *                          but filtered using the default case in JFilterInput::clean.
      * @param mixed $datasource Array to retrieve data from, or null
@@ -509,7 +509,7 @@ class Input implements \Serializable, \Countable
     /**
      * Magic method to get filtered input data.
      *
-     * @param string $name      Name of the filter type prefixed with 'get'.
+     * @param string $name Name of the filter type prefixed with 'get'.
      * @param array  $arguments [0] The name of the variable [1] The default value.
      *
      * @return mixed The filtered input value.

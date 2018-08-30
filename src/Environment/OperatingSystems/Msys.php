@@ -7,7 +7,7 @@
  *  @project apli
  *  @file Msys.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 25/08/18 at 07:48
+ *  @date 27/08/18 at 10:26
  */
 
 /**
@@ -37,14 +37,6 @@ class Msys implements OperatingSystem
     }
 
     /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'Msys';
-    }
-
-    /**
      * @return int
      */
     public function getFamily()
@@ -60,5 +52,13 @@ class Msys implements OperatingSystem
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Msys';
     }
 }

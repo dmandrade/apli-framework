@@ -7,7 +7,7 @@
  *  @project apli
  *  @file PriorityQueue.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 18/08/18 at 18:17
+ *  @date 27/08/18 at 10:27
  */
 
 /**
@@ -18,8 +18,6 @@
  */
 
 namespace Apli\Data;
-
-use Traversable;
 
 /**
  * PriorityQueue is like Queue but with an assigned priority, and the value

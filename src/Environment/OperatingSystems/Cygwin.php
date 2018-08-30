@@ -7,7 +7,7 @@
  *  @project apli
  *  @file Cygwin.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 25/08/18 at 07:47
+ *  @date 27/08/18 at 10:27
  */
 
 /**
@@ -38,14 +38,6 @@ class Cygwin implements OperatingSystem
     }
 
     /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'Cygwin';
-    }
-
-    /**
      * @return int
      */
     public function getFamily()
@@ -61,5 +53,13 @@ class Cygwin implements OperatingSystem
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Cygwin';
     }
 }

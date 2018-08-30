@@ -7,15 +7,15 @@
  *  @project apli
  *  @file IO.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 25/08/18 at 10:22
+ *  @date 27/08/18 at 10:26
  */
 
 namespace Apli\IO\Cli;
 
 use Apli\IO\Cli\Input\BasicCliInput;
 use Apli\IO\Cli\Input\CliInput;
-use Apli\IO\Cli\Output\ColorfulCliOutput;
 use Apli\IO\Cli\Output\CliOutput;
+use Apli\IO\Cli\Output\ColorfulCliOutput;
 
 /**
  * The IO class.
@@ -52,7 +52,7 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
      * Write a string to standard output.
      *
      * @param string $text The text to display.
-     * @param bool   $nl   True (default) to append a new line at the end of the output string.
+     * @param bool   $nl True (default) to append a new line at the end of the output string.
      *
      * @return IO Instance of $this to allow chaining.
      */
@@ -77,7 +77,7 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
      * Write a string to standard error output.
      *
      * @param string $text The text to display.
-     * @param bool   $nl   True (default) to append a new line at the end of the output string.
+     * @param bool   $nl True (default) to append a new line at the end of the output string.
      *
      * @return $this
      */
@@ -91,7 +91,7 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
     /**
      * Gets a value from the input data.
      *
-     * @param string $name    Name of the value to get.
+     * @param string $name Name of the value to get.
      * @param mixed  $default Default value to return if variable does not exist.
      *
      * @return mixed The filtered input value.
@@ -104,7 +104,7 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
     /**
      * Sets a value.
      *
-     * @param string $name  Name of the value to set.
+     * @param string $name Name of the value to set.
      * @param mixed  $value Value to assign to the input.
      *
      * @return IO
@@ -213,7 +213,7 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
      * Set value to property.
      *
      * @param mixed $offset Property key.
-     * @param mixed $value  Property value to set.
+     * @param mixed $value Property value to set.
      *
      * @return void
      */
@@ -324,7 +324,7 @@ class IO implements IOInterface, \IteratorAggregate, \ArrayAccess, \Serializable
     {
         return [
             'arguments' => $this->input->args,
-            'options'   => $this->input->all(),
+            'options' => $this->input->all(),
         ];
     }
 }

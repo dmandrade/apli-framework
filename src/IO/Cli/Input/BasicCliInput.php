@@ -7,7 +7,7 @@
  *  @project apli
  *  @file BasicCliInput.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 25/08/18 at 10:22
+ *  @date 27/08/18 at 10:27
  */
 
 namespace Apli\IO\Cli\Input;
@@ -45,7 +45,7 @@ class BasicCliInput extends Input implements CliInput
     /**
      * Prepare source.
      *
-     * @param array $source    Optional source data. If omitted, a copy of the server variable '_REQUEST' is used.
+     * @param array $source Optional source data. If omitted, a copy of the server variable '_REQUEST' is used.
      * @param bool  $reference If set to true, he source in first argument will be reference.
      *
      * @return void
@@ -151,9 +151,9 @@ class BasicCliInput extends Input implements CliInput
     /**
      * Gets a value from the input data.
      *
-     * @param string $name      Name of the value to get.
-     * @param mixed  $default   Default value to return if variable does not exist.
-     * @param string $filter    Filter to apply to the value.
+     * @param string $name Name of the value to get.
+     * @param mixed  $default Default value to return if variable does not exist.
+     * @param string $filter Filter to apply to the value.
      * @param string $separator Symbol to separate path.
      *
      * @return mixed The filtered input value.

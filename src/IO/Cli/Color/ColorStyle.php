@@ -7,7 +7,7 @@
  *  @project apli
  *  @file ColorStyle.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 27/07/18 at 10:11
+ *  @date 27/08/18 at 10:27
  */
 
 namespace Apli\IO\Cli\Color;
@@ -23,14 +23,14 @@ final class ColorStyle
      * @var array
      */
     private static $knownColors = [
-        'black'   => 0,
-        'red'     => 1,
-        'green'   => 2,
-        'yellow'  => 3,
-        'blue'    => 4,
+        'black' => 0,
+        'red' => 1,
+        'green' => 2,
+        'yellow' => 3,
+        'blue' => 4,
         'magenta' => 5,
-        'cyan'    => 6,
-        'white'   => 7,
+        'cyan' => 6,
+        'white' => 7,
     ];
 
     /**
@@ -39,10 +39,10 @@ final class ColorStyle
      * @var array
      */
     private static $knownOptions = [
-        'bold'       => 1,
+        'bold' => 1,
         'underscore' => 4,
-        'blink'      => 5,
-        'reverse'    => 7,
+        'blink' => 5,
+        'reverse' => 7,
     ];
 
     /**
@@ -83,8 +83,8 @@ final class ColorStyle
     /**
      * Constructor.
      *
-     * @param string $fg      Foreground color.
-     * @param string $bg      Background color.
+     * @param string $fg Foreground color.
+     * @param string $bg Background color.
      * @param array  $options Style options.
      *
      * @throws \InvalidArgumentException

@@ -7,7 +7,7 @@
  *  @project apli
  *  @file PathCleaner.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 25/08/18 at 07:52
+ *  @date 27/08/18 at 10:27
  */
 
 /**
@@ -31,8 +31,8 @@ class PathCleaner implements Cleaner
     public function clean($source)
     {
         $pattern = '/^[A-Za-z0-9_-]+[A-Za-z0-9_\.-]*([\\\\\/][A-Za-z0-9_-]+[A-Za-z0-9_\.-]*)*$/';
-        preg_match($pattern, (string) $source, $matches);
+        preg_match($pattern, (string)$source, $matches);
 
-        return isset($matches[0]) ? (string) $matches[0] : null;
+        return isset($matches[0]) ? (string)$matches[0] : null;
     }
 }

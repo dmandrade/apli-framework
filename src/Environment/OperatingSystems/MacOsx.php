@@ -7,7 +7,7 @@
  *  @project apli
  *  @file MacOsx.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 25/08/18 at 07:47
+ *  @date 27/08/18 at 10:27
  */
 
 /**
@@ -35,14 +35,6 @@ class MacOsx implements OperatingSystem
     }
 
     /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'Mac OSX';
-    }
-
-    /**
      * @return int
      */
     public function getFamily()
@@ -58,5 +50,13 @@ class MacOsx implements OperatingSystem
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Mac OSX';
     }
 }

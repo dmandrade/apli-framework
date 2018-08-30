@@ -7,7 +7,7 @@
  *  @project apli
  *  @file GenericSequence.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 21/08/18 at 09:27
+ *  @date 27/08/18 at 10:27
  */
 
 namespace Apli\Data\Traits;
@@ -39,6 +39,18 @@ trait GenericSequence
         if ($values) {
             $this->pushAll($values);
         }
+    }
+
+    /**
+     * @param $values
+     */
+    private function pushAll($values)
+    {
+        foreach ($values as $value) {
+            $this->values[] = $value;
+        }
+
+        $this->checkCapacity();
     }
 
     /**
@@ -84,11 +96,20 @@ trait GenericSequence
      */
     public function get($index)
     {
-        if ( ! $this->validIndex($index)) {
+        if (!$this->validIndex($index)) {
             throw new OutOfRangeException();
         }
 
         return $this->values[$index];
+    }
+
+    /**
+     * @param int $index
+     * @return bool
+     */
+    private function validIndex($index)
+    {
+        return $index >= 0 && $index < count($this);
     }
 
     /**
@@ -97,7 +118,7 @@ trait GenericSequence
      */
     public function insert($index, ...$values)
     {
-        if ( ! $this->validIndex($index) && $index !== count($this)) {
+        if (!$this->validIndex($index) && $index !== count($this)) {
             throw new OutOfRangeException();
         }
 
@@ -129,18 +150,6 @@ trait GenericSequence
     }
 
     /**
-     * @param $values
-     */
-    private function pushAll($values)
-    {
-        foreach ($values as $value) {
-            $this->values[] = $value;
-        }
-
-        $this->checkCapacity();
-    }
-
-    /**
      * @param mixed ...$values
      */
     public function push(...$values)
@@ -164,7 +173,7 @@ trait GenericSequence
      */
     public function remove($index)
     {
-        if ( ! $this->validIndex($index)) {
+        if (!$this->validIndex($index)) {
             throw new OutOfRangeException();
         }
 
@@ -191,6 +200,16 @@ trait GenericSequence
     }
 
     /**
+     * @param int $rotations
+     */
+    public function rotate($rotations)
+    {
+        for ($r = $this->normalizeRotations($rotations); $r > 0; $r--) {
+            array_push($this->values, array_shift($this->values));
+        }
+    }
+
+    /**
      * Converts negative or large rotations into the minimum positive number
      * of rotations required to rotate the sequence by a given $r.
      *
@@ -208,22 +227,12 @@ trait GenericSequence
     }
 
     /**
-     * @param int $rotations
-     */
-    public function rotate($rotations)
-    {
-        for ($r = $this->normalizeRotations($rotations); $r > 0; $r--) {
-            array_push($this->values, array_shift($this->values));
-        }
-    }
-
-    /**
      * @param int $index
      * @param     $value
      */
     public function set($index, $value)
     {
-        if ( ! $this->validIndex($index)) {
+        if (!$this->validIndex($index)) {
             throw new OutOfRangeException();
         }
 
@@ -288,15 +297,6 @@ trait GenericSequence
     }
 
     /**
-     * @param int $index
-     * @return bool
-     */
-    private function validIndex($index)
-    {
-        return $index >= 0 && $index < count($this);
-    }
-
-    /**
      * @return \Generator
      */
     public function getIterator()
@@ -334,7 +334,7 @@ trait GenericSequence
      */
     public function &offsetGet($offset)
     {
-        if ( ! $this->validIndex($offset)) {
+        if (!$this->validIndex($offset)) {
             throw new OutOfRangeException();
         }
 

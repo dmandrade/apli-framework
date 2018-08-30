@@ -7,7 +7,7 @@
  *  @project apli
  *  @file SquaredCapacity.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 30/07/18 at 10:09
+ *  @date 27/08/18 at 10:27
  */
 
 namespace Apli\Data\Traits;
@@ -21,6 +21,16 @@ trait SquaredCapacity
     use Capacity;
 
     /**
+     * Ensures that enough memory is allocated for a specified capacity.
+     *
+     * @param int $capacity The number of values for which capacity should be allocated.
+     */
+    public function allocate($capacity)
+    {
+        $this->capacity = max($this->square($capacity), $this->capacity);
+    }
+
+    /**
      * Rounds an integer to the next power of two if not already a power of two.
      *
      * @param int $capacity
@@ -30,16 +40,6 @@ trait SquaredCapacity
     private function square($capacity)
     {
         return pow(2, ceil(log($capacity, 2)));
-    }
-
-    /**
-     * Ensures that enough memory is allocated for a specified capacity.
-     *
-     * @param int $capacity The number of values for which capacity should be allocated.
-     */
-    public function allocate($capacity)
-    {
-        $this->capacity = max($this->square($capacity), $this->capacity);
     }
 
     /**

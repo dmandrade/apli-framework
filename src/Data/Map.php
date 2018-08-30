@@ -7,7 +7,7 @@
  *  @project apli
  *  @file Map.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 20/08/18 at 17:43
+ *  @date 27/08/18 at 10:27
  */
 
 namespace Apli\Data;
@@ -45,6 +45,78 @@ final class Map implements Collection
         if (func_num_args()) {
             $this->putAll($values);
         }
+    }
+
+    /**
+     * Creates associations for all keys and corresponding values of either an
+     * array or iterable object.
+     *
+     * @param \Traversable|array $values
+     */
+    public function putAll($values)
+    {
+        foreach ($values as $key => $value) {
+            $this->put($key, $value);
+        }
+    }
+
+    /**
+     * Associates a key with a value, replacing a previous association if there
+     * was one.
+     *
+     * @param mixed $key
+     * @param mixed $value
+     */
+    public function put($key, $value)
+    {
+        if (is_object($key) && $key instanceof Hashable === false) {
+            throw new \Exception("Objects as key need to implement Hashable");
+        }
+
+        $entry = $this->lookupKey($key);
+
+        if ($entry) {
+            $entry->value = $value;
+
+        } else {
+            $this->checkCapacity();
+            $this->entries[] = new Entry($key, $value);
+        }
+    }
+
+    /**
+     * Attempts to look up a key in the table.
+     *
+     * @param $key
+     *
+     * @return Entry|null
+     */
+    private function lookupKey($key)
+    {
+        foreach ($this->entries as $entry) {
+            if ($this->keysAreEqual($entry->key, $key)) {
+                return $entry;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Determines whether two keys are equal.
+     *
+     * @param mixed $a
+     * @param mixed $b
+     *
+     * @return bool
+     */
+    private function keysAreEqual($a, $b)
+    {
+        if (is_object($a) && $a instanceof Hashable) {
+            return get_class($a) === get_class($b) && $a->equals($b);
+        }
+
+        return $a === $b;
     }
 
     /**
@@ -88,21 +160,6 @@ final class Map implements Collection
     }
 
     /**
-     * Returns the result of associating all keys of a given traversable object
-     * or array with their corresponding values, as well as those of this map.
-     *
-     * @param array|\Traversable $values
-     *
-     * @return Map
-     */
-    public function merge($values)
-    {
-        $merged = new self($this);
-        $merged->putAll($values);
-        return $merged;
-    }
-
-    /**
      * Creates a new map containing the entries of the current instance whose keys
      * are also present in the given map. In other words, returns a copy of the
      * current map with all keys removed that are not also in the other map.
@@ -116,62 +173,9 @@ final class Map implements Collection
      */
     public function intersect(Map $map)
     {
-        return $this->filter(function($key) use ($map) {
+        return $this->filter(function ($key) use ($map) {
             return $map->hasKey($key);
         });
-    }
-
-    /**
-     * Determines whether two keys are equal.
-     *
-     * @param mixed $a
-     * @param mixed $b
-     *
-     * @return bool
-     */
-    private function keysAreEqual($a, $b)
-    {
-        if (is_object($a) && $a instanceof Hashable) {
-            return get_class($a) === get_class($b) && $a->equals($b);
-        }
-
-        return $a === $b;
-    }
-
-    /**
-     * Attempts to look up a key in the table.
-     *
-     * @param $key
-     *
-     * @return Entry|null
-     */
-    private function lookupKey($key)
-    {
-        foreach ($this->entries as $entry) {
-            if ($this->keysAreEqual($entry->key, $key)) {
-                return $entry;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Attempts to look up a key in the table.
-     *
-     * @param $value
-     *
-     * @return Entry|null
-     */
-    private function lookupValue($value)
-    {
-        foreach ($this->entries as $entry) {
-            if ($entry->value === $value) {
-                return $entry;
-            }
-        }
-
-        return null;
     }
 
     /**
@@ -199,6 +203,24 @@ final class Map implements Collection
     }
 
     /**
+     * Attempts to look up a key in the table.
+     *
+     * @param $value
+     *
+     * @return Entry|null
+     */
+    private function lookupValue($value)
+    {
+        foreach ($this->entries as $entry) {
+            if ($entry->value === $value) {
+                return $entry;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Return a count of itens in table
      * @return int
      */
@@ -208,39 +230,13 @@ final class Map implements Collection
     }
 
     /**
-     * Returns the value associated with a key, or an optional default if the
-     * key is not associated with a value.
-     *
-     * @param mixed $key
-     * @param mixed $default
-     *
-     * @return mixed The associated value or fallback default if provided.
-     *
-     * @throws OutOfBoundsException if no default was provided and the key is
-     *                               not associated with a value.
-     */
-    public function get($key, $default = null)
-    {
-        if (($entry = $this->lookupKey($key))) {
-            return $entry->value;
-        }
-
-        // Check if a default was provided.
-        if (func_num_args() === 1) {
-            throw new OutOfBoundsException();
-        }
-
-        return $default;
-    }
-
-    /**
      * Returns a set of all the keys in the map.
      *
      * @return Set
      */
     public function keys()
     {
-        $key = function($entry) {
+        $key = function ($entry) {
             return $entry->key;
         };
 
@@ -254,35 +250,11 @@ final class Map implements Collection
      */
     public function entries()
     {
-        $copy = function(Entry $entry) {
+        $copy = function (Entry $entry) {
             return $entry->copy();
         };
 
         return new Vector(array_map($copy, $this->entries));
-    }
-
-    /**
-     * Associates a key with a value, replacing a previous association if there
-     * was one.
-     *
-     * @param mixed $key
-     * @param mixed $value
-     */
-    public function put($key, $value)
-    {
-        if (is_object($key) && $key instanceof Hashable === false) {
-            throw new \Exception("Objects as key need to implement Hashable");
-        }
-
-        $entry = $this->lookupKey($key);
-
-        if ($entry) {
-            $entry->value = $value;
-
-        } else {
-            $this->checkCapacity();
-            $this->entries[] = new Entry($key, $value);
-        }
     }
 
     /**
@@ -293,27 +265,15 @@ final class Map implements Collection
      *
      * @throws \OutOfRangeException if the index is not in the range [0, size-1]
      */
-    public function set($key, $value) {
-        $this->put($key, $value);
-    }
-
-    /**
-     * Creates associations for all keys and corresponding values of either an
-     * array or iterable object.
-     *
-     * @param \Traversable|array $values
-     */
-    public function putAll($values)
+    public function set($key, $value)
     {
-        foreach ($values as $key => $value) {
-            $this->put($key, $value);
-        }
+        $this->put($key, $value);
     }
 
     /**
      * Iteratively reduces the map to a single value using a callback.
      *
-     * @param callable $callback Accepts the carry, key, and value, and
+     * @param callable   $callback Accepts the carry, key, and value, and
      *                           returns an updated carry value.
      *
      * @param mixed|null $initial Optional initial carry value.
@@ -330,54 +290,6 @@ final class Map implements Collection
         }
 
         return $carry;
-    }
-
-    /**
-     * Removes and returns the value at a given index in the sequence.
-     *
-     * @param int $index this index to remove.
-     *
-     * @return mixed the removed value.
-     *
-     * @throws \OutOfRangeException if the index is not in the range [0, size-1]
-     */
-    function delete($index)
-    {
-        $entry  = $this->entries[$index];
-        $value = $entry->value;
-
-        array_splice($this->entries, $index, 1, null);
-        $this->checkCapacity();
-
-        return $value;
-    }
-
-    /**
-     * Removes a key's association from the map and returns the associated value
-     * or a provided default if provided.
-     *
-     * @param mixed $key
-     * @param mixed $default
-     *
-     * @return mixed The associated value or fallback default if provided.
-     *
-     * @throws \OutOfBoundsException if no default was provided and the key is
-     *                               not associated with a value.
-     */
-    public function remove($key, $default = null)
-    {
-        foreach ($this->entries as $position => $entry) {
-            if ($this->keysAreEqual($entry->key, $key)) {
-                return $this->delete($position);
-            }
-        }
-
-        // Check if a default was provided
-        if (func_num_args() === 1) {
-            throw new \OutOfBoundsException();
-        }
-
-        return $default;
     }
 
     /**
@@ -404,7 +316,7 @@ final class Map implements Collection
     /**
      * Returns a sub-sequence of a given length starting at a specified offset.
      *
-     * @param int $offset      If the offset is non-negative, the map will
+     * @param int      $offset If the offset is non-negative, the map will
      *                         start at that offset in the map. If offset is
      *                         negative, the map will start that far from the
      *                         end.
@@ -442,31 +354,6 @@ final class Map implements Collection
     }
 
     /**
-     * Sorts the map in-place, based on an optional callable comparator.
-     *
-     * The map will be sorted by value.
-     *
-     * @param callable|null $comparator Accepts two values to be compared.
-     */
-    public function sort(callable $comparator = null)
-    {
-        if ($comparator) {
-            usort($this->entries, function($a, $b) use ($comparator) {
-                return $comparator($a->value, $b->value);
-            });
-
-        } else {
-            usort($this->entries, function($a, $b) {
-                if ($a->value == $b->value) {
-                    return 0;
-                }
-
-                return ($a->value < $b->value) ? -1 : 1;
-            });
-        }
-    }
-
-    /**
      * Returns a sorted copy of the map, based on an optional callable
      * comparator. The map will be sorted by value.
      *
@@ -484,24 +371,24 @@ final class Map implements Collection
     /**
      * Sorts the map in-place, based on an optional callable comparator.
      *
-     * The map will be sorted by key.
+     * The map will be sorted by value.
      *
-     * @param callable|null $comparator Accepts two keys to be compared.
+     * @param callable|null $comparator Accepts two values to be compared.
      */
-    public function ksort(callable $comparator = null)
+    public function sort(callable $comparator = null)
     {
         if ($comparator) {
-            usort($this->entries, function($a, $b) use ($comparator) {
-                return $comparator($a->key, $b->key);
+            usort($this->entries, function ($a, $b) use ($comparator) {
+                return $comparator($a->value, $b->value);
             });
 
         } else {
-            usort($this->entries, function($a, $b) {
-                if ($a->key == $b->key) {
+            usort($this->entries, function ($a, $b) {
+                if ($a->value == $b->value) {
                     return 0;
                 }
 
-                return ($a->key < $b->key) ? -1 : 1;
+                return ($a->value < $b->value) ? -1 : 1;
             });
         }
     }
@@ -522,6 +409,31 @@ final class Map implements Collection
     }
 
     /**
+     * Sorts the map in-place, based on an optional callable comparator.
+     *
+     * The map will be sorted by key.
+     *
+     * @param callable|null $comparator Accepts two keys to be compared.
+     */
+    public function ksort(callable $comparator = null)
+    {
+        if ($comparator) {
+            usort($this->entries, function ($a, $b) use ($comparator) {
+                return $comparator($a->key, $b->key);
+            });
+
+        } else {
+            usort($this->entries, function ($a, $b) {
+                if ($a->key == $b->key) {
+                    return 0;
+                }
+
+                return ($a->key < $b->key) ? -1 : 1;
+            });
+        }
+    }
+
+    /**
      * Returns the sum of all values in the map.
      *
      * @return int|float The sum of all the values in the map.
@@ -529,6 +441,20 @@ final class Map implements Collection
     public function sum()
     {
         return $this->values()->sum();
+    }
+
+    /**
+     * Returns a sequence of all the associated values in the Map.
+     *
+     * @return Sequence
+     */
+    public function values()
+    {
+        $value = function ($entry) {
+            return $entry->value;
+        };
+
+        return new Vector(array_map($value, $this->entries));
     }
 
     /**
@@ -552,20 +478,6 @@ final class Map implements Collection
     }
 
     /**
-     * Returns a sequence of all the associated values in the Map.
-     *
-     * @return Sequence
-     */
-    public function values()
-    {
-        $value = function($entry) {
-            return $entry->value;
-        };
-
-        return new Vector(array_map($value, $this->entries));
-    }
-
-    /**
      * Creates a new map that contains the entries of the current instance as well
      * as the entries of another map.
      *
@@ -580,6 +492,21 @@ final class Map implements Collection
     }
 
     /**
+     * Returns the result of associating all keys of a given traversable object
+     * or array with their corresponding values, as well as those of this map.
+     *
+     * @param array|\Traversable $values
+     *
+     * @return Map
+     */
+    public function merge($values)
+    {
+        $merged = new self($this);
+        $merged->putAll($values);
+        return $merged;
+    }
+
+    /**
      * Creates a new map using keys of either the current instance or of another
      * map, but not of both.
      *
@@ -590,7 +517,7 @@ final class Map implements Collection
      */
     public function doXor(Map $map)
     {
-        return $this->merge($map)->filter(function($key) use ($map) {
+        return $this->merge($map)->filter(function ($key) use ($map) {
             return $this->hasKey($key) ^ $map->hasKey($key);
         });
     }
@@ -641,6 +568,54 @@ final class Map implements Collection
     }
 
     /**
+     * Removes a key's association from the map and returns the associated value
+     * or a provided default if provided.
+     *
+     * @param mixed $key
+     * @param mixed $default
+     *
+     * @return mixed The associated value or fallback default if provided.
+     *
+     * @throws \OutOfBoundsException if no default was provided and the key is
+     *                               not associated with a value.
+     */
+    public function remove($key, $default = null)
+    {
+        foreach ($this->entries as $position => $entry) {
+            if ($this->keysAreEqual($entry->key, $key)) {
+                return $this->delete($position);
+            }
+        }
+
+        // Check if a default was provided
+        if (func_num_args() === 1) {
+            throw new \OutOfBoundsException();
+        }
+
+        return $default;
+    }
+
+    /**
+     * Removes and returns the value at a given index in the sequence.
+     *
+     * @param int $index this index to remove.
+     *
+     * @return mixed the removed value.
+     *
+     * @throws \OutOfRangeException if the index is not in the range [0, size-1]
+     */
+    function delete($index)
+    {
+        $entry = $this->entries[$index];
+        $value = $entry->value;
+
+        array_splice($this->entries, $index, 1, null);
+        $this->checkCapacity();
+
+        return $value;
+    }
+
+    /**
      * @param mixed $offset
      * @return bool
      */
@@ -650,9 +625,47 @@ final class Map implements Collection
     }
 
     /**
+     * Returns the value associated with a key, or an optional default if the
+     * key is not associated with a value.
+     *
+     * @param mixed $key
+     * @param mixed $default
+     *
+     * @return mixed The associated value or fallback default if provided.
+     *
+     * @throws OutOfBoundsException if no default was provided and the key is
+     *                               not associated with a value.
+     */
+    public function get($key, $default = null)
+    {
+        if (($entry = $this->lookupKey($key))) {
+            return $entry->value;
+        }
+
+        // Check if a default was provided.
+        if (func_num_args() === 1) {
+            throw new OutOfBoundsException();
+        }
+
+        return $default;
+    }
+
+    /**
+     * Filter items by the given key value pair using strict comparison.
+     *
+     * @param  string $key
+     * @param  mixed  $value
+     * @return static
+     */
+    public function whereStrict($key, $value)
+    {
+        return $this->where($key, '===', $value);
+    }
+
+    /**
      * Filter items by the given key value pair.
      *
-     * @param  string  $key
+     * @param  string $key
      * @param  mixed  $operator
      * @param  mixed  $value
      * @return static
@@ -669,21 +682,46 @@ final class Map implements Collection
     }
 
     /**
-     * Filter items by the given key value pair using strict comparison.
+     * Get an operator checker callback.
      *
-     * @param  string  $key
+     * @param  string $key
+     * @param  string $operator
      * @param  mixed  $value
-     * @return static
+     * @return \Closure
      */
-    public function whereStrict($key, $value)
+    protected function operatorForWhere($key, $operator, $value)
     {
-        return $this->where($key, '===', $value);
+        return function ($item) use ($key, $operator, $value) {
+            $retrieved = $item[$key];
+
+            switch ($operator) {
+                default:
+                case '=':
+                case '==':
+                    return $retrieved == $value;
+                case '!=':
+                case '<>':
+                    return $retrieved != $value;
+                case '<':
+                    return $retrieved < $value;
+                case '>':
+                    return $retrieved > $value;
+                case '<=':
+                    return $retrieved <= $value;
+                case '>=':
+                    return $retrieved >= $value;
+                case '===':
+                    return $retrieved === $value;
+                case '!==':
+                    return $retrieved !== $value;
+            }
+        };
     }
 
     /**
      * Filter items by the given key value pair.
      *
-     * @param  string  $key
+     * @param  string $key
      * @param  mixed  $values
      * @return static
      */
@@ -699,7 +737,7 @@ final class Map implements Collection
     /**
      * Filter items by the given key value pair using strict comparison.
      *
-     * @param  string  $key
+     * @param  string $key
      * @param  mixed  $values
      * @return static
      */
@@ -710,34 +748,5 @@ final class Map implements Collection
         return $this->filter(function ($item) use ($key, $values) {
             return in_array($item[$key], $values, true);
         });
-    }
-
-    /**
-     * Get an operator checker callback.
-     *
-     * @param  string  $key
-     * @param  string  $operator
-     * @param  mixed  $value
-     * @return \Closure
-     */
-    protected function operatorForWhere($key, $operator, $value)
-    {
-        return function ($item) use ($key, $operator, $value) {
-            $retrieved = $item[$key];
-
-            switch ($operator) {
-                default:
-                case '=':
-                case '==':  return $retrieved == $value;
-                case '!=':
-                case '<>':  return $retrieved != $value;
-                case '<':   return $retrieved < $value;
-                case '>':   return $retrieved > $value;
-                case '<=':  return $retrieved <= $value;
-                case '>=':  return $retrieved >= $value;
-                case '===': return $retrieved === $value;
-                case '!==': return $retrieved !== $value;
-            }
-        };
     }
 }

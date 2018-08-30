@@ -7,7 +7,7 @@
  *  @project apli
  *  @file Entry.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 19/08/18 at 17:25
+ *  @date 27/08/18 at 10:26
  */
 
 /**
@@ -21,8 +21,8 @@ namespace Apli\Data;
 
 use Apli\Support\Hashable;
 use Apli\Support\Traits\HashableTrait;
-use OutOfBoundsException;
 use JsonSerializable;
+use OutOfBoundsException;
 
 /**
  * Class entry represents a key and an associated value.
@@ -86,17 +86,17 @@ class Entry implements JsonSerializable, Hashable
     /**
      * @inheritDoc
      */
-    public function toArray()
+    public function jsonSerialize()
     {
-        return ['key' => $this->key, 'value' => $this->value];
+        return $this->toArray();
     }
 
     /**
      * @inheritDoc
      */
-    public function jsonSerialize()
+    public function toArray()
     {
-        return $this->toArray();
+        return ['key' => $this->key, 'value' => $this->value];
     }
 
     /**
@@ -105,22 +105,6 @@ class Entry implements JsonSerializable, Hashable
     public function __toString()
     {
         return $this->getValue();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getKey()
-    {
-        return $this->key;
-    }
-
-    /**
-     * @param mixed $key
-     */
-    public function setKey($key)
-    {
-        $this->key = $key;
     }
 
     /**
@@ -137,5 +121,21 @@ class Entry implements JsonSerializable, Hashable
     public function setValue($value)
     {
         $this->value = $value;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    /**
+     * @param mixed $key
+     */
+    public function setKey($key)
+    {
+        $this->key = $key;
     }
 }

@@ -7,7 +7,7 @@
  *  @project apli
  *  @file Stack.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 18/08/18 at 21:47
+ *  @date 27/08/18 at 10:26
  */
 
 /**
@@ -110,28 +110,6 @@ class Stack implements Collection
     }
 
     /**
-     * Returns and removes the value at the top of the stack.
-     *
-     * @return mixed
-     *
-     * @throws \UnderflowException if the stack is empty.
-     */
-    public function pop()
-    {
-        return $this->vector->pop();
-    }
-
-    /**
-     * Pushes zero or more values onto the top of the stack.
-     *
-     * @param mixed ...$values
-     */
-    public function push(...$values)
-    {
-        $this->vector->push(...$values);
-    }
-
-    /**
      * @return array
      */
     public function toArray()
@@ -144,9 +122,21 @@ class Stack implements Collection
      */
     public function getIterator()
     {
-        while ( ! $this->isEmpty()) {
+        while (!$this->isEmpty()) {
             yield $this->pop();
         }
+    }
+
+    /**
+     * Returns and removes the value at the top of the stack.
+     *
+     * @return mixed
+     *
+     * @throws \UnderflowException if the stack is empty.
+     */
+    public function pop()
+    {
+        return $this->vector->pop();
     }
 
     /**
@@ -160,6 +150,16 @@ class Stack implements Collection
         } else {
             throw new OutOfBoundsException();
         }
+    }
+
+    /**
+     * Pushes zero or more values onto the top of the stack.
+     *
+     * @param mixed ...$values
+     */
+    public function push(...$values)
+    {
+        $this->vector->push(...$values);
     }
 
     /**

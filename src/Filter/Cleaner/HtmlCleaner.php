@@ -7,7 +7,7 @@
  *  @project apli
  *  @file HtmlCleaner.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 25/08/18 at 08:52
+ *  @date 27/08/18 at 10:27
  */
 
 namespace Apli\Filter\Cleaner;
@@ -104,11 +104,11 @@ class HtmlCleaner implements Cleaner
     /**
      * Constructor for inputFilter class. Only first parameter is required.
      *
-     * @param array $tagsArray  List of user-defined tags
-     * @param array $attrArray  List of user-defined attributes
+     * @param array $tagsArray List of user-defined tags
+     * @param array $attrArray List of user-defined attributes
      * @param int   $tagsMethod WhiteList method = 0, BlackList method = 1
      * @param int   $attrMethod WhiteList method = 0, BlackList method = 1
-     * @param int   $xssAuto    Only auto clean essentials = 0, Allow clean blacklisted tags/attr = 1
+     * @param int   $xssAuto Only auto clean essentials = 0, Allow clean blacklisted tags/attr = 1
      */
     public function __construct(
         $tagsArray = [],
@@ -116,10 +116,11 @@ class HtmlCleaner implements Cleaner
         $tagsMethod = self::USE_BLACK_LIST,
         $attrMethod = self::USE_BLACK_LIST,
         $xssAuto = 1
-    ) {
+    )
+    {
         // Make sure user defined arrays are in lowercase
-        $tagsArray = array_map('strtolower', (array) $tagsArray);
-        $attrArray = array_map('strtolower', (array) $attrArray);
+        $tagsArray = array_map('strtolower', (array)$tagsArray);
+        $attrArray = array_map('strtolower', (array)$attrArray);
 
         // Assign member variables
         $this->tagsArray = $tagsArray;
@@ -127,6 +128,104 @@ class HtmlCleaner implements Cleaner
         $this->tagsMethod = $tagsMethod;
         $this->attrMethod = $attrMethod;
         $this->xssAuto = $xssAuto;
+    }
+
+    /**
+     * Try to convert to plaintext.
+     *
+     * @note    This method will be removed once support for PHP 5.3 is discontinued.
+     *
+     * @param string $source The source string.
+     *
+     * @return string Plaintext string
+     */
+    public function decode($source)
+    {
+        return html_entity_decode($source, ENT_QUOTES, 'UTF-8');
+    }
+
+    /**
+     * getTagsMethod.
+     *
+     * @return int
+     */
+    public function getTagsMethod()
+    {
+        return $this->tagsMethod;
+    }
+
+    /**
+     * setTagsMethod.
+     *
+     * @param int $tagsMethod
+     *
+     * @return HtmlCleaner Return self to support chaining.
+     */
+    public function setTagsMethod($tagsMethod)
+    {
+        $this->tagsMethod = $tagsMethod;
+
+        return $this;
+    }
+
+    /**
+     * getAttrMethod.
+     *
+     * @return int
+     */
+    public function getAttrMethod()
+    {
+        return $this->attrMethod;
+    }
+
+    /**
+     * setAttrMethod.
+     *
+     * @param int $attrMethod
+     *
+     * @return HtmlCleaner Return self to support chaining.
+     */
+    public function setAttrMethod($attrMethod)
+    {
+        $this->attrMethod = $attrMethod;
+
+        return $this;
+    }
+
+    /**
+     * getXssAuto.
+     *
+     * @return int
+     */
+    public function getXssMethod()
+    {
+        return $this->xssAuto;
+    }
+
+    /**
+     * setXssAuto.
+     *
+     * @param int $xssAuto
+     *
+     * @return HtmlCleaner Return self to support chaining.
+     */
+    public function setXssMethod($xssAuto)
+    {
+        $this->xssAuto = $xssAuto;
+
+        return $this;
+    }
+
+    /**
+     * Method to clean text by rule.
+     *
+     * @param string $source The source to be clean.
+     *
+     * @return mixed The cleaned value.
+     */
+    public function clean($source)
+    {
+        return (string)$this->remove((string)$source);
     }
 
     /**
@@ -531,103 +630,5 @@ class HtmlCleaner implements Cleaner
             || (strpos($attrSubSet[1], 'vbscript:') !== false)
             || (strpos($attrSubSet[1], 'mocha:') !== false)
             || (strpos($attrSubSet[1], 'livescript:') !== false);
-    }
-
-    /**
-     * Try to convert to plaintext.
-     *
-     * @note    This method will be removed once support for PHP 5.3 is discontinued.
-     *
-     * @param string $source The source string.
-     *
-     * @return string Plaintext string
-     */
-    public function decode($source)
-    {
-        return html_entity_decode($source, ENT_QUOTES, 'UTF-8');
-    }
-
-    /**
-     * getTagsMethod.
-     *
-     * @return int
-     */
-    public function getTagsMethod()
-    {
-        return $this->tagsMethod;
-    }
-
-    /**
-     * setTagsMethod.
-     *
-     * @param int $tagsMethod
-     *
-     * @return HtmlCleaner Return self to support chaining.
-     */
-    public function setTagsMethod($tagsMethod)
-    {
-        $this->tagsMethod = $tagsMethod;
-
-        return $this;
-    }
-
-    /**
-     * getAttrMethod.
-     *
-     * @return int
-     */
-    public function getAttrMethod()
-    {
-        return $this->attrMethod;
-    }
-
-    /**
-     * setAttrMethod.
-     *
-     * @param int $attrMethod
-     *
-     * @return HtmlCleaner Return self to support chaining.
-     */
-    public function setAttrMethod($attrMethod)
-    {
-        $this->attrMethod = $attrMethod;
-
-        return $this;
-    }
-
-    /**
-     * getXssAuto.
-     *
-     * @return int
-     */
-    public function getXssMethod()
-    {
-        return $this->xssAuto;
-    }
-
-    /**
-     * setXssAuto.
-     *
-     * @param int $xssAuto
-     *
-     * @return HtmlCleaner Return self to support chaining.
-     */
-    public function setXssMethod($xssAuto)
-    {
-        $this->xssAuto = $xssAuto;
-
-        return $this;
-    }
-
-    /**
-     * Method to clean text by rule.
-     *
-     * @param string $source The source to be clean.
-     *
-     * @return mixed The cleaned value.
-     */
-    public function clean($source)
-    {
-        return (string) $this->remove((string) $source);
     }
 }

@@ -7,7 +7,7 @@
  *  @project apli
  *  @file StringCleaner.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 25/08/18 at 09:09
+ *  @date 27/08/18 at 10:26
  */
 
 /**
@@ -24,11 +24,23 @@ class StringCleaner implements Cleaner
     private $filter;
 
     /**
+     * Method to clean text by rule.
+     *
+     * @param string $source The source to be clean.
+     *
+     * @return mixed The cleaned value.
+     */
+    public function clean($source)
+    {
+        return (string)$this->getFilter()->clean($this->getFilter()->decode((string)$source));
+    }
+
+    /**
      * @return HtmlCleaner
      */
     public function getFilter()
     {
-        if(is_null($this->filter)) {
+        if (is_null($this->filter)) {
             $this->filter = new HtmlCleaner();
         }
 
@@ -41,17 +53,5 @@ class StringCleaner implements Cleaner
     public function setFilter($filter)
     {
         $this->filter = $filter;
-    }
-
-    /**
-     * Method to clean text by rule.
-     *
-     * @param string $source The source to be clean.
-     *
-     * @return mixed The cleaned value.
-     */
-    public function clean($source)
-    {
-        return (string) $this->getFilter()->clean($this->getFilter()->decode((string) $source));
     }
 }

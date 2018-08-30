@@ -7,7 +7,7 @@
  *  @project apli
  *  @file Vector.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 19/08/18 at 17:19
+ *  @date 27/08/18 at 10:26
  */
 
 namespace Apli\Data;

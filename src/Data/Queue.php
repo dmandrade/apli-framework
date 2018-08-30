@@ -7,7 +7,7 @@
  *  @project apli
  *  @file Queue.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 18/08/18 at 21:47
+ *  @date 27/08/18 at 10:27
  */
 
 /**
@@ -109,26 +109,6 @@ class Queue implements Collection
     }
 
     /**
-     * Returns and removes the value at the top of the Queue.
-     *
-     * @return mixed
-     */
-    public function pop()
-    {
-        return $this->deque->shift();
-    }
-
-    /**
-     * Pushes values into the top of the queue.
-     *
-     * @param mixed ...$values
-     */
-    public function push(...$values)
-    {
-        $this->deque->push(...$values);
-    }
-
-    /**
      * Return array of Queue values
      *
      * @return array
@@ -150,6 +130,15 @@ class Queue implements Collection
         }
     }
 
+    /**
+     * Returns and removes the value at the top of the Queue.
+     *
+     * @return mixed
+     */
+    public function pop()
+    {
+        return $this->deque->shift();
+    }
 
     /**
      * Pushe value into the top of queue
@@ -165,6 +154,16 @@ class Queue implements Collection
         } else {
             throw new OutOfBoundsException();
         }
+    }
+
+    /**
+     * Pushes values into the top of the queue.
+     *
+     * @param mixed ...$values
+     */
+    public function push(...$values)
+    {
+        $this->deque->push(...$values);
     }
 
     /**

@@ -7,7 +7,7 @@
  *  @project apli
  *  @file ColorProcessor.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 27/07/18 at 10:11
+ *  @date 27/08/18 at 10:27
  */
 
 namespace Apli\IO\Cli\Color;
@@ -83,7 +83,7 @@ class ColorProcessor implements ColorProcessorInterface
     /**
      * Add a style.
      *
-     * @param string     $name  The style name.
+     * @param string     $name The style name.
      * @param ColorStyle $style The color style.
      *
      * @return ColorProcessor Instance of $this to allow chaining.
@@ -139,8 +139,8 @@ class ColorProcessor implements ColorProcessorInterface
     /**
      * Replace color tags in a string.
      *
-     * @param string     $text  The original text.
-     * @param string     $tag   The matched tag.
+     * @param string     $text The original text.
+     * @param string     $tag The matched tag.
      * @param string     $match The match.
      * @param ColorStyle $style The color style to apply.
      *

@@ -7,7 +7,7 @@
  *  @project apli
  *  @file FloatCleaner.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 25/08/18 at 07:52
+ *  @date 27/08/18 at 10:26
  */
 
 /**
@@ -31,8 +31,8 @@ class FloatCleaner implements Cleaner
     public function clean($source)
     {
         // Only use the first floating point value
-        preg_match('/-?[0-9]+(\.[0-9]+)?/', (string) $source, $matches);
+        preg_match('/-?[0-9]+(\.[0-9]+)?/', (string)$source, $matches);
 
-        return isset($matches[0]) ? (float) $matches[0] : null;
+        return isset($matches[0]) ? (float)$matches[0] : null;
     }
 }

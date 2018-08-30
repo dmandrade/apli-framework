@@ -7,7 +7,7 @@
  *  @project apli
  *  @file Deque.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 18/08/18 at 18:07
+ *  @date 27/08/18 at 10:27
  */
 
 /**

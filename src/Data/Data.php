@@ -7,7 +7,7 @@
  *  @project apli
  *  @file Data.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 19/08/18 at 17:26
+ *  @date 27/08/18 at 10:27
  */
 
 /**
@@ -39,7 +39,7 @@ class Data implements Collection
     /**
      * Create a new data container instance.
      *
-     * @param  array|object    $attributes
+     * @param  array|object $attributes
      * @return void
      */
     public function __construct($attributes = [])
@@ -47,16 +47,6 @@ class Data implements Collection
         if (null !== $attributes) {
             $this->fill($attributes);
         }
-    }
-
-    /**
-     * Get all attributes.
-     *
-     * @return array
-     */
-    public function all()
-    {
-        return $this->attributes;
     }
 
     /**
@@ -98,6 +88,16 @@ class Data implements Collection
     }
 
     /**
+     * Get all attributes.
+     *
+     * @return array
+     */
+    public function all()
+    {
+        return $this->attributes;
+    }
+
+    /**
      * Count properties in data container.
      *
      * @return  int
@@ -105,6 +105,101 @@ class Data implements Collection
     public function count()
     {
         return count($this->attributes);
+    }
+
+    /**
+     * Determine if the given offset exists.
+     *
+     * @param  string $offset
+     * @return bool
+     */
+    public function offsetExists($offset)
+    {
+        return $this->has($offset);
+    }
+
+    /**
+     * Check if key exists in container
+     *
+     * @param $key
+     * @return bool
+     */
+    public function has($key)
+    {
+        return isset($this->attributes[$key]);
+    }
+
+    /**
+     * Get the value for a given offset.
+     *
+     * @param  string $offset
+     * @return mixed
+     */
+    public function offsetGet($offset)
+    {
+        return $this->{$offset};
+    }
+
+    /**
+     * Set the value at the given offset.
+     *
+     * @param  string $offset
+     * @param  mixed  $value
+     * @return void
+     */
+    public function offsetSet($offset, $value)
+    {
+        $this->{$offset} = $value;
+    }
+
+    /**
+     * Unset the value at the given offset.
+     *
+     * @param  string $offset
+     * @return void
+     */
+    public function offsetUnset($offset)
+    {
+        unset($this->{$offset});
+    }
+
+    /**
+     * Dynamically retrieve the value of an attribute.
+     *
+     * @param  string $key
+     * @return mixed
+     */
+    public function __get($key)
+    {
+        return $this->get($key);
+    }
+
+    /**
+     * Dynamically set the value of an attribute.
+     *
+     * @param  string $key
+     * @param  mixed  $value
+     * @return void
+     */
+    public function __set($key, $value)
+    {
+        $this->set($key, $value);
+    }
+
+    /**
+     * Get an attribute from the container.
+     *
+     * @param  string $key
+     * @param  mixed  $default
+     * @return mixed
+     */
+    public function get($key, $default = null)
+    {
+        if (array_key_exists($key, $this->attributes)) {
+            return $this->attributes[$key];
+        }
+
+        return $default;
     }
 
     /**
@@ -127,103 +222,9 @@ class Data implements Collection
     }
 
     /**
-     * Get an attribute from the container.
-     *
-     * @param  string  $key
-     * @param  mixed   $default
-     * @return mixed
-     */
-    public function get($key, $default = null)
-    {
-        if (array_key_exists($key, $this->attributes)) {
-            return $this->attributes[$key];
-        }
-
-        return $default;
-    }
-
-    /**
-     * Convert the data instance to an array.
-     *
-     * @return array
-     */
-    public function toArray()
-    {
-        return $this->attributes;
-    }
-
-    /**
-     * Determine if the given offset exists.
-     *
-     * @param  string  $offset
-     * @return bool
-     */
-    public function offsetExists($offset)
-    {
-        return $this->has($offset);
-    }
-
-    /**
-     * Get the value for a given offset.
-     *
-     * @param  string  $offset
-     * @return mixed
-     */
-    public function offsetGet($offset)
-    {
-        return $this->{$offset};
-    }
-
-    /**
-     * Set the value at the given offset.
-     *
-     * @param  string  $offset
-     * @param  mixed   $value
-     * @return void
-     */
-    public function offsetSet($offset, $value)
-    {
-        $this->{$offset} = $value;
-    }
-
-    /**
-     * Unset the value at the given offset.
-     *
-     * @param  string  $offset
-     * @return void
-     */
-    public function offsetUnset($offset)
-    {
-        unset($this->{$offset});
-    }
-
-    /**
-     * Dynamically retrieve the value of an attribute.
-     *
-     * @param  string  $key
-     * @return mixed
-     */
-    public function __get($key)
-    {
-        return $this->get($key);
-    }
-
-    /**
-     * Dynamically set the value of an attribute.
-     *
-     * @param  string  $key
-     * @param  mixed   $value
-     * @return void
-     */
-    public function __set($key, $value)
-    {
-        $this->set($key, $value);
-    }
-
-    /**
      * Dynamically check if an attribute is set.
      *
-     * @param  string  $key
+     * @param  string $key
      * @return bool
      */
     public function __isset($key)
@@ -234,35 +235,12 @@ class Data implements Collection
     /**
      * Dynamically unset an attribute.
      *
-     * @param  string  $key
+     * @param  string $key
      * @return void
      */
     public function __unset($key)
     {
         unset($this->attributes[$key]);
-    }
-
-    /**
-     * Check if key exists in container
-     *
-     * @param $key
-     * @return bool
-     */
-    public function has($key)
-    {
-        return isset($this->attributes[$key]);
-    }
-
-    /**
-     * Retrieve a external iterator
-     *
-     * @return \Generator|\Traversable
-     */
-    public function getIterator()
-    {
-        foreach ($this->attributes as $key => $value) {
-            yield $key => $value;
-        }
     }
 
     /**
@@ -285,6 +263,18 @@ class Data implements Collection
     }
 
     /**
+     * Retrieve a external iterator
+     *
+     * @return \Generator|\Traversable
+     */
+    public function getIterator()
+    {
+        foreach ($this->attributes as $key => $value) {
+            yield $key => $value;
+        }
+    }
+
+    /**
      * Get all data properties names
      *
      * @return  array
@@ -292,6 +282,16 @@ class Data implements Collection
     public function keys()
     {
         return array_keys($this->toArray());
+    }
+
+    /**
+     * Convert the data instance to an array.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return $this->attributes;
     }
 
     /**

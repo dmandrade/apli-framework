@@ -7,7 +7,7 @@
  *  @project apli
  *  @file Environment.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 25/08/18 at 07:09
+ *  @date 27/08/18 at 10:27
  */
 
 namespace Apli\Environment;
@@ -53,7 +53,7 @@ class Environment
      */
     public function server()
     {
-        if(is_null($this->server)) {
+        if (is_null($this->server)) {
             $this->server = new Server();
         }
 

@@ -7,7 +7,7 @@
  *  @project apli
  *  @file ColorProcessorInterface.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 27/07/18 at 10:11
+ *  @date 27/08/18 at 10:27
  */
 
 namespace Apli\IO\Cli\Color;
@@ -29,7 +29,7 @@ interface ColorProcessorInterface
     /**
      * Add a style.
      *
-     * @param string     $name  The style name.
+     * @param string     $name The style name.
      * @param ColorStyle $style The color style.
      *
      * @return ColorProcessor Instance of $this to allow chaining.

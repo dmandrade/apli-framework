@@ -7,7 +7,7 @@
  *  @project apli
  *  @file Session.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 27/07/18 at 10:11
+ *  @date 27/08/18 at 10:26
  */
 
 namespace Apli\Session;
@@ -102,7 +102,7 @@ class Session implements \ArrayAccess, \IteratorAggregate
      * @param mixed $offset <p>
      *                      The offset to assign the value to.
      *                      </p>
-     * @param mixed $value  <p>
+     * @param mixed $value <p>
      *                      The value to set.
      *                      </p>
      *

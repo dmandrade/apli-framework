@@ -7,7 +7,7 @@
  *  @project apli
  *  @file IOInterface.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 12/08/18 at 09:51
+ *  @date 27/08/18 at 10:27
  */
 
 namespace Apli\IO\Cli;
@@ -21,7 +21,7 @@ interface IOInterface
      * Write a string to standard output.
      *
      * @param string $text The text to display.
-     * @param bool   $nl   True (default) to append a new line at the end of the output string.
+     * @param bool   $nl True (default) to append a new line at the end of the output string.
      *
      * @return IOInterface Instance of $this to allow chaining.
      */
@@ -46,7 +46,7 @@ interface IOInterface
     /**
      * Gets a value from the input data.
      *
-     * @param string $name    Name of the value to get.
+     * @param string $name Name of the value to get.
      * @param mixed  $default Default value to return if variable does not exist.
      *
      * @return mixed The filtered input value.
@@ -56,7 +56,7 @@ interface IOInterface
     /**
      * Sets a value.
      *
-     * @param string $name  Name of the value to set.
+     * @param string $name Name of the value to set.
      * @param mixed  $value Value to assign to the input.
      *
      * @return void

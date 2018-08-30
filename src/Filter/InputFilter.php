@@ -7,7 +7,7 @@
  *  @project apli
  *  @file InputFilter.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 25/08/18 at 09:22
+ *  @date 27/08/18 at 10:27
  */
 
 namespace Apli\Filter;
@@ -87,13 +87,13 @@ class InputFilter implements \Serializable
     protected function loadDefaultHandlers()
     {
         foreach ($this->nativeHandlers as $name => $handler) {
-            if(!$this->hasHandler($name)) {
+            if (!$this->hasHandler($name)) {
                 $this->setHandler($name, $handler);
             }
         }
 
         // Function to handle raw data
-        if(!$this->hasHandler('RAW')) {
+        if (!$this->hasHandler('RAW')) {
             $this->handlers['RAW'] = function ($source) {
                 return $source;
             };
@@ -101,7 +101,7 @@ class InputFilter implements \Serializable
 
         // Function to handler unknown clean
         $this->defaultHandler = function ($source) {
-            /** @var HtmlCleaner $filter **/
+            /** @var HtmlCleaner $filter * */
             $filter = $this->getHandler('html');
             // Are we dealing with an array?
             if (is_array($source)) {
@@ -126,6 +126,28 @@ class InputFilter implements \Serializable
         };
     }
 
+    public function hasHandler($name)
+    {
+        return isset($this->handlers[strtoupper($name)]);
+    }
+
+    /**
+     * Add a new clean handler
+     *
+     * @param $name
+     * @param $handler
+     * @return $this
+     * @throws \ReflectionException
+     */
+    public function setHandler($name, $handler)
+    {
+        if ($this->isValidHandler($handler)) {
+            $this->handlers[strtoupper($name)] = $handler;
+        }
+
+        return $this;
+    }
+
     /**
      * Check if passed handler is valid
      *
@@ -136,7 +158,7 @@ class InputFilter implements \Serializable
      */
     private function isValidHandler($handler)
     {
-        if(is_string($handler)) {
+        if (is_string($handler)) {
             $reflection = new \ReflectionClass($handler);
             if (!$reflection->implementsInterface(Cleaner::class)) {
                 throw new \InvalidArgumentException($reflection->getName().' should implements Cleaner');
@@ -153,25 +175,15 @@ class InputFilter implements \Serializable
     }
 
     /**
-     * Add a new clean handler
+     * getHandlers.
      *
-     * @param $name
-     * @param $handler
-     * @return $this
-     * @throws \ReflectionException
+     * @param string $name
+     *
+     * @return \callable
      */
-    public function setHandler($name, $handler)
+    public function getHandler($name)
     {
-        if($this->isValidHandler($handler)) {
-            $this->handlers[strtoupper($name)] = $handler;
-        }
-
-        return $this;
-    }
-
-    public function hasHandler($name)
-    {
-        return isset($this->handlers[strtoupper($name)]);
+        return new $this->handlers[strtoupper($name)]();
     }
 
     /**
@@ -209,18 +221,6 @@ class InputFilter implements \Serializable
     }
 
     /**
-     * getHandlers.
-     *
-     * @param string $name
-     *
-     * @return \callable
-     */
-    public function getHandler($name)
-    {
-        return new $this->handlers[strtoupper($name)]();
-    }
-
-    /**
      * setDefaultHandler.
      *
      * @param callable $defaultHandler
@@ -242,10 +242,10 @@ class InputFilter implements \Serializable
     public function serialize()
     {
         $this->defaultHandler = null;
-        $handlers =  $this->handlers;
+        $handlers = $this->handlers;
 
         foreach ($handlers as $name => $handler) {
-            if(!is_string($handler)) {
+            if (!is_string($handler)) {
                 unset($handlers[$name]);
             }
         }

@@ -7,7 +7,7 @@
  *  @project apli
  *  @file OperatingSystem.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 25/08/18 at 07:45
+ *  @date 27/08/18 at 10:27
  */
 
 /**
@@ -22,6 +22,11 @@ namespace Apli\Environment;
 interface OperatingSystem
 {
     /**
+     * @return array
+     */
+    public static function getVariants();
+
+    /**
      * @return string
      */
     public function getName();
@@ -30,11 +35,6 @@ interface OperatingSystem
      * @return string
      */
     public function getFamily();
-
-    /**
-     * @return array
-     */
-    public static function getVariants();
 
     public function __toString();
 }

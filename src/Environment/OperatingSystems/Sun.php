@@ -7,7 +7,7 @@
  *  @project apli
  *  @file Sun.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 25/08/18 at 07:48
+ *  @date 27/08/18 at 10:26
  */
 
 /**
@@ -36,14 +36,6 @@ class Sun implements OperatingSystem
     }
 
     /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'Sun OS';
-    }
-
-    /**
      * @return int
      */
     public function getFamily()
@@ -59,5 +51,13 @@ class Sun implements OperatingSystem
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Sun OS';
     }
 }

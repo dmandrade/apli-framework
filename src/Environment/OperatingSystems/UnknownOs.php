@@ -7,7 +7,7 @@
  *  @project apli
  *  @file UnknownOs.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 25/08/18 at 07:47
+ *  @date 27/08/18 at 10:27
  */
 
 /**
@@ -35,17 +35,6 @@ class UnknownOs implements OperatingSystem
     }
 
     /**
-     * Operating system name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'UNKNOWN';
-    }
-
-
-    /**
      * Operating system family
      *
      * @return int
@@ -63,5 +52,15 @@ class UnknownOs implements OperatingSystem
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * Operating system name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return 'UNKNOWN';
     }
 }

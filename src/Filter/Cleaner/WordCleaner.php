@@ -7,7 +7,7 @@
  *  @project apli
  *  @file WordCleaner.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 25/08/18 at 07:52
+ *  @date 27/08/18 at 10:27
  */
 
 /**
@@ -30,6 +30,6 @@ class WordCleaner implements Cleaner
      */
     public function clean($source)
     {
-        return (string) preg_replace('/[^A-Z_]/i', '', $source);
+        return (string)preg_replace('/[^A-Z_]/i', '', $source);
     }
 }

@@ -7,7 +7,7 @@
  *  @project apli
  *  @file AbstractCliApplication.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 12/08/18 at 09:48
+ *  @date 27/08/18 at 10:26
  */
 
 /**
@@ -19,7 +19,6 @@
 
 namespace Apli\Application;
 
-use Apli\Data\Collection;
 use Apli\IO\Cli\IO;
 use Apli\IO\Cli\IOInterface;
 
@@ -65,7 +64,7 @@ abstract class AbstractCliApplication extends AbstractApplication
      * Write a string to standard output.
      *
      * @param string $text The text to display.
-     * @param bool   $nl   True (default) to append a new line at the end of the output string.
+     * @param bool   $nl True (default) to append a new line at the end of the output string.
      *
      * @return AbstractCliApplication Instance of $this to allow chaining.
      */

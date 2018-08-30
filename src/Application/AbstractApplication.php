@@ -7,7 +7,7 @@
  *  @project apli
  *  @file AbstractApplication.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 12/08/18 at 09:49
+ *  @date 27/08/18 at 10:26
  */
 
 namespace Apli\Application;
@@ -122,7 +122,7 @@ abstract class AbstractApplication implements LoggerAwareInterface
     /**
      * Returns a property of the object or the default value if the property is not set.
      *
-     * @param string $key     The name of the property.
+     * @param string $key The name of the property.
      * @param mixed  $default The default value (optional) if none is set.
      *
      * @return mixed The value of the configuration.
@@ -164,7 +164,7 @@ abstract class AbstractApplication implements LoggerAwareInterface
     /**
      * Modifies a property of the object, creating it if it does not already exist.
      *
-     * @param string $key   The name of the property.
+     * @param string $key The name of the property.
      * @param mixed  $value The value of the property to set (optional).
      *
      * @return mixed Previous value of the property

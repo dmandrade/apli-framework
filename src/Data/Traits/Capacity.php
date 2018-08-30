@@ -7,7 +7,7 @@
  *  @project apli
  *  @file Capacity.php
  *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 30/07/18 at 10:08
+ *  @date 27/08/18 at 10:27
  */
 
 namespace Apli\Data\Traits;
@@ -52,23 +52,6 @@ trait Capacity
     }
 
     /**
-     * @return float to multiply by when decreasing capacity.
-     */
-    protected function getDecayFactor()
-    {
-        return 0.5;
-    }
-
-    /**
-     * @return float the ratio between size and capacity when capacity should be
-     *               decreased.
-     */
-    protected function getTruncateThreshold()
-    {
-        return 0.25;
-    }
-
-    /**
      * Checks and adjusts capacity if required.
      */
     protected function checkCapacity()
@@ -83,11 +66,20 @@ trait Capacity
     }
 
     /**
-     * Called when capacity should be increased to accommodate new values.
+     * @return bool whether capacity should be increased.
      */
-    protected function increaseCapacity()
+    protected function shouldDecreaseCapacity()
     {
-        $this->capacity = max($this->count(), $this->capacity * $this->getGrowthFactor());
+        return count($this) <= $this->capacity * $this->getTruncateThreshold();
+    }
+
+    /**
+     * @return float the ratio between size and capacity when capacity should be
+     *               decreased.
+     */
+    protected function getTruncateThreshold()
+    {
+        return 0.25;
     }
 
     /**
@@ -95,15 +87,23 @@ trait Capacity
      */
     protected function decreaseCapacity()
     {
-        $this->capacity = max(self::MIN_CAPACITY, $this->capacity  * $this->getDecayFactor());
+        $this->capacity = max(self::MIN_CAPACITY, $this->capacity * $this->getDecayFactor());
     }
 
     /**
-     * @return bool whether capacity should be increased.
+     * @return float to multiply by when decreasing capacity.
      */
-    protected function shouldDecreaseCapacity()
+    protected function getDecayFactor()
     {
-        return count($this) <= $this->capacity * $this->getTruncateThreshold();
+        return 0.5;
+    }
+
+    /**
+     * Called when capacity should be increased to accommodate new values.
+     */
+    protected function increaseCapacity()
+    {
+        $this->capacity = max($this->count(), $this->capacity * $this->getGrowthFactor());
     }
 
     /**
