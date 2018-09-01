@@ -12,8 +12,8 @@
 
 namespace Apli\IO\Cli\Output;
 
+use Apli\IO\Cli\Color\DefaultColorProcessor;
 use Apli\IO\Cli\Color\ColorProcessor;
-use Apli\IO\Cli\Color\ColorProcessorInterface;
 
 /**
  * Simple Cli Output.
@@ -23,18 +23,18 @@ class ColorfulCliOutput extends AbstractCliOutput
     /**
      * Color processing object.
      *
-     * @var ColorProcessorInterface
+     * @var ColorProcessor
      */
     protected $processor;
 
     /**
      * Constructor.
      *
-     * @param ColorProcessorInterface $processor The output processor.
+     * @param ColorProcessor $processor The output processor.
      */
-    public function __construct(ColorProcessorInterface $processor = null)
+    public function __construct(ColorProcessor $processor = null)
     {
-        $this->setProcessor(($processor instanceof ColorProcessorInterface) ? $processor : new ColorProcessor());
+        $this->setProcessor(($processor instanceof ColorProcessor) ? $processor : new DefaultColorProcessor());
     }
 
     /**
@@ -57,7 +57,7 @@ class ColorfulCliOutput extends AbstractCliOutput
      *
      * @throws \RuntimeException
      *
-     * @return ColorProcessorInterface
+     * @return ColorProcessor
      */
     public function getProcessor()
     {
@@ -71,11 +71,11 @@ class ColorfulCliOutput extends AbstractCliOutput
     /**
      * Set a processor.
      *
-     * @param ColorProcessorInterface $processor The output processor.
+     * @param ColorProcessor $processor The output processor.
      *
      * @return ColorfulCliOutput Instance of $this to allow chaining.
      */
-    public function setProcessor(ColorProcessorInterface $processor)
+    public function setProcessor(ColorProcessor $processor)
     {
         $this->processor = $processor;
 

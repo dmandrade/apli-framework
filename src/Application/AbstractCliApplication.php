@@ -19,37 +19,37 @@
 
 namespace Apli\Application;
 
+use Apli\IO\Cli\BasicIO;
 use Apli\IO\Cli\IO;
-use Apli\IO\Cli\IOInterface;
 
 /**
  * Simple class for a Aplí command line application.
  *
- * @property-read  IOInterface $io
+ * @property-read  IO $io
  */
 abstract class AbstractCliApplication extends AbstractApplication
 {
     /**
      * The CLI In/Out object.
      *
-     * @var IOInterface
+     * @var IO
      */
     protected $io = null;
 
     /**
      * Class constructor.
      *
-     * @param IOInterface $io An optional argument to provide dependency injection for the application's IO object.
+     * @param IO $io An optional argument to provide dependency injection for the application's IO object.
      * @param param Map $config An optional argument to provide a Map object to be config.
      */
-    public function __construct(IOInterface $io = null, Map $config = null)
+    public function __construct(IO $io = null, Map $config = null)
     {
         // Close the application if we are not executed from the command line.
         if (!defined('STDOUT') || !defined('STDIN') || !isset($_SERVER['argv'])) {
             $this->close();
         }
 
-        $this->io = $io instanceof IOInterface ? $io : new IO();
+        $this->io = $io instanceof IO ? $io : new BasicIO();
         parent::__construct($config);
 
         // Set the execution datetime and timestamp;
@@ -88,7 +88,7 @@ abstract class AbstractCliApplication extends AbstractApplication
     /**
      * Get the IO object.
      *
-     * @return IOInterface
+     * @return IO
      */
     public function getIO()
     {
@@ -98,7 +98,7 @@ abstract class AbstractCliApplication extends AbstractApplication
     /**
      * Set the IO object.
      *
-     * @param IOInterface $io The IO object.
+     * @param IO $io The IO object.
      *
      * @return AbstractCliApplication Return self to support chaining.
      */

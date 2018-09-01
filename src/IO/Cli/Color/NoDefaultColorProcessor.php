@@ -15,7 +15,7 @@ namespace Apli\IO\Cli\Color;
 /**
  * The NullColorProcessor class.
  */
-class NoColorProcessor extends ColorProcessor
+class NoDefaultColorProcessor extends DefaultColorProcessor
 {
     /**
      * Flag to remove color codes from the output.

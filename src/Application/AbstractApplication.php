@@ -181,11 +181,11 @@ abstract class AbstractApplication implements LoggerAwareInterface
     /**
      * Sets the configuration for the application.
      *
-     * @param Data $config A structure object holding the configuration.
+     * @param Map $config A structure object holding the configuration.
      *
      * @return AbstractApplication Returns itself to support chaining.
      */
-    public function setConfiguration(Data $config)
+    public function setConfiguration(Map $config)
     {
         $this->config = $config;
 
