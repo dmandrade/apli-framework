@@ -13,6 +13,7 @@
 namespace Apli\Application;
 
 use Apli\Data\Map;
+use Apli\Http\Server\RequestHandler;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -40,8 +41,7 @@ abstract class AbstractApplication implements LoggerAwareInterface
 
     /**
      * Class constructor of Application.
-     *
-     * @param Map $config An optional argument to provide a Map object to be config.
+     * @param Map|null $config
      */
     public function __construct(Map $config = null)
     {
@@ -171,7 +171,7 @@ abstract class AbstractApplication implements LoggerAwareInterface
      */
     public function set($key, $value = null)
     {
-        $previous = $this->config->get($key);
+        $previous = $this->config->get($key, null);
 
         $this->config->put($key, $value);
 
