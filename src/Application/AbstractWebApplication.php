@@ -29,7 +29,6 @@ use Apli\Http\Message\ServerRequest;
 use Apli\Http\RequestHandlerRunner;
 use Apli\Http\Server\Emitter;
 use Apli\Http\ServerRequestFactory;
-use Apli\Router\Router;
 
 /**
  * Class AbstractWebApplication
@@ -40,7 +39,7 @@ use Apli\Router\Router;
  *
  * @package Apli\Application
  */
-class AbstractWebApplication extends AbstractApplication
+abstract class AbstractWebApplication extends AbstractApplication
 {
     /**
      * The application environment object.
@@ -166,17 +165,6 @@ class AbstractWebApplication extends AbstractApplication
         $this->emitter->emit($response);
 
         // @event onAfterRespond
-    }
-
-    /**
-     * Method to run the application routines. Most likely you will want to instantiate a controller
-     * and execute it, or perform some sort of task directly.
-     *
-     * @return  Response
-     */
-    protected function doExecute()
-    {
-        return $this->router->dispatch($this->request);
     }
 
     /**

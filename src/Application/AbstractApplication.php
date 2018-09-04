@@ -13,7 +13,6 @@
 namespace Apli\Application;
 
 use Apli\Data\Map;
-use Apli\Http\Server\RequestHandler;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -106,7 +105,7 @@ abstract class AbstractApplication implements LoggerAwareInterface
      * Method to run the application routines. Most likely you will want to instantiate a controller
      * and execute it, or perform some sort of task directly.
      *
-     * @return void
+     * @return mixed
      */
     abstract protected function doExecute();
 
