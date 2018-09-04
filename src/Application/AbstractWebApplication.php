@@ -24,7 +24,6 @@ use Apli\Data\Map;
 use Apli\Environment\Environment;
 use Apli\Http\Emitter\EmitterStack;
 use Apli\Http\Emitter\SapiEmitter;
-use Apli\Http\Message\Response;
 use Apli\Http\Message\ServerRequest;
 use Apli\Http\RequestHandlerRunner;
 use Apli\Http\Server\Emitter;

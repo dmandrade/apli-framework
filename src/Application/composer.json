@@ -13,6 +13,7 @@
         "apli/io": "~1.0",
         "apli/data": "~1.0",
         "apli/environment": "~1.0",
+        "apli/http": "~1.0",
         "psr/log": "~1.0"
     },
     "require-dev": {
