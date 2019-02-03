@@ -19,22 +19,21 @@
 
 namespace Apli\Application;
 
-
 use Apli\Data\Map;
 use Apli\Environment\Environment;
 use Apli\Http\Emitter\EmitterStack;
 use Apli\Http\Emitter\SapiEmitter;
-use Apli\Http\Message\ServerRequest;
+use Psr\Http\Message\ServerRequestInterface;
 use Apli\Http\RequestHandlerRunner;
-use Apli\Http\Server\Emitter;
+use Apli\Http\Emitter\EmitterInterface;
 use Apli\Http\ServerRequestFactory;
 
 /**
  * Class AbstractWebApplication
  *
  * @property-read  Environment $environment
- * @property-read  Emitter  $emitter
- * @property-read  ServerRequest  $request
+ * @property-read  EmitterInterface  $emitter
+ * @property-read  ServerRequestInterface  $request
  *
  * @package Apli\Application
  */
@@ -50,23 +49,24 @@ abstract class AbstractWebApplication extends AbstractApplication
     /**
      * Property server.
      *
-     * @var  Emitter
+     * @var  EmitterInterface
      */
     protected $emitter;
 
     /**
-     * @var ServerRequest
+     * @var ServerRequestInterface
      */
     protected $request;
 
     /**
      * AbstractWebApplication constructor.
-     * @param ServerRequest|null $request
+     * @param ServerRequestInterface|null $request
      * @param Map|null           $config
      * @param Environment|null   $environment
+     * @throws \Apli\Uri\UriException
      */
     public function __construct(
-        ServerRequest $request = null,
+        ServerRequestInterface $request = null,
         Map $config = null,
         Environment $environment = null
     ) {
@@ -114,8 +114,6 @@ abstract class AbstractWebApplication extends AbstractApplication
      * @return  boolean  True if the headers have already been sent.
      *
      * @see     headers_sent()
-     *
-     * @since   3.0
      */
     public function checkHeadersSent()
     {
@@ -123,7 +121,7 @@ abstract class AbstractWebApplication extends AbstractApplication
     }
 
     /**
-     * @return Emitter
+     * @return EmitterInterface
      */
     public function getEmitter()
     {
@@ -131,10 +129,10 @@ abstract class AbstractWebApplication extends AbstractApplication
     }
 
     /**
-     * @param Emitter $emitter
+     * @param EmitterInterface $emitter
      * @return $this
      */
-    public function setEmitter(Emitter $emitter)
+    public function setEmitter(EmitterInterface $emitter)
     {
         $this->emitter = $emitter;
 
@@ -164,19 +162,5 @@ abstract class AbstractWebApplication extends AbstractApplication
         $this->emitter->emit($response);
 
         // @event onAfterRespond
-    }
-
-    /**
-     * Magic method to render output.
-     *
-     * @return  string  Rendered string.
-     */
-    public function __toString()
-    {
-        ob_start();
-
-        $this->execute();
-
-        return ob_get_clean();
     }
 }
