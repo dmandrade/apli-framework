@@ -71,11 +71,15 @@ class Build extends AbstractCliApplication
     protected $subtrees = [
         'application' => 'Application',
         'data'        => 'Data',
+        'di'          => 'Di',
         'environment' => 'Environment',
         'filter'      => 'Filter',
+        'http'        => 'Http',
         'io'          => 'IO',
+        'router'          => 'Router',
         'session'     => 'Session',
         'support'     => 'Support',
+        'uri'     => 'Uri',
     ];
 
     /**
