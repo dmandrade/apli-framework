@@ -4,10 +4,10 @@
  *
  *  This file is part of the apli project.
  *
- *  @project apli
- *  @file Build.php
- *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 27/07/18 at 10:11
+ * @project apli
+ * @file Build.php
+ * @author Danilo Andrade <danilo@webbingbrasil.com.br>
+ * @date 27/07/18 at 10:11
  */
 
 use Apli\Application\AbstractCliApplication;
@@ -70,16 +70,16 @@ class Build extends AbstractCliApplication
      */
     protected $subtrees = [
         'application' => 'Application',
-        'data'        => 'Data',
-        'di'          => 'Di',
+        'data' => 'Data',
+        'di' => 'DI',
         'environment' => 'Environment',
-        'filter'      => 'Filter',
-        'http'        => 'Http',
-        'io'          => 'IO',
-        'router'          => 'Router',
-        'session'     => 'Session',
-        'support'     => 'Support',
-        'uri'     => 'Uri',
+        'filter' => 'Filter',
+        'http' => 'Http',
+        'io' => 'IO',
+        'router' => 'Router',
+        'session' => 'Session',
+        'support' => 'Support',
+        'uri' => 'Uri',
     ];
 
     /**
@@ -215,8 +215,8 @@ HELP;
      */
     protected function exec($command, $arguments = [], $options = [])
     {
-        $arguments = implode(' ', (array) $arguments);
-        $options = implode(' ', (array) $options);
+        $arguments = implode(' ', (array)$arguments);
+        $options = implode(' ', (array)$options);
 
         $command = sprintf('%s %s %s', $command, $arguments, $options);
 

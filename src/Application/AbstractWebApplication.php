@@ -4,10 +4,10 @@
  *
  *  This file is part of the apli project.
  *
- *  @project apli
- *  @file AbstractWebApplication.php
- *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 04/09/18 at 10:43
+ * @project apli
+ * @file AbstractWebApplication.php
+ * @author Danilo Andrade <danilo@webbingbrasil.com.br>
+ * @date 04/09/18 at 10:43
  */
 
 /**
@@ -21,19 +21,19 @@ namespace Apli\Application;
 
 use Apli\Data\Map;
 use Apli\Environment\Environment;
+use Apli\Http\Emitter\EmitterInterface;
 use Apli\Http\Emitter\EmitterStack;
 use Apli\Http\Emitter\SapiEmitter;
-use Psr\Http\Message\ServerRequestInterface;
 use Apli\Http\RequestHandlerRunner;
-use Apli\Http\Emitter\EmitterInterface;
 use Apli\Http\ServerRequestFactory;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Class AbstractWebApplication
  *
- * @property-read  Environment $environment
- * @property-read  EmitterInterface  $emitter
- * @property-read  ServerRequestInterface  $request
+ * @property-read  Environment            $environment
+ * @property-read  EmitterInterface       $emitter
+ * @property-read  ServerRequestInterface $request
  *
  * @package Apli\Application
  */
@@ -61,20 +61,21 @@ abstract class AbstractWebApplication extends AbstractApplication
     /**
      * AbstractWebApplication constructor.
      * @param ServerRequestInterface|null $request
-     * @param Map|null           $config
-     * @param Environment|null   $environment
+     * @param Map|null                    $config
+     * @param Environment|null            $environment
      * @throws \Apli\Uri\UriException
      */
     public function __construct(
         ServerRequestInterface $request = null,
         Map $config = null,
         Environment $environment = null
-    ) {
-        $this->request     = $request ?: ServerRequestFactory::fromGlobals(
+    )
+    {
+        $this->request = $request ?: ServerRequestFactory::fromGlobals(
             $_SERVER, $_GET, $_POST, $_COOKIE, $_FILES
         );
         $environment = $environment ?: new Environment();
-        $emitter      = new EmitterStack();
+        $emitter = new EmitterStack();
         $emitter->push(new SapiEmitter());
 
         $this->setEnvironment($environment);

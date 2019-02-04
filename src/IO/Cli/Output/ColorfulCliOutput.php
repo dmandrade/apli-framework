@@ -4,16 +4,16 @@
  *
  *  This file is part of the apli project.
  *
- *  @project apli
- *  @file ColorfulCliOutput.php
- *  @author Danilo Andrade <danilo@webbingbrasil.com.br>
- *  @date 27/08/18 at 10:27
+ * @project apli
+ * @file ColorfulCliOutput.php
+ * @author Danilo Andrade <danilo@webbingbrasil.com.br>
+ * @date 27/08/18 at 10:27
  */
 
 namespace Apli\IO\Cli\Output;
 
-use Apli\IO\Cli\Color\DefaultColorProcessor;
 use Apli\IO\Cli\Color\ColorProcessor;
+use Apli\IO\Cli\Color\DefaultColorProcessor;
 
 /**
  * Simple Cli Output.
