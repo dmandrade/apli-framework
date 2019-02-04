@@ -1,15 +1,15 @@
 <?php
 /**
- *  Copyright (c) 2018 Danilo Andrade
+ *  Copyright (c) 2018 Danilo Andrade.
  *
  *  This file is part of the apli project.
  *
  * @project apli
  * @file Build.php
+ *
  * @author Danilo Andrade <danilo@webbingbrasil.com.br>
  * @date 27/07/18 at 10:11
  */
-
 use Apli\Application\AbstractCliApplication;
 
 include_once __DIR__.'/../vendor/autoload.php';
@@ -70,16 +70,16 @@ class Build extends AbstractCliApplication
      */
     protected $subtrees = [
         'application' => 'Application',
-        'data' => 'Data',
-        'di' => 'DI',
+        'data'        => 'Data',
+        'di'          => 'DI',
         'environment' => 'Environment',
-        'filter' => 'Filter',
-        'http' => 'Http',
-        'io' => 'IO',
-        'router' => 'Router',
-        'session' => 'Session',
-        'support' => 'Support',
-        'uri' => 'Uri',
+        'filter'      => 'Filter',
+        'http'        => 'Http',
+        'io'          => 'IO',
+        'router'      => 'Router',
+        'session'     => 'Session',
+        'support'     => 'Support',
+        'uri'         => 'Uri',
     ];
 
     /**
@@ -215,8 +215,8 @@ HELP;
      */
     protected function exec($command, $arguments = [], $options = [])
     {
-        $arguments = implode(' ', (array)$arguments);
-        $options = implode(' ', (array)$options);
+        $arguments = implode(' ', (array) $arguments);
+        $options = implode(' ', (array) $options);
 
         $command = sprintf('%s %s %s', $command, $arguments, $options);
 

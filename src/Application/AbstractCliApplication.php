@@ -1,11 +1,12 @@
 <?php
 /**
- *  Copyright (c) 2018 Danilo Andrade
+ *  Copyright (c) 2018 Danilo Andrade.
  *
  *  This file is part of the apli project.
  *
  * @project apli
  * @file AbstractCliApplication.php
+ *
  * @author Danilo Andrade <danilo@webbingbrasil.com.br>
  * @date 27/08/18 at 10:26
  */
@@ -39,7 +40,7 @@ abstract class AbstractCliApplication extends AbstractApplication
     /**
      * Class constructor.
      *
-     * @param IO $io An optional argument to provide dependency injection for the application's IO object.
+     * @param IO        $io     An optional argument to provide dependency injection for the application's IO object.
      * @param param Map $config An optional argument to provide a Map object to be config.
      */
     public function __construct(IO $io = null, Map $config = null)
@@ -64,7 +65,7 @@ abstract class AbstractCliApplication extends AbstractApplication
      * Write a string to standard output.
      *
      * @param string $text The text to display.
-     * @param bool   $nl True (default) to append a new line at the end of the output string.
+     * @param bool   $nl   True (default) to append a new line at the end of the output string.
      *
      * @return AbstractCliApplication Instance of $this to allow chaining.
      */

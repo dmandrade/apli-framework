@@ -1,11 +1,12 @@
 <?php
 /**
- *  Copyright (c) 2018 Danilo Andrade
+ *  Copyright (c) 2018 Danilo Andrade.
  *
  *  This file is part of the apli project.
  *
  * @project apli
  * @file SystemDetector.php
+ *
  * @author Danilo Andrade <danilo@webbingbrasil.com.br>
  * @date 27/08/18 at 10:27
  */
@@ -54,6 +55,7 @@ class SystemDetector
      * Register a new operating system.
      *
      * @param $class
+     *
      * @throws \ReflectionException
      * @throws InvalidArgumentException
      */
@@ -87,14 +89,15 @@ class SystemDetector
     }
 
     /**
-     * Check if kernel is from operating system variants
+     * Check if kernel is from operating system variants.
      *
      * @param $kernel
      * @param $variants
+     *
      * @return bool
      */
     private function isOs($kernel, $variants)
     {
-        return (bool)preg_grep('/^'.preg_quote($kernel).'$/i', $variants);
+        return (bool) preg_grep('/^'.preg_quote($kernel).'$/i', $variants);
     }
 }

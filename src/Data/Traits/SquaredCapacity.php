@@ -1,11 +1,12 @@
 <?php
 /**
- *  Copyright (c) 2018 Danilo Andrade
+ *  Copyright (c) 2018 Danilo Andrade.
  *
  *  This file is part of the apli project.
  *
  * @project apli
  * @file SquaredCapacity.php
+ *
  * @author Danilo Andrade <danilo@webbingbrasil.com.br>
  * @date 27/08/18 at 10:27
  */
@@ -13,8 +14,7 @@
 namespace Apli\Data\Traits;
 
 /**
- * Trait SquaredCapacity
- * @package Apli\Data\Traits
+ * Trait SquaredCapacity.
  */
 trait SquaredCapacity
 {

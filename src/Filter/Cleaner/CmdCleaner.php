@@ -1,11 +1,12 @@
 <?php
 /**
- *  Copyright (c) 2018 Danilo Andrade
+ *  Copyright (c) 2018 Danilo Andrade.
  *
  *  This file is part of the apli project.
  *
  * @project apli
  * @file CmdCleaner.php
+ *
  * @author Danilo Andrade <danilo@webbingbrasil.com.br>
  * @date 27/08/18 at 10:27
  */
@@ -30,7 +31,7 @@ class CmdCleaner implements Cleaner
      */
     public function clean($source)
     {
-        $result = (string)preg_replace('/[^A-Z0-9_\.-]/i', '', $source);
+        $result = (string) preg_replace('/[^A-Z0-9_\.-]/i', '', $source);
 
         return ltrim($result, '.');
     }

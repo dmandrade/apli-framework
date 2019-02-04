@@ -1,11 +1,12 @@
 <?php
 /**
- *  Copyright (c) 2018 Danilo Andrade
+ *  Copyright (c) 2018 Danilo Andrade.
  *
  *  This file is part of the apli project.
  *
  * @project apli
  * @file HtmlCleaner.php
+ *
  * @author Danilo Andrade <danilo@webbingbrasil.com.br>
  * @date 27/08/18 at 10:27
  */
@@ -104,11 +105,11 @@ class HtmlCleaner implements Cleaner
     /**
      * Constructor for inputFilter class. Only first parameter is required.
      *
-     * @param array $tagsArray List of user-defined tags
-     * @param array $attrArray List of user-defined attributes
+     * @param array $tagsArray  List of user-defined tags
+     * @param array $attrArray  List of user-defined attributes
      * @param int   $tagsMethod WhiteList method = 0, BlackList method = 1
      * @param int   $attrMethod WhiteList method = 0, BlackList method = 1
-     * @param int   $xssAuto Only auto clean essentials = 0, Allow clean blacklisted tags/attr = 1
+     * @param int   $xssAuto    Only auto clean essentials = 0, Allow clean blacklisted tags/attr = 1
      */
     public function __construct(
         $tagsArray = [],
@@ -116,11 +117,10 @@ class HtmlCleaner implements Cleaner
         $tagsMethod = self::USE_BLACK_LIST,
         $attrMethod = self::USE_BLACK_LIST,
         $xssAuto = 1
-    )
-    {
+    ) {
         // Make sure user defined arrays are in lowercase
-        $tagsArray = array_map('strtolower', (array)$tagsArray);
-        $attrArray = array_map('strtolower', (array)$attrArray);
+        $tagsArray = array_map('strtolower', (array) $tagsArray);
+        $attrArray = array_map('strtolower', (array) $attrArray);
 
         // Assign member variables
         $this->tagsArray = $tagsArray;
@@ -225,7 +225,7 @@ class HtmlCleaner implements Cleaner
      */
     public function clean($source)
     {
-        return (string)$this->remove((string)$source);
+        return (string) $this->remove((string) $source);
     }
 
     /**

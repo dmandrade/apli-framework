@@ -1,11 +1,12 @@
 <?php
 /**
- *  Copyright (c) 2018 Danilo Andrade
+ *  Copyright (c) 2018 Danilo Andrade.
  *
  *  This file is part of the apli project.
  *
  * @project apli
  * @file UrlCleaner.php
+ *
  * @author Danilo Andrade <danilo@webbingbrasil.com.br>
  * @date 27/08/18 at 10:26
  */
@@ -30,7 +31,7 @@ class UrlCleaner implements Cleaner
      */
     public function clean($source)
     {
-        return (string)filter_var($source, FILTER_SANITIZE_URL,
+        return (string) filter_var($source, FILTER_SANITIZE_URL,
             FILTER_FLAG_QUERY_REQUIRED | FILTER_FLAG_PATH_REQUIRED);
     }
 }

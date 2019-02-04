@@ -1,11 +1,12 @@
 <?php
 /**
- *  Copyright (c) 2018 Danilo Andrade
+ *  Copyright (c) 2018 Danilo Andrade.
  *
  *  This file is part of the apli project.
  *
  * @project apli
  * @file ColorProcessorInterface.php
+ *
  * @author Danilo Andrade <danilo@webbingbrasil.com.br>
  * @date 27/08/18 at 10:27
  */
@@ -29,7 +30,7 @@ interface ColorProcessor
     /**
      * Add a style.
      *
-     * @param string     $name The style name.
+     * @param string     $name  The style name.
      * @param ColorStyle $style The color style.
      *
      * @return DefaultColorProcessor Instance of $this to allow chaining.

@@ -1,11 +1,12 @@
 <?php
 /**
- *  Copyright (c) 2018 Danilo Andrade
+ *  Copyright (c) 2018 Danilo Andrade.
  *
  *  This file is part of the apli project.
  *
  * @project apli
  * @file GenericCollection.php
+ *
  * @author Danilo Andrade <danilo@webbingbrasil.com.br>
  * @date 27/08/18 at 10:27
  */
@@ -17,8 +18,7 @@ use Apli\Support\Hashable;
 use Apli\Support\Traits\HashableTrait;
 
 /**
- * Trait GenericCollection
- * @package Apli\Data\Traits
+ * Trait GenericCollection.
  */
 trait GenericCollection
 {
@@ -35,11 +35,11 @@ trait GenericCollection
     }
 
     /**
-     * Return the first item from collection
-     *
-     * @return Entry
+     * Return the first item from collection.
      *
      * @throws UnderflowException
+     *
+     * @return Entry
      */
     public function first()
     {
@@ -48,6 +48,7 @@ trait GenericCollection
         }
 
         $array = $this->all();
+
         return current($array);
     }
 
@@ -62,11 +63,11 @@ trait GenericCollection
     }
 
     /**
-     * Return the last Entry from the Map
-     *
-     * @return Entry
+     * Return the last Entry from the Map.
      *
      * @throws UnderflowException
+     *
+     * @return Entry
      */
     public function last()
     {
@@ -75,13 +76,15 @@ trait GenericCollection
         }
 
         $array = $this->all();
+
         return end($array);
     }
 
     /**
      * Execute a callback over each item.
      *
-     * @param  callable $callback
+     * @param callable $callback
+     *
      * @return $this
      */
     public function each(callable $callback)
@@ -98,7 +101,8 @@ trait GenericCollection
     /**
      * Run a map over each of the items.
      *
-     * @param  callable $callback
+     * @param callable $callback
+     *
      * @return static
      */
     public function map(callable $callback)
@@ -123,8 +127,9 @@ trait GenericCollection
     /**
      * Create a new collection consisting of every n-th element.
      *
-     * @param  int $step
-     * @param  int $offset
+     * @param int $step
+     * @param int $offset
+     *
      * @return static
      */
     public function every($step, $offset = 0)
@@ -147,7 +152,8 @@ trait GenericCollection
     /**
      * Create a collection of all elements that do not pass a given truth test.
      *
-     * @param  callable|mixed $callback
+     * @param callable|mixed $callback
+     *
      * @return static
      */
     public function reject($callback)
@@ -166,7 +172,8 @@ trait GenericCollection
     /**
      * Determine if the given value is callable, but not a string.
      *
-     * @param  mixed $value
+     * @param mixed $value
+     *
      * @return bool
      */
     protected function useAsCallable($value)
@@ -177,7 +184,8 @@ trait GenericCollection
     /**
      * Run a filter over each of the items.
      *
-     * @param  callable|null $callback
+     * @param callable|null $callback
+     *
      * @return static
      */
     public function filter(callable $callback = null)
@@ -196,8 +204,9 @@ trait GenericCollection
     /**
      * Slice the underlying collection array.
      *
-     * @param  int $offset
-     * @param  int $length
+     * @param int $offset
+     * @param int $length
+     *
      * @return static
      */
     public function slice($offset, $length = null)
@@ -208,13 +217,14 @@ trait GenericCollection
     /**
      * Split a collection into a certain number of groups.
      *
-     * @param  int $numberOfGroups
+     * @param int $numberOfGroups
+     *
      * @return static
      */
     public function split($numberOfGroups)
     {
         if ($this->isEmpty()) {
-            return new static;
+            return new static();
         }
 
         $groupSize = ceil($this->count() / $numberOfGroups);
@@ -225,13 +235,14 @@ trait GenericCollection
     /**
      * Chunk the underlying collection array.
      *
-     * @param  int $size
+     * @param int $size
+     *
      * @return static
      */
     public function chunk($size)
     {
         if ($size <= 0) {
-            return new static;
+            return new static();
         }
 
         $chunks = [];
@@ -246,9 +257,10 @@ trait GenericCollection
     /**
      * Splice a portion of the underlying collection array.
      *
-     * @param  int      $offset
-     * @param  int|null $length
-     * @param  mixed    $replacement
+     * @param int      $offset
+     * @param int|null $length
+     * @param mixed    $replacement
+     *
      * @return static
      */
     public function splice($offset, $length = null, $replacement = [])
@@ -264,7 +276,8 @@ trait GenericCollection
     /**
      * Take the first or last {$limit} items.
      *
-     * @param  int $limit
+     * @param int $limit
+     *
      * @return static
      */
     public function take($limit)
@@ -279,12 +292,14 @@ trait GenericCollection
     /**
      * Get the items in the collection that are not present in the given items.
      *
-     * @param  mixed $items
+     * @param mixed $items
+     *
      * @return static
      */
     public function diff($items)
     {
         $array = array_values($this->getArrayableItems($items));
+
         return $this->filter(function ($value) use ($array) {
             foreach ($array as $otherValue) {
                 if ($otherValue === $value) {
@@ -299,7 +314,8 @@ trait GenericCollection
     /**
      * Results array of items from Collection or Arrayable.
      *
-     * @param  mixed $items
+     * @param mixed $items
+     *
      * @return array
      */
     protected function getArrayableItems($items)
@@ -318,18 +334,20 @@ trait GenericCollection
             return $items->jsonSerialize();
         }
 
-        return (array)$items;
+        return (array) $items;
     }
 
     /**
      * Get the items in the collection whose keys are not present in the given items.
      *
-     * @param  mixed $items
+     * @param mixed $items
+     *
      * @return static
      */
     public function diffKeys($items)
     {
         $array = array_keys($this->getArrayableItems($items));
+
         return $this->filter(function ($value, $key) use ($array) {
             if (is_object($key) && $key instanceof Hashable) {
                 $key = $key->hash();
@@ -347,6 +365,7 @@ trait GenericCollection
 
     /**
      * @param mixed ...$values
+     *
      * @return bool
      */
     public function contains(...$values)
@@ -380,6 +399,7 @@ trait GenericCollection
 
     /**
      * @param mixed ...$values
+     *
      * @return bool
      */
     public function containsStrict(...$values)
@@ -466,7 +486,8 @@ trait GenericCollection
     /**
      * Convert the object to its JSON representation.
      *
-     * @param  int $options
+     * @param int $options
+     *
      * @return string
      */
     public function toJson($options = 0)

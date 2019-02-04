@@ -1,11 +1,12 @@
 <?php
 /**
- *  Copyright (c) 2018 Danilo Andrade
+ *  Copyright (c) 2018 Danilo Andrade.
  *
  *  This file is part of the apli project.
  *
  * @project apli
  * @file Map.php
+ *
  * @author Danilo Andrade <danilo@webbingbrasil.com.br>
  * @date 27/08/18 at 10:27
  */
@@ -20,8 +21,6 @@ use Traversable;
 /**
  * A Map is a sequential collection of key-value entries, almost identical to an
  * array used in a similar context. Keys can be any type, but must be unique.
- *
- * @package Ds
  */
 final class Map implements Collection
 {
@@ -70,14 +69,13 @@ final class Map implements Collection
     public function put($key, $value)
     {
         if (is_object($key) && $key instanceof Hashable === false) {
-            throw new \Exception("Objects as key need to implement Hashable");
+            throw new \Exception('Objects as key need to implement Hashable');
         }
 
         $entry = $this->lookupKey($key);
 
         if ($entry) {
             $entry->value = $value;
-
         } else {
             $this->checkCapacity();
             $this->entries[] = new Entry($key, $value);
@@ -98,8 +96,6 @@ final class Map implements Collection
                 return $entry;
             }
         }
-
-        return null;
     }
 
     /**
@@ -133,7 +129,7 @@ final class Map implements Collection
     }
 
     /**
-     * Reset object to initial state
+     * Reset object to initial state.
      */
     public function clear()
     {
@@ -142,13 +138,13 @@ final class Map implements Collection
     }
 
     /**
-     * Return the entry at a specified position in the Map
+     * Return the entry at a specified position in the Map.
      *
      * @param int $position
      *
-     * @return Entry
-     *
      * @throws OutOfRangeException
+     *
+     * @return Entry
      */
     public function skip($position)
     {
@@ -167,11 +163,11 @@ final class Map implements Collection
      * @param Map $map The other map.
      *
      * @return Map A new map containing the entries of the current instance
-     *                 whose keys are also present in the given map. In other
-     *                 words, returns a copy of the current map with all keys
-     *                 removed that are not also in the other map.
+     *             whose keys are also present in the given map. In other
+     *             words, returns a copy of the current map with all keys
+     *             removed that are not also in the other map.
      */
-    public function intersect(Map $map)
+    public function intersect(self $map)
     {
         return $this->filter(function ($key) use ($map) {
             return $map->hasKey($key);
@@ -216,12 +212,11 @@ final class Map implements Collection
                 return $entry;
             }
         }
-
-        return null;
     }
 
     /**
-     * Return a count of itens in table
+     * Return a count of itens in table.
+     *
      * @return int
      */
     public function count()
@@ -274,9 +269,8 @@ final class Map implements Collection
      * Iteratively reduces the map to a single value using a callback.
      *
      * @param callable   $callback Accepts the carry, key, and value, and
-     *                           returns an updated carry value.
-     *
-     * @param mixed|null $initial Optional initial carry value.
+     *                             returns an updated carry value.
+     * @param mixed|null $initial  Optional initial carry value.
      *
      * @return mixed The carry value of the final iteration, or the initial
      *               value if the map was empty.
@@ -320,7 +314,6 @@ final class Map implements Collection
      *                         start at that offset in the map. If offset is
      *                         negative, the map will start that far from the
      *                         end.
-     *
      * @param int|null $length If a length is given and is positive, the
      *                         resulting set will have up to that many entries in
      *                         it. If the requested length results in an
@@ -365,6 +358,7 @@ final class Map implements Collection
     {
         $copy = $this->copy();
         $copy->sort($comparator);
+
         return $copy;
     }
 
@@ -381,7 +375,6 @@ final class Map implements Collection
             usort($this->entries, function ($a, $b) use ($comparator) {
                 return $comparator($a->value, $b->value);
             });
-
         } else {
             usort($this->entries, function ($a, $b) {
                 if ($a->value == $b->value) {
@@ -405,6 +398,7 @@ final class Map implements Collection
     {
         $copy = $this->copy();
         $copy->ksort($comparator);
+
         return $copy;
     }
 
@@ -421,7 +415,6 @@ final class Map implements Collection
             usort($this->entries, function ($a, $b) use ($comparator) {
                 return $comparator($a->key, $b->key);
             });
-
         } else {
             usort($this->entries, function ($a, $b) {
                 if ($a->key == $b->key) {
@@ -484,9 +477,9 @@ final class Map implements Collection
      * @param Map $map The other map, to combine with the current instance.
      *
      * @return Map A new map containing all the entries of the current
-     *                 instance as well as another map.
+     *             instance as well as another map.
      */
-    public function union(Map $map)
+    public function union(self $map)
     {
         return $this->merge($map);
     }
@@ -503,6 +496,7 @@ final class Map implements Collection
     {
         $merged = new self($this);
         $merged->putAll($values);
+
         return $merged;
     }
 
@@ -513,9 +507,9 @@ final class Map implements Collection
      * @param Map $map
      *
      * @return Map A new map containing keys in the current instance as well
-     *                 as another map, but not in both.
+     *             as another map, but not in both.
      */
-    public function doXor(Map $map)
+    public function doXor(self $map)
     {
         return $this->merge($map)->filter(function ($key) use ($map) {
             return $this->hasKey($key) ^ $map->hasKey($key);
@@ -523,7 +517,7 @@ final class Map implements Collection
     }
 
     /**
-     * Retrieve a external iterator
+     * Retrieve a external iterator.
      *
      * @return \Generator|Traversable
      */
@@ -545,8 +539,10 @@ final class Map implements Collection
 
     /**
      * @param mixed $offset
-     * @return mixed
+     *
      * @throws OutOfBoundsException
+     *
+     * @return mixed
      */
     public function &offsetGet($offset)
     {
@@ -574,10 +570,10 @@ final class Map implements Collection
      * @param mixed $key
      * @param mixed $default
      *
-     * @return mixed The associated value or fallback default if provided.
-     *
      * @throws \OutOfBoundsException if no default was provided and the key is
      *                               not associated with a value.
+     *
+     * @return mixed The associated value or fallback default if provided.
      */
     public function remove($key, $default = null)
     {
@@ -600,11 +596,11 @@ final class Map implements Collection
      *
      * @param int $index this index to remove.
      *
-     * @return mixed the removed value.
-     *
      * @throws \OutOfRangeException if the index is not in the range [0, size-1]
+     *
+     * @return mixed the removed value.
      */
-    function delete($index)
+    public function delete($index)
     {
         $entry = $this->entries[$index];
         $value = $entry->value;
@@ -617,6 +613,7 @@ final class Map implements Collection
 
     /**
      * @param mixed $offset
+     *
      * @return bool
      */
     public function offsetExists($offset)
@@ -631,10 +628,10 @@ final class Map implements Collection
      * @param mixed $key
      * @param mixed $default
      *
-     * @return mixed The associated value or fallback default if provided.
-     *
      * @throws OutOfBoundsException if no default was provided and the key is
-     *                               not associated with a value.
+     *                              not associated with a value.
+     *
+     * @return mixed The associated value or fallback default if provided.
      */
     public function get($key, $default = null)
     {
@@ -653,8 +650,9 @@ final class Map implements Collection
     /**
      * Filter items by the given key value pair using strict comparison.
      *
-     * @param  string $key
-     * @param  mixed  $value
+     * @param string $key
+     * @param mixed  $value
+     *
      * @return static
      */
     public function whereStrict($key, $value)
@@ -665,9 +663,10 @@ final class Map implements Collection
     /**
      * Filter items by the given key value pair.
      *
-     * @param  string $key
-     * @param  mixed  $operator
-     * @param  mixed  $value
+     * @param string $key
+     * @param mixed  $operator
+     * @param mixed  $value
+     *
      * @return static
      */
     public function where($key, $operator, $value = null)
@@ -684,9 +683,10 @@ final class Map implements Collection
     /**
      * Get an operator checker callback.
      *
-     * @param  string $key
-     * @param  string $operator
-     * @param  mixed  $value
+     * @param string $key
+     * @param string $operator
+     * @param mixed  $value
+     *
      * @return \Closure
      */
     protected function operatorForWhere($key, $operator, $value)
@@ -721,8 +721,9 @@ final class Map implements Collection
     /**
      * Filter items by the given key value pair.
      *
-     * @param  string $key
-     * @param  mixed  $values
+     * @param string $key
+     * @param mixed  $values
+     *
      * @return static
      */
     public function whereIn($key, $values)
@@ -737,8 +738,9 @@ final class Map implements Collection
     /**
      * Filter items by the given key value pair using strict comparison.
      *
-     * @param  string $key
-     * @param  mixed  $values
+     * @param string $key
+     * @param mixed  $values
+     *
      * @return static
      */
     public function whereInStrict($key, $values)

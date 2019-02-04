@@ -1,11 +1,12 @@
 <?php
 /**
- *  Copyright (c) 2018 Danilo Andrade
+ *  Copyright (c) 2018 Danilo Andrade.
  *
  *  This file is part of the apli project.
  *
  * @project apli
  * @file ColorProcessor.php
+ *
  * @author Danilo Andrade <danilo@webbingbrasil.com.br>
  * @date 27/08/18 at 10:27
  */
@@ -13,8 +14,7 @@
 namespace Apli\IO\Cli\Color;
 
 /**
- * Class DefaultColorProcessor
- * @package Apli\IO\Cli\Color
+ * Class DefaultColorProcessor.
  */
 class DefaultColorProcessor implements ColorProcessor
 {
@@ -84,7 +84,7 @@ class DefaultColorProcessor implements ColorProcessor
     /**
      * Add a style.
      *
-     * @param string     $name The style name.
+     * @param string     $name  The style name.
      * @param ColorStyle $style The color style.
      *
      * @return DefaultColorProcessor Instance of $this to allow chaining.
@@ -140,8 +140,8 @@ class DefaultColorProcessor implements ColorProcessor
     /**
      * Replace color tags in a string.
      *
-     * @param string     $text The original text.
-     * @param string     $tag The matched tag.
+     * @param string     $text  The original text.
+     * @param string     $tag   The matched tag.
      * @param string     $match The match.
      * @param ColorStyle $style The color style to apply.
      *

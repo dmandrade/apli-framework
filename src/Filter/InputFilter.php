@@ -1,11 +1,12 @@
 <?php
 /**
- *  Copyright (c) 2018 Danilo Andrade
+ *  Copyright (c) 2018 Danilo Andrade.
  *
  *  This file is part of the apli project.
  *
  * @project apli
  * @file InputFilter.php
+ *
  * @author Danilo Andrade <danilo@webbingbrasil.com.br>
  * @date 27/08/18 at 10:27
  */
@@ -42,25 +43,26 @@ class InputFilter implements \Serializable
     protected $handlers = [];
 
     /**
-     * A list of native handlers for filter
+     * A list of native handlers for filter.
+     *
      * @var array
      */
     protected $nativeHandlers = [
-        'HTML' => HtmlCleaner::class,
-        'INTEGER' => IntegerCleaner::class,
-        'UINT' => UintCleaner::class,
-        'FLOAT' => FloatCleaner::class,
-        'BOOLEAN' => BooleanCleaner::class,
-        'WORD' => WordCleaner::class,
-        'ALNUM' => AlnumCleaner::class,
-        'CMD' => CmdCleaner::class,
-        'BASE64' => Base64Cleaner::class,
-        'STRING' => StringCleaner::class,
-        'ARRAY' => ArrayCleaner::class,
-        'PATH' => PathCleaner::class,
+        'HTML'     => HtmlCleaner::class,
+        'INTEGER'  => IntegerCleaner::class,
+        'UINT'     => UintCleaner::class,
+        'FLOAT'    => FloatCleaner::class,
+        'BOOLEAN'  => BooleanCleaner::class,
+        'WORD'     => WordCleaner::class,
+        'ALNUM'    => AlnumCleaner::class,
+        'CMD'      => CmdCleaner::class,
+        'BASE64'   => Base64Cleaner::class,
+        'STRING'   => StringCleaner::class,
+        'ARRAY'    => ArrayCleaner::class,
+        'PATH'     => PathCleaner::class,
         'USERNAME' => UsernameCleaner::class,
-        'EMAIL' => EmailCleaner::class,
-        'URL' => UrlCleaner::class,
+        'EMAIL'    => EmailCleaner::class,
+        'URL'      => UrlCleaner::class,
     ];
 
     /**
@@ -77,7 +79,6 @@ class InputFilter implements \Serializable
     {
         $this->loadDefaultHandlers();
     }
-
 
     /**
      * Load default clean handlers.
@@ -132,12 +133,14 @@ class InputFilter implements \Serializable
     }
 
     /**
-     * Add a new clean handler
+     * Add a new clean handler.
      *
      * @param $name
      * @param $handler
-     * @return $this
+     *
      * @throws \ReflectionException
+     *
+     * @return $this
      */
     public function setHandler($name, $handler)
     {
@@ -149,12 +152,14 @@ class InputFilter implements \Serializable
     }
 
     /**
-     * Check if passed handler is valid
+     * Check if passed handler is valid.
      *
      * @param $handler
-     * @return bool
+     *
      * @throws \ReflectionException
      * @throws \InvalidArgumentException
+     *
+     * @return bool
      */
     private function isValidHandler($handler)
     {

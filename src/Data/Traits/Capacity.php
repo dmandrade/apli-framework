@@ -1,11 +1,12 @@
 <?php
 /**
- *  Copyright (c) 2018 Danilo Andrade
+ *  Copyright (c) 2018 Danilo Andrade.
  *
  *  This file is part of the apli project.
  *
  * @project apli
  * @file Capacity.php
+ *
  * @author Danilo Andrade <danilo@webbingbrasil.com.br>
  * @date 27/08/18 at 10:27
  */
@@ -13,13 +14,12 @@
 namespace Apli\Data\Traits;
 
 /**
- * Trait Capacity
- * @package Apli\Data\Traits
+ * Trait Capacity.
  */
 trait Capacity
 {
     /**
-     * @var integer internal capacity
+     * @var int internal capacity
      */
     private $capacity = self::MIN_CAPACITY;
 

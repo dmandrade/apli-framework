@@ -1,11 +1,12 @@
 <?php
 /**
- *  Copyright (c) 2018 Danilo Andrade
+ *  Copyright (c) 2018 Danilo Andrade.
  *
  *  This file is part of the apli project.
  *
  * @project apli
  * @file Entry.php
+ *
  * @author Danilo Andrade <danilo@webbingbrasil.com.br>
  * @date 27/08/18 at 10:26
  */
@@ -14,7 +15,7 @@
  * Created by PhpStorm.
  * User: Danilo
  * Date: 28/07/2018
- * Time: 15:06
+ * Time: 15:06.
  */
 
 namespace Apli\Data;
@@ -26,20 +27,18 @@ use OutOfBoundsException;
 
 /**
  * Class entry represents a key and an associated value.
- *
- * @package Apli\Data
  */
 class Entry implements JsonSerializable, Hashable
 {
     use HashableTrait;
 
     /**
-     * @var mixed $key The entry key's.
+     * @var mixed The entry key's.
      */
     public $key;
 
     /**
-     * @var mixed $value The entry value.
+     * @var mixed The entry value.
      */
     public $value;
 
@@ -67,6 +66,7 @@ class Entry implements JsonSerializable, Hashable
     {
         if ($name === 'key' || $name === 'value') {
             $this->$name = null;
+
             return;
         }
 
@@ -74,7 +74,7 @@ class Entry implements JsonSerializable, Hashable
     }
 
     /**
-     * Returns a copy of the Pair
+     * Returns a copy of the Pair.
      *
      * @return Entry
      */
@@ -84,7 +84,7 @@ class Entry implements JsonSerializable, Hashable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function jsonSerialize()
     {
@@ -92,7 +92,7 @@ class Entry implements JsonSerializable, Hashable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function toArray()
     {
