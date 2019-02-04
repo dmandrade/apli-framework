@@ -1,11 +1,12 @@
 <?php
 /**
- *  Copyright (c) 2018 Danilo Andrade
+ *  Copyright (c) 2018 Danilo Andrade.
  *
  *  This file is part of the apli project.
  *
  * @project apli
  * @file Stack.php
+ *
  * @author Danilo Andrade <danilo@webbingbrasil.com.br>
  * @date 27/08/18 at 10:26
  */
@@ -14,7 +15,7 @@
  * Created by PhpStorm.
  * User: Danilo
  * Date: 02/08/2018
- * Time: 10:15
+ * Time: 10:15.
  */
 
 namespace Apli\Data;
@@ -25,7 +26,6 @@ use OutOfBoundsException;
 /**
  * Class Stack only allows access to the value at the top
  * of the structure and iterates in that order, destructively.
- * @package Apli\Data
  */
 class Stack implements Collection
 {
@@ -47,7 +47,7 @@ class Stack implements Collection
     }
 
     /**
-     * Clear all elements in the Stack
+     * Clear all elements in the Stack.
      */
     public function clear()
     {
@@ -65,7 +65,7 @@ class Stack implements Collection
     }
 
     /**
-     * Returns the number of elements in the Stack
+     * Returns the number of elements in the Stack.
      *
      * @return int
      */
@@ -100,9 +100,9 @@ class Stack implements Collection
     /**
      * Returns the value at the top of the stack without removing it.
      *
-     * @return mixed
-     *
      * @throws \UnderflowException if the stack is empty.
+     *
+     * @return mixed
      */
     public function peek()
     {
@@ -130,9 +130,9 @@ class Stack implements Collection
     /**
      * Returns and removes the value at the top of the stack.
      *
-     * @return mixed
-     *
      * @throws \UnderflowException if the stack is empty.
+     *
+     * @return mixed
      */
     public function pop()
     {
@@ -164,6 +164,7 @@ class Stack implements Collection
 
     /**
      * @param mixed $offset
+     *
      * @return mixed|void
      */
     public function offsetGet($offset)
@@ -181,6 +182,7 @@ class Stack implements Collection
 
     /**
      * @param mixed $offset
+     *
      * @return bool|void
      */
     public function offsetExists($offset)
@@ -196,7 +198,7 @@ class Stack implements Collection
      *
      * @throws \OutOfRangeException if the index is not in the range [0, size-1]
      */
-    function set($key, $value)
+    public function set($key, $value)
     {
         if ($key === null) {
             $this->push($value);

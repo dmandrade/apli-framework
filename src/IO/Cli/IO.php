@@ -1,11 +1,12 @@
 <?php
 /**
- *  Copyright (c) 2018 Danilo Andrade
+ *  Copyright (c) 2018 Danilo Andrade.
  *
  *  This file is part of the apli project.
  *
  * @project apli
  * @file IOInterface.php
+ *
  * @author Danilo Andrade <danilo@webbingbrasil.com.br>
  * @date 27/08/18 at 10:27
  */
@@ -13,8 +14,7 @@
 namespace Apli\IO\Cli;
 
 /**
- * Interface IO
- * @package Apli\IO\Cli
+ * Interface IO.
  */
 interface IO extends \IteratorAggregate, \ArrayAccess, \Serializable, \Countable, \JsonSerializable
 {
@@ -22,7 +22,7 @@ interface IO extends \IteratorAggregate, \ArrayAccess, \Serializable, \Countable
      * Write a string to standard output.
      *
      * @param string $text The text to display.
-     * @param bool   $nl True (default) to append a new line at the end of the output string.
+     * @param bool   $nl   True (default) to append a new line at the end of the output string.
      *
      * @return IO Instance of $this to allow chaining.
      */
@@ -47,7 +47,7 @@ interface IO extends \IteratorAggregate, \ArrayAccess, \Serializable, \Countable
     /**
      * Gets a value from the input data.
      *
-     * @param string $name Name of the value to get.
+     * @param string $name    Name of the value to get.
      * @param mixed  $default Default value to return if variable does not exist.
      *
      * @return mixed The filtered input value.
@@ -57,7 +57,7 @@ interface IO extends \IteratorAggregate, \ArrayAccess, \Serializable, \Countable
     /**
      * Sets a value.
      *
-     * @param string $name Name of the value to set.
+     * @param string $name  Name of the value to set.
      * @param mixed  $value Value to assign to the input.
      *
      * @return void

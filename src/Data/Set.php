@@ -1,11 +1,12 @@
 <?php
 /**
- *  Copyright (c) 2018 Danilo Andrade
+ *  Copyright (c) 2018 Danilo Andrade.
  *
  *  This file is part of the apli project.
  *
  * @project apli
  * @file Set.php
+ *
  * @author Danilo Andrade <danilo@webbingbrasil.com.br>
  * @date 27/08/18 at 10:27
  */
@@ -18,7 +19,6 @@ use OutOfRangeException;
 
 /**
  * Class Set represent a sequence of unique values.
- * @package Apli\Data
  */
 final class Set implements Collection
 {
@@ -80,7 +80,7 @@ final class Set implements Collection
     }
 
     /**
-     * Clear all elements in the Set
+     * Clear all elements in the Set.
      */
     public function clear()
     {
@@ -88,7 +88,7 @@ final class Set implements Collection
     }
 
     /**
-     * Returns the number of elements in the Stack
+     * Returns the number of elements in the Stack.
      *
      * @return int
      */
@@ -107,7 +107,7 @@ final class Set implements Collection
      *
      * @return Set
      */
-    public function doXor(Set $set)
+    public function doXor(self $set)
     {
         return $this->table->doXor($set->table)->keys();
     }
@@ -117,9 +117,9 @@ final class Set implements Collection
      *
      * @param int $position
      *
-     * @return mixed|null
-     *
      * @throws OutOfRangeException
+     *
+     * @return mixed|null
      */
     public function get($position)
     {
@@ -138,7 +138,7 @@ final class Set implements Collection
      *
      * @return Set
      */
-    public function intersect(Set $set)
+    public function intersect(self $set)
     {
         return $this->table->intersect($set->table)->keys();
     }
@@ -168,9 +168,8 @@ final class Set implements Collection
      * Iteratively reduces the set to a single value using a callback.
      *
      * @param callable   $callback Accepts the carry and current value, and
-     *                           returns an updated carry value.
-     *
-     * @param mixed|null $initial Optional initial carry value.
+     *                             returns an updated carry value.
+     * @param mixed|null $initial  Optional initial carry value.
      *
      * @return mixed The carry value of the final iteration, or the initial
      *               value if the set was empty.
@@ -225,7 +224,6 @@ final class Set implements Collection
      * @param int $offset If the offset is non-negative, the set will start
      *                    at that offset in the set. If offset is negative,
      *                    the set will start that far from the end.
-     *
      * @param int $length If a length is given and is positive, the resulting
      *                    set will have up to that many values in it.
      *                    If the requested length results in an overflow, only
@@ -314,7 +312,7 @@ final class Set implements Collection
      *
      * @return Set
      */
-    public function union(Set $set)
+    public function union(self $set)
     {
         $union = new self();
 
@@ -330,7 +328,7 @@ final class Set implements Collection
     }
 
     /**
-     * Get iterator
+     * Get iterator.
      */
     public function getIterator()
     {
@@ -340,7 +338,7 @@ final class Set implements Collection
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @throws OutOfBoundsException
      */
@@ -348,6 +346,7 @@ final class Set implements Collection
     {
         if ($offset === null) {
             $this->add($value);
+
             return;
         }
 
@@ -356,6 +355,7 @@ final class Set implements Collection
 
     /**
      * @param mixed $offset
+     *
      * @return mixed
      */
     public function offsetGet($offset)
@@ -365,9 +365,10 @@ final class Set implements Collection
 
     /**
      * @param mixed $offset
-     * @return bool|void
      *
      * @throws Error
+     *
+     * @return bool|void
      */
     public function offsetExists($offset)
     {
@@ -392,7 +393,7 @@ final class Set implements Collection
      *
      * @throws \OutOfRangeException if the index is not in the range [0, size-1]
      */
-    function set($key, $value)
+    public function set($key, $value)
     {
         $this->table->put($value, null);
     }

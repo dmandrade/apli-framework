@@ -1,11 +1,12 @@
 <?php
 /**
- *  Copyright (c) 2018 Danilo Andrade
+ *  Copyright (c) 2018 Danilo Andrade.
  *
  *  This file is part of the apli project.
  *
  * @project apli
  * @file IO.php
+ *
  * @author Danilo Andrade <danilo@webbingbrasil.com.br>
  * @date 27/08/18 at 10:26
  */
@@ -18,8 +19,7 @@ use Apli\IO\Cli\Output\CliOutput;
 use Apli\IO\Cli\Output\ColorfulCliOutput;
 
 /**
- * Class BasicIO
- * @package Apli\IO\Cli
+ * Class BasicIO.
  */
 class BasicIO implements IO
 {
@@ -53,7 +53,7 @@ class BasicIO implements IO
      * Write a string to standard output.
      *
      * @param string $text The text to display.
-     * @param bool   $nl True (default) to append a new line at the end of the output string.
+     * @param bool   $nl   True (default) to append a new line at the end of the output string.
      *
      * @return BasicIO Instance of $this to allow chaining.
      */
@@ -78,7 +78,7 @@ class BasicIO implements IO
      * Write a string to standard error output.
      *
      * @param string $text The text to display.
-     * @param bool   $nl True (default) to append a new line at the end of the output string.
+     * @param bool   $nl   True (default) to append a new line at the end of the output string.
      *
      * @return $this
      */
@@ -92,7 +92,7 @@ class BasicIO implements IO
     /**
      * Gets a value from the input data.
      *
-     * @param string $name Name of the value to get.
+     * @param string $name    Name of the value to get.
      * @param mixed  $default Default value to return if variable does not exist.
      *
      * @return mixed The filtered input value.
@@ -105,7 +105,7 @@ class BasicIO implements IO
     /**
      * Sets a value.
      *
-     * @param string $name Name of the value to set.
+     * @param string $name  Name of the value to set.
      * @param mixed  $value Value to assign to the input.
      *
      * @return BasicIO
@@ -214,7 +214,7 @@ class BasicIO implements IO
      * Set value to property.
      *
      * @param mixed $offset Property key.
-     * @param mixed $value Property value to set.
+     * @param mixed $value  Property value to set.
      *
      * @return void
      */
@@ -325,7 +325,7 @@ class BasicIO implements IO
     {
         return [
             'arguments' => $this->input->args,
-            'options' => $this->input->all(),
+            'options'   => $this->input->all(),
         ];
     }
 }

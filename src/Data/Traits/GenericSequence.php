@@ -1,11 +1,12 @@
 <?php
 /**
- *  Copyright (c) 2018 Danilo Andrade
+ *  Copyright (c) 2018 Danilo Andrade.
  *
  *  This file is part of the apli project.
  *
  * @project apli
  * @file GenericSequence.php
+ *
  * @author Danilo Andrade <danilo@webbingbrasil.com.br>
  * @date 27/08/18 at 10:27
  */
@@ -20,8 +21,6 @@ use UnderflowException;
  * Common functionality of all structures that implement 'Sequence'. Because the
  * polyfill's only goal is to achieve consistent behaviour, all sequences will
  * share the same implementation using an array array.
- *
- * @package Ds\Traits
  */
 trait GenericSequence
 {
@@ -32,6 +31,7 @@ trait GenericSequence
 
     /**
      * GenericSequence constructor.
+     *
      * @param null $values
      */
     public function __construct($values = null)
@@ -73,12 +73,14 @@ trait GenericSequence
 
     /**
      * @param $values
+     *
      * @return Sequence
      */
     public function merge($values)
     {
         $copy = $this->copy();
         $copy->pushAll($values);
+
         return $copy;
     }
 
@@ -92,6 +94,7 @@ trait GenericSequence
 
     /**
      * @param int $index
+     *
      * @return mixed
      */
     public function get($index)
@@ -105,6 +108,7 @@ trait GenericSequence
 
     /**
      * @param int $index
+     *
      * @return bool
      */
     private function validIndex($index)
@@ -127,6 +131,7 @@ trait GenericSequence
 
     /**
      * @param string|null $glue
+     *
      * @return string
      */
     public function join($glue = null)
@@ -160,6 +165,7 @@ trait GenericSequence
     /**
      * @param callable $callback
      * @param null     $initial
+     *
      * @return mixed
      */
     public function reduce(callable $callback, $initial = null)
@@ -169,6 +175,7 @@ trait GenericSequence
 
     /**
      * @param int $index
+     *
      * @return mixed
      */
     public function remove($index)
@@ -183,9 +190,6 @@ trait GenericSequence
         return $value;
     }
 
-    /**
-     *
-     */
     public function reverse()
     {
         $this->values = array_reverse($this->values);
@@ -214,14 +218,19 @@ trait GenericSequence
      * of rotations required to rotate the sequence by a given $r.
      *
      * @param int $r
+     *
      * @return int
      */
     private function normalizeRotations($r)
     {
         $n = count($this);
 
-        if ($n < 2) return 0;
-        if ($r < 0) return $n - (abs($r) % $n);
+        if ($n < 2) {
+            return 0;
+        }
+        if ($r < 0) {
+            return $n - (abs($r) % $n);
+        }
 
         return $r % $n;
     }
@@ -268,12 +277,14 @@ trait GenericSequence
 
     /**
      * @param callable|null $comparator
+     *
      * @return Sequence
      */
     public function sorted(callable $comparator = null)
     {
         $copy = $this->copy();
         $copy->sort($comparator);
+
         return $copy;
     }
 
@@ -306,9 +317,6 @@ trait GenericSequence
         }
     }
 
-    /**
-     *
-     */
     public function clear()
     {
         $this->values = [];
@@ -330,6 +338,7 @@ trait GenericSequence
 
     /**
      * @param $offset
+     *
      * @return mixed
      */
     public function &offsetGet($offset)
@@ -346,18 +355,19 @@ trait GenericSequence
      */
     public function offsetUnset($offset)
     {
-        if (is_integer($offset) && $this->validIndex($offset)) {
+        if (is_int($offset) && $this->validIndex($offset)) {
             $this->remove($offset);
         }
     }
 
     /**
      * @param $offset
+     *
      * @return bool
      */
     public function offsetExists($offset)
     {
-        return is_integer($offset)
+        return is_int($offset)
             && $this->validIndex($offset)
             && $this->get($offset) !== null;
     }

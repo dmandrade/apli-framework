@@ -1,11 +1,12 @@
 <?php
 /**
- *  Copyright (c) 2018 Danilo Andrade
+ *  Copyright (c) 2018 Danilo Andrade.
  *
  *  This file is part of the apli project.
  *
  * @project apli
  * @file Bsd.php
+ *
  * @author Danilo Andrade <danilo@webbingbrasil.com.br>
  * @date 27/08/18 at 10:27
  */
@@ -49,7 +50,7 @@ class Bsd implements OperatingSystem
     }
 
     /**
-     * Operating system name
+     * Operating system name.
      *
      * @return string
      */

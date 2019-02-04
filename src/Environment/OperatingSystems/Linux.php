@@ -1,11 +1,12 @@
 <?php
 /**
- *  Copyright (c) 2018 Danilo Andrade
+ *  Copyright (c) 2018 Danilo Andrade.
  *
  *  This file is part of the apli project.
  *
  * @project apli
  * @file Linux.php
+ *
  * @author Danilo Andrade <danilo@webbingbrasil.com.br>
  * @date 27/08/18 at 10:27
  */
@@ -25,7 +26,7 @@ use Apli\Environment\SystemDetector;
 class Linux implements OperatingSystem
 {
     /**
-     * Array ir kernel variant names
+     * Array ir kernel variant names.
      *
      * @return array
      */
@@ -39,7 +40,7 @@ class Linux implements OperatingSystem
     }
 
     /**
-     * Operating system family
+     * Operating system family.
      *
      * @return int
      */
@@ -49,7 +50,7 @@ class Linux implements OperatingSystem
     }
 
     /**
-     * Operating system name
+     * Operating system name.
      *
      * @return string
      */
@@ -59,7 +60,7 @@ class Linux implements OperatingSystem
     }
 
     /**
-     * Operating system name
+     * Operating system name.
      *
      * @return string
      */

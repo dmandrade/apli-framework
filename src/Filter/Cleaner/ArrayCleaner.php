@@ -1,11 +1,12 @@
 <?php
 /**
- *  Copyright (c) 2018 Danilo Andrade
+ *  Copyright (c) 2018 Danilo Andrade.
  *
  *  This file is part of the apli project.
  *
  * @project apli
  * @file ArrayCleaner.php
+ *
  * @author Danilo Andrade <danilo@webbingbrasil.com.br>
  * @date 27/08/18 at 10:26
  */
@@ -30,6 +31,6 @@ class ArrayCleaner implements Cleaner
      */
     public function clean($source)
     {
-        return (array)$source;
+        return (array) $source;
     }
 }

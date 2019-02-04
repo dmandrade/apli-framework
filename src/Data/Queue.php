@@ -1,11 +1,12 @@
 <?php
 /**
- *  Copyright (c) 2018 Danilo Andrade
+ *  Copyright (c) 2018 Danilo Andrade.
  *
  *  This file is part of the apli project.
  *
  * @project apli
  * @file Queue.php
+ *
  * @author Danilo Andrade <danilo@webbingbrasil.com.br>
  * @date 27/08/18 at 10:27
  */
@@ -14,19 +15,16 @@
  * Created by PhpStorm.
  * User: Danilo
  * Date: 02/08/2018
- * Time: 10:15
+ * Time: 10:15.
  */
 
 namespace Apli\Data;
-
 
 use Traversable;
 
 /**
  * Queue is a collection that only allows access to the top value
  * of the queue and iterates in that order, destructively.
- *
- * @package Apli\Data
  */
 class Queue implements Collection
 {
@@ -52,7 +50,7 @@ class Queue implements Collection
     /**
      * Removes all values from the collection.
      */
-    function clear()
+    public function clear()
     {
         $this->deque->clear();
     }
@@ -62,7 +60,7 @@ class Queue implements Collection
      *
      * @return int
      */
-    function count()
+    public function count()
     {
         return count($this->deque);
     }
@@ -89,7 +87,7 @@ class Queue implements Collection
     }
 
     /**
-     * Copy queue to a new object
+     * Copy queue to a new object.
      *
      * @return Queue
      */
@@ -109,7 +107,7 @@ class Queue implements Collection
     }
 
     /**
-     * Return array of Queue values
+     * Return array of Queue values.
      *
      * @return array
      */
@@ -119,7 +117,7 @@ class Queue implements Collection
     }
 
     /**
-     * Get iterator
+     * Get iterator.
      *
      * @return \Generator|Traversable
      */
@@ -141,10 +139,11 @@ class Queue implements Collection
     }
 
     /**
-     * Pushe value into the top of queue
+     * Pushe value into the top of queue.
      *
      * @param mixed $offset
      * @param mixed $value
+     *
      * @throws OutOfBoundsException
      */
     public function offsetSet($offset, $value)
@@ -198,7 +197,7 @@ class Queue implements Collection
      *
      * @throws \OutOfRangeException if the index is not in the range [0, size-1]
      */
-    function set($key, $value)
+    public function set($key, $value)
     {
         // TODO: Implement set() method.
     }
