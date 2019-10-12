@@ -27,6 +27,7 @@ use Apli\IO\Filter\NullFilter;
  * @property    FormDataInput            $link
  * @property    FormDataInput            $unlink
  * @property    Input                    $request
+ * @property    Input                    $route
  * @property    Input                    $server
  * @property    Input                    $env
  * @property    Input                    $header
@@ -111,7 +112,7 @@ class Input implements \Serializable, \Countable
      */
     public function prepareSource(&$source = null, $reference = false)
     {
-        if (is_null($source)) {
+        if ($source === null) {
             $this->data = &$_REQUEST;
         } else {
             if ($reference) {
@@ -158,7 +159,7 @@ class Input implements \Serializable, \Countable
         }
 
         if (in_array(strtolower($name), ['put', 'patch', 'delete', 'link', 'unlink'])) {
-            $data = (strtolower($this->getMethod()) == strtolower($name)) ? null : [];
+            $data = (strtolower($this->getMethod()) === strtolower($name)) ? null : [];
 
             $this->inputs[$name] = new FormDataInput($data, $filter);
 

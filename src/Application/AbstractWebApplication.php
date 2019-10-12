@@ -26,6 +26,8 @@ use Apli\Http\Emitter\EmitterInterface;
 use Apli\Http\Emitter\EmitterStack;
 use Apli\Http\Emitter\SapiEmitter;
 use Apli\Http\ServerRequestFactory;
+use Apli\Uri\UriException;
+use InvalidArgumentException;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -63,7 +65,7 @@ abstract class AbstractWebApplication extends AbstractApplication
      * @param Map|null                    $config
      * @param Environment|null            $environment
      *
-     * @throws \Apli\Uri\UriException
+     * @throws UriException|InvalidArgumentException
      */
     public function __construct(
         ServerRequestInterface $request = null,
@@ -83,7 +85,6 @@ abstract class AbstractWebApplication extends AbstractApplication
         // Call the constructor as late as possible (it runs `init()`).
         parent::__construct($config);
 
-        // Set the execution datetime and timestamp;
         $this->set('execution.datetime', gmdate('Y-m-d H:i:s'));
         $this->set('execution.timestamp', time());
     }
@@ -91,7 +92,7 @@ abstract class AbstractWebApplication extends AbstractApplication
     /**
      * @return Environment
      */
-    public function getEnvironment()
+    public function getEnvironment(): Environment
     {
         return $this->environment;
     }
@@ -101,7 +102,7 @@ abstract class AbstractWebApplication extends AbstractApplication
      *
      * @return $this
      */
-    public function setEnvironment(Environment $environment)
+    public function setEnvironment(Environment $environment): self
     {
         $this->environment = $environment;
 
@@ -112,11 +113,11 @@ abstract class AbstractWebApplication extends AbstractApplication
      * Method to check to see if headers have already been sent.
      * We wrap headers_sent() function with this method for testing reason.
      *
-     * @return bool True if the headers have already been sent.
+     * @return bool
      *
      * @see     headers_sent()
      */
-    public function checkHeadersSent()
+    public function checkHeadersSent(): bool
     {
         return headers_sent();
     }
@@ -124,7 +125,7 @@ abstract class AbstractWebApplication extends AbstractApplication
     /**
      * @return EmitterInterface
      */
-    public function getEmitter()
+    public function getEmitter(): EmitterInterface
     {
         return $this->emitter;
     }
@@ -134,7 +135,7 @@ abstract class AbstractWebApplication extends AbstractApplication
      *
      * @return $this
      */
-    public function setEmitter(EmitterInterface $emitter)
+    public function setEmitter(EmitterInterface $emitter): self
     {
         $this->emitter = $emitter;
 
@@ -144,25 +145,12 @@ abstract class AbstractWebApplication extends AbstractApplication
     /**
      * Execute the application.
      *
-     * @return string
+     * @return mixed|void
      */
     public function execute()
     {
         $this->prepareExecute();
-
-        // @event onBeforeExecute
-
-        // Perform application routines.
-        $response = $this->doExecute();
-
-        // @event onAfterExecute
-
-        $this->postExecute();
-
-        // @event onBeforeRespond
-
+        $response = $this->postExecute($this->doExecute());
         $this->emitter->emit($response);
-
-        // @event onAfterRespond
     }
 }

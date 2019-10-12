@@ -17,6 +17,7 @@ use Apli\Support\Hashable;
 use OutOfBoundsException;
 use OutOfRangeException;
 use Traversable;
+use InvalidArgumentException;
 
 /**
  * A Map is a sequential collection of key-value entries, almost identical to an
@@ -65,11 +66,12 @@ final class Map implements Collection
      *
      * @param mixed $key
      * @param mixed $value
+     * @throws InvalidArgumentException
      */
     public function put($key, $value)
     {
         if (is_object($key) && $key instanceof Hashable === false) {
-            throw new \Exception('Objects as key need to implement Hashable');
+            throw new InvalidArgumentException('Objects as key need to implement Hashable');
         }
 
         $entry = $this->lookupKey($key);
@@ -618,7 +620,7 @@ final class Map implements Collection
      */
     public function offsetExists($offset)
     {
-        return $this->get($offset, null) !== null;
+        return $this->get($offset) !== null;
     }
 
     /**
@@ -628,20 +630,12 @@ final class Map implements Collection
      * @param mixed $key
      * @param mixed $default
      *
-     * @throws OutOfBoundsException if no default was provided and the key is
-     *                              not associated with a value.
-     *
      * @return mixed The associated value or fallback default if provided.
      */
     public function get($key, $default = null)
     {
         if (($entry = $this->lookupKey($key))) {
             return $entry->value;
-        }
-
-        // Check if a default was provided.
-        if (func_num_args() === 1) {
-            throw new OutOfBoundsException();
         }
 
         return $default;

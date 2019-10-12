@@ -14,9 +14,13 @@
 namespace Apli\Application;
 
 use Apli\Data\Map;
+use Apli\Support\Str;
+use InvalidArgumentException;
+use OutOfBoundsException;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use UnexpectedValueException;
 
 /**
  * The Abstract Application Class.
@@ -40,6 +44,14 @@ abstract class AbstractApplication implements LoggerAwareInterface
     protected $logger;
 
     /**
+     * @var array
+     */
+    protected $allowGetProperties = [
+        'config',
+        'logger'
+    ];
+
+    /**
      * Class constructor of Application.
      *
      * @param Map|null $config
@@ -59,7 +71,7 @@ abstract class AbstractApplication implements LoggerAwareInterface
      *
      * @return void
      */
-    protected function init()
+    protected function init(): void
     {
     }
 
@@ -70,7 +82,7 @@ abstract class AbstractApplication implements LoggerAwareInterface
      *
      * @return void
      */
-    public function close($message = 0)
+    public function close($message = 0): void
     {
         exit($message);
     }
@@ -78,20 +90,12 @@ abstract class AbstractApplication implements LoggerAwareInterface
     /**
      * Execute the application.
      *
-     * @return mixed
+     * @return mixed|void
      */
     public function execute()
     {
         $this->prepareExecute();
-
-        // @event onBeforeExecute
-
-        // Perform application routines.
-        $this->doExecute();
-
-        // @event onAfterExecute
-
-        return $this->postExecute();
+        return $this->postExecute($this->doExecute());
     }
 
     /**
@@ -99,7 +103,7 @@ abstract class AbstractApplication implements LoggerAwareInterface
      *
      * @return void
      */
-    protected function prepareExecute()
+    protected function prepareExecute(): void
     {
     }
 
@@ -113,11 +117,12 @@ abstract class AbstractApplication implements LoggerAwareInterface
 
     /**
      * Post execute hook.
-     *
+     * @param $response
      * @return mixed
      */
-    protected function postExecute()
+    protected function postExecute($response)
     {
+        return $response;
     }
 
     /**
@@ -138,9 +143,8 @@ abstract class AbstractApplication implements LoggerAwareInterface
      *
      * @return LoggerInterface
      */
-    public function getLogger()
+    public function getLogger(): LoggerInterface
     {
-        // If a logger hasn't been set, use NullLogger
         if (!($this->logger instanceof LoggerInterface)) {
             $this->logger = new NullLogger();
         }
@@ -155,7 +159,7 @@ abstract class AbstractApplication implements LoggerAwareInterface
      *
      * @return AbstractApplication Returns itself to support chaining.
      */
-    public function setLogger(LoggerInterface $logger)
+    public function setLogger(LoggerInterface $logger): self
     {
         $this->logger = $logger;
 
@@ -165,14 +169,14 @@ abstract class AbstractApplication implements LoggerAwareInterface
     /**
      * Modifies a property of the object, creating it if it does not already exist.
      *
-     * @param string $key   The name of the property.
-     * @param mixed  $value The value of the property to set (optional).
-     *
-     * @return mixed Previous value of the property
+     * @param      $key
+     * @param null $value
+     * @return mixed the previous value
+     * @throws InvalidArgumentException
      */
     public function set($key, $value = null)
     {
-        $previous = $this->config->get($key, null);
+        $previous = $this->config->get($key);
 
         $this->config->put($key, $value);
 
@@ -184,32 +188,63 @@ abstract class AbstractApplication implements LoggerAwareInterface
      *
      * @param Map $config A structure object holding the configuration.
      *
-     * @return AbstractApplication Returns itself to support chaining.
+     * @return AbstractApplication
      */
-    public function setConfiguration(Map $config)
+    public function setConfiguration(Map $config): self
     {
         $this->config = $config;
 
         return $this;
     }
 
+
+    /**
+     * Determine if a get method exists for an property.
+     *
+     * @param  string  $property
+     * @return bool
+     */
+    public function hasGetMethod($property): bool
+    {
+        return method_exists($this, 'get'.Str::studly($property));
+    }
+
     /**
      * is utilized for reading data from inaccessible members.
      *
-     * @param   $name string
+     * @param   $property string
      *
      * @return mixed
      */
-    public function __get($name)
+    public function __get($property)
     {
-        $allowNames = [
-            'config',
-        ];
-
-        if (in_array($name, $allowNames)) {
-            return $this->$name;
+        if ($this->__isset($property)) {
+            if($this->hasGetMethod($property)) {
+                return $this->{'get'.Str::studly($property)}();
+            }
+            return $this->$property;
         }
 
-        throw new \UnexpectedValueException('Property: '.$name.' not found in '.get_called_class());
+        throw new UnexpectedValueException('Property: '.$property.' not found in '.static::class);
+    }
+
+    /**
+     * Prevent overwrite properties
+     *
+     * @param $property
+     * @param $value
+     */
+    public function __set($property, $value)
+    {
+        throw new UnexpectedValueException('Not allowed to overwrite '.$property.' in '.static::class);
+    }
+
+    /**
+     * @param $property
+     * @return bool
+     */
+    public function __isset($property)
+    {
+        return in_array($property, $this->allowGetProperties, false);
     }
 }

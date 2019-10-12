@@ -34,7 +34,7 @@ interface Collection extends Traversable, IteratorAggregate, ArrayAccess, JsonSe
     /**
      * Get all of the items in the collection.
      *
-     * @return mixed
+     * @return mixedequa
      */
     public function all();
 
