@@ -13,7 +13,7 @@
 
 namespace Apli\IO\Cli;
 
-use Apli\Support\AbstractEnum;
+use Apli\Support\Enum;
 
 /**
  * Class Signal.
@@ -55,7 +55,7 @@ use Apli\Support\AbstractEnum;
  * @method static Signal UNBLOCK()
  * @method static Signal SETMASK()
  */
-class Signal extends AbstractEnum
+class Signal extends Enum
 {
     const HUP = 'SIGHUP';
     const INT = 'SIGINT';
