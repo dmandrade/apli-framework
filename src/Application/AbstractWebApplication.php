@@ -22,65 +22,36 @@ namespace Apli\Application;
 
 use Apli\Data\Map;
 use Apli\Environment\Environment;
-use Apli\Http\Emitter\EmitterInterface;
-use Apli\Http\Emitter\EmitterStack;
 use Apli\Http\Emitter\SapiEmitter;
-use Apli\Http\ServerRequestFactory;
+use Apli\Http\HttpFactoryInterface;
 use Apli\Uri\UriException;
 use InvalidArgumentException;
-use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Class AbstractWebApplication.
- *
- * @property-read  Environment            $environment
- * @property-read  EmitterInterface       $emitter
- * @property-read  ServerRequestInterface $request
+ * Class AbstractWebApplication
+ * @package Apli\Application
  */
 abstract class AbstractWebApplication extends AbstractApplication
 {
-    /**
-     * The application environment object.
-     *
-     * @var Environment
-     */
-    protected $environment;
-
-    /**
-     * Property server.
-     *
-     * @var EmitterInterface
-     */
-    protected $emitter;
-
-    /**
-     * @var ServerRequestInterface
-     */
-    protected $request;
+    use WithEnvironment, WithEmitter, WithServerRequest;
 
     /**
      * AbstractWebApplication constructor.
      *
-     * @param ServerRequestInterface|null $request
-     * @param Map|null                    $config
-     * @param Environment|null            $environment
+     * @param HttpFactoryInterface|null $httpFactory
+     * @param Map|null             $config
+     * @param Environment|null     $environment
      *
      * @throws UriException|InvalidArgumentException
      */
     public function __construct(
-        ServerRequestInterface $request = null,
+        HttpFactoryInterface $httpFactory = null,
         Map $config = null,
         Environment $environment = null
-    ) {
-        $this->request = $request ?: ServerRequestFactory::fromGlobals(
-            $_SERVER, $_GET, $_POST, $_COOKIE, $_FILES
-        );
-        $environment = $environment ?: new Environment();
-        $emitter = new EmitterStack();
-        $emitter->push(new SapiEmitter());
-
+    )
+    {
+//        $this->createServerRequestFrom($httpFactory);
         $this->setEnvironment($environment);
-        $this->setEmitter($emitter);
 
         // Call the constructor as late as possible (it runs `init()`).
         parent::__construct($config);
@@ -90,23 +61,16 @@ abstract class AbstractWebApplication extends AbstractApplication
     }
 
     /**
-     * @return Environment
-     */
-    public function getEnvironment(): Environment
-    {
-        return $this->environment;
-    }
-
-    /**
-     * @param Environment $environment
+     * Custom initialisation method.
      *
-     * @return $this
+     * Called at the end of the AbstractApplication::__construct() method.
+     * This is for developers to inject initialisation code for their application classes.
+     *
+     * @return void
      */
-    public function setEnvironment(Environment $environment): self
+    protected function init(): void
     {
-        $this->environment = $environment;
-
-        return $this;
+        $this->getEmitter()->push(new SapiEmitter());
     }
 
     /**
@@ -123,34 +87,12 @@ abstract class AbstractWebApplication extends AbstractApplication
     }
 
     /**
-     * @return EmitterInterface
+     * Post execute hook.
+     * @param $response
+     * @return void
      */
-    public function getEmitter(): EmitterInterface
+    protected function postExecute($response): void
     {
-        return $this->emitter;
-    }
-
-    /**
-     * @param EmitterInterface $emitter
-     *
-     * @return $this
-     */
-    public function setEmitter(EmitterInterface $emitter): self
-    {
-        $this->emitter = $emitter;
-
-        return $this;
-    }
-
-    /**
-     * Execute the application.
-     *
-     * @return mixed|void
-     */
-    public function execute()
-    {
-        $this->prepareExecute();
-        $response = $this->postExecute($this->doExecute());
-        $this->emitter->emit($response);
+        $this->getEmitter()->emit($response);
     }
 }

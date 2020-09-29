@@ -20,7 +20,9 @@ use OutOfBoundsException;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use Throwable;
 use UnexpectedValueException;
+use function in_array;
 
 /**
  * The Abstract Application Class.
@@ -90,12 +92,40 @@ abstract class AbstractApplication implements LoggerAwareInterface
     /**
      * Execute the application.
      *
-     * @return mixed|void
+     * @return void
      */
-    public function execute()
+    public function execute(): void
     {
-        $this->prepareExecute();
-        return $this->postExecute($this->doExecute());
+        try {
+            $this->prepareExecute();
+            $this->postExecute($this->doExecute());
+        } catch (Throwable $e) {
+            $this->handleException($e);
+        }
+    }
+
+    /**
+     * @param Throwable $e
+     */
+    public function handleException(Throwable $e): void
+    {
+        print('<pre>' . $e->getMessage() . '<br/>' . implode('<br/>', $this->formatCallStack($e)));
+    }
+
+    /**
+     * @param $e
+     * @return array
+     */
+    protected function formatCallStack($e): array
+    {
+        $stack = $e->getTrace();
+
+        foreach ($stack as $i => $call) {
+            $stack[$i] = (@$call['file'] == '' ? 'lambda : ' : @$call['file'] . ' (' . $call['line'] . ') : ') .
+                (@$call['class'] == '' ? '' : $call['class'] . '->') . $call['function'];
+        }
+
+        return $stack;
     }
 
     /**
@@ -118,11 +148,10 @@ abstract class AbstractApplication implements LoggerAwareInterface
     /**
      * Post execute hook.
      * @param $response
-     * @return mixed
+     * @return void
      */
-    protected function postExecute($response)
+    protected function postExecute($response): void
     {
-        return $response;
     }
 
     /**
