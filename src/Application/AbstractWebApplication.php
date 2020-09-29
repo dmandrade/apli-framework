@@ -50,7 +50,7 @@ abstract class AbstractWebApplication extends AbstractApplication
         Environment $environment = null
     )
     {
-//        $this->createServerRequestFrom($httpFactory);
+        $this->createServerRequestFrom($httpFactory);
         $this->setEnvironment($environment);
 
         // Call the constructor as late as possible (it runs `init()`).
@@ -58,19 +58,6 @@ abstract class AbstractWebApplication extends AbstractApplication
 
         $this->set('execution.datetime', gmdate('Y-m-d H:i:s'));
         $this->set('execution.timestamp', time());
-    }
-
-    /**
-     * Custom initialisation method.
-     *
-     * Called at the end of the AbstractApplication::__construct() method.
-     * This is for developers to inject initialisation code for their application classes.
-     *
-     * @return void
-     */
-    protected function init(): void
-    {
-        $this->getEmitter()->push(new SapiEmitter());
     }
 
     /**
