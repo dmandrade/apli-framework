@@ -1,0 +1,27 @@
+{
+    "name": "apli/mqtt",
+    "type": "apli-package",
+    "description": "Aplí MQTT package",
+    "keywords": [
+        "apli",
+        "framework",
+        "mqtt"
+    ],
+    "homepage": "https://github.com/dmandrade/apli-mqtt",
+    "require": {
+        "php": ">=5.6",
+    },
+    "require-dev": {
+        "codeception/codeception": "^2.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Apli\\MQTT\\": ""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.x-dev"
+        }
+    }
+}
