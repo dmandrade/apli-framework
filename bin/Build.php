@@ -85,7 +85,7 @@ class Build extends AbstractCliApplication
     /**
      * Method to run this application.
      *
-     * @return bool
+     * @return mixed
      */
     protected function doExecute()
     {
@@ -136,15 +136,13 @@ class Build extends AbstractCliApplication
 
         $this->exec('git checkout master');
 
-        $this->out()->out('Split finish.');
-
-        return true;
+        $this->out('Split finish.');
     }
 
     /**
      * help.
      *
-     * @return bool
+     * @return mixed
      */
     protected function help()
     {
@@ -164,8 +162,6 @@ Usage: php build.php [packages] [-t] [-b=test] [-f] [--dry-run] [--no-replace]
 HELP;
 
         $this->out($help);
-
-        return true;
     }
 
     /**
